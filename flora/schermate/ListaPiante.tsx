@@ -3,7 +3,7 @@ import {View, Text} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import {globalStyles} from "../styles/global";
-import CustomButton from "../components/CustomButton";
+import Button from "../components/Button";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ListaPiante'>;
 
@@ -12,8 +12,8 @@ export default function ListaPiante({ navigation, route }: Props) {
 
     return (
         <View style={globalStyles.background}>
-            <Text>{searched}</Text>
-            <CustomButton title="Indietro" onPress={() => navigation.navigate('Home')} />
+            <Text>Benvenuto in ListaPiante</Text>
+            <Button title="Indietro" onPress={() => navigation.navigate('Home')} />
         </View>
     )
 }

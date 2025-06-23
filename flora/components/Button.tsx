@@ -7,7 +7,7 @@ interface CustomButtonProps {
     onPress?: () => any
 }
 
-export default function CustomButton ({title, onPress}: CustomButtonProps){
+export default function Button ({title, onPress}: CustomButtonProps){
     return (
         <TouchableOpacity style={globalStyles.mainButton} onPress={onPress}>
             <Text style={globalStyles.mainButtonText}>{title}</Text>
