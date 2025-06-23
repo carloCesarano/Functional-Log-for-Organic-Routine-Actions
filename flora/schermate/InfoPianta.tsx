@@ -5,7 +5,6 @@ import { RootStackParamList } from "../types";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'InfoPianta'>;
 
-// @ts-ignore
 export default function InfoPianta({ navigation, route }: Props) {
     const { plantId } = route.params;
 

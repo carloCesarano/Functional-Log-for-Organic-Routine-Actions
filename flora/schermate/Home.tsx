@@ -5,7 +5,6 @@ import { RootStackParamList } from "../types";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-// @ts-ignore
 export default function Home({ navigation }: Props) {
     return (
         <View>
