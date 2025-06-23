@@ -29,8 +29,8 @@ export const globalStyles = StyleSheet.create({
         height: 50,
     },
     searchBox: {
-        flexDirection: 'row',       // 1) metti gli elementi in orizzontale
-        alignItems: 'center',       // 2) allinea verticalmente icona e input
+        flexDirection: 'row',
+        alignItems: 'center',
         height: 60,
         width: 240,
         backgroundColor: '#52b04e',
@@ -38,14 +38,14 @@ export const globalStyles = StyleSheet.create({
         borderWidth: 3,
         borderColor: '#0e4523',
         borderStyle: 'solid',
-        paddingHorizontal: 10,      // 3) un po’ di padding orizzontale
+        paddingHorizontal: 10,
     },
 
     searchBoxText: {
-        flex: 1,                    // 4) occupa tutto lo spazio rimanente
+        flex: 1,
         fontSize: 32,
-        paddingHorizontal: 10,      // 5) distanzia il testo dai bordi
-        color: '#fff',              // 6) imposta un colore visibile
+        paddingHorizontal: 10,
+        color: '#fff',
     },
 
     mainButton: {
@@ -60,5 +60,23 @@ export const globalStyles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: '600'
-    }
+    },
+
+    addButton: {
+        position: 'absolute',
+        bottom: 30,
+        right: 30,
+        backgroundColor: '#52b04e',
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 5,
+        shadowColor: '#000', 
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+    },
+
 });
