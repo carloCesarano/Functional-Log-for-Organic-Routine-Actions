@@ -23,22 +23,31 @@ export const globalStyles = StyleSheet.create({
         width: 150,
         height: 150,
     },
+
+    hamburgmenu:{
+        width:50,
+        height: 50,
+    },
     searchBox: {
-        height: 90,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#52b04e",
+        flexDirection: 'row',       // 1) metti gli elementi in orizzontale
+        alignItems: 'center',       // 2) allinea verticalmente icona e input
+        height: 60,
+        width: 240,
+        backgroundColor: '#52b04e',
         borderRadius: 50,
-        borderStyle: "solid",
-        borderColor: "#0e4523",
         borderWidth: 3,
+        borderColor: '#0e4523',
+        borderStyle: 'solid',
+        paddingHorizontal: 10,      // 3) un po’ di padding orizzontale
     },
+
     searchBoxText: {
-        flex: 1,
+        flex: 1,                    // 4) occupa tutto lo spazio rimanente
         fontSize: 32,
-        paddingHorizontal: 30,
-        borderRadius: 50,
+        paddingHorizontal: 10,      // 5) distanzia il testo dai bordi
+        color: '#fff',              // 6) imposta un colore visibile
     },
+
     mainButton: {
         backgroundColor: '#52b04e',
         paddingVertical: 12,
