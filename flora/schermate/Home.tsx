@@ -1,13 +1,18 @@
 import React from "react";
 import {View, Text, Button} from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../types";
+
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 // @ts-ignore
-export default function Home({ navigation }) {
+export default function Home({ navigation }: Props) {
     return (
         <View>
             <Text>Benvenuto nella Home</Text>
-            <Button title="Nuova Pianta" onPress={() => navigation.navigate('NuovaPianta')} />
-            <Button title="Info Pianta" onPress={() => navigation.navigate('InfoPianta')} />
+            <Button title="Nuova Pianta" onPress={() => navigation.navigate('AggiungiPianta')} />
+            <Button title="Lista Piante" onPress={() => navigation.navigate('ListaPiante')} />
+            <Button title="Info Pianta" onPress={() => navigation.navigate('InfoPianta', {plantId: '123'})} />
         </View>
     )
 }

@@ -3,16 +3,12 @@ import {View, Text, Button} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 
-type Props = NativeStackScreenProps<RootStackParamList, 'InfoPianta'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'ListaPiante'>;
 
-// @ts-ignore
-export default function InfoPianta({ navigation, route }: Props) {
-    const { plantId } = route.params;
-
+export default function ListaPiante({ navigation }: Props) {
     return (
         <View>
-            <Text>Benvenuto in InfoPianta</Text>
-            <Text>ID Pianta: {plantId}</Text>
+            <Text>Benvenuto in ListaPiante</Text>
             <Button title="Indietro" onPress={() => navigation.navigate('Home')} />
         </View>
     )
