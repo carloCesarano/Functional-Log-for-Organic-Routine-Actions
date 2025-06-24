@@ -1,28 +1,47 @@
-class Pianta {
-  id: number; // utile per il database
-  nome: string;
-  specie: string;
-  dataAcquisizione: Date;
-  categoria: string;
-  stato: 'sana' | 'da controllare' | 'malata';
-  fotoUri: string; // percorso/uri della foto salvata
-  frequenzaInnaffiatura: number; // in giorni
-  frequenzaPotatura: number; // in giorni
-  frequenzaRinvaso: number; // in giorni
-  note: string;
+// Interfaccia per la Pianta
+interface IPianta {
+  id: 'Integer'; // utile per il database
+  nome: Text;
+  specie: Text;
+  dataAcquisizione: Text;
+  categoria: Text;
+  stato: Text;
+  foto: Text; 
+  ultimaInnaffiatura: 'Intger';
+  frequenzaInnaffiatura: 'Integer'; 
+  frequenzaPotatura: 'Integer'; 
+  frequenzaRinvaso: 'Integer'; 
+  note: Text;
+}
+
+
+class Pianta implements IPianta {
+  id: 'Integer'; // utile per il database
+  nome: Text;
+  specie: Text;
+  dataAcquisizione: Text;
+  categoria: Text;
+  stato: Text;
+  foto: Text; 
+  ultimaInnaffiatura: 'Intger';
+  frequenzaInnaffiatura: 'Integer'; 
+  frequenzaPotatura: 'Integer'; 
+  frequenzaRinvaso: 'Integer'; 
+  note: Text;
 
   constructor(
-    id: number,
-    nome: string,
-    specie: string,
-    dataAcquisizione: Date,
-    categoria: string,
-    stato: 'sana' | 'da controllare' | 'malata',
-    fotoUri: string,
-    frequenzaInnaffiatura: number,
-    frequenzaPotatura: number,
-    frequenzaRinvaso: number,
-    note: string
+    id: 'Integer', // utile per il database
+  nome: Text,
+  specie: Text,
+  dataAcquisizione: Text,
+  categoria: Text,
+  stato: Text,
+  foto: Text,
+  ultimaInnaffiatura: 'Intger',
+  frequenzaInnaffiatura: 'Integer', 
+  frequenzaPotatura: 'Integer',
+  frequenzaRinvaso: 'Integer',
+  note: Text,
   ) {
     this.id = id;
     this.nome = nome;
@@ -30,11 +49,11 @@ class Pianta {
     this.dataAcquisizione = dataAcquisizione;
     this.categoria = categoria;
     this.stato = stato;
-    this.fotoUri = fotoUri;
+    this.foto = foto;
+    this.ultimaInnaffiatura = ultimaInnaffiatura;
     this.frequenzaInnaffiatura = frequenzaInnaffiatura;
     this.frequenzaPotatura = frequenzaPotatura;
     this.frequenzaRinvaso = frequenzaRinvaso;
     this.note = note;
   }
-
 }
