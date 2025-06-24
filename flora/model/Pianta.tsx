@@ -36,4 +36,5 @@ class Pianta {
     this.frequenzaRinvaso = frequenzaRinvaso;
     this.note = note;
   }
+
 }

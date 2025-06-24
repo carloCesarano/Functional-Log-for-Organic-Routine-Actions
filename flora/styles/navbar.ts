@@ -14,7 +14,7 @@ export const navbarStyles = StyleSheet.create({
     hamburgerMenu: {
         width: 50,
         height: 50,
-        color: "black"
+        color: "black",
     },
     searchBox: {
         flexDirection: 'row',
