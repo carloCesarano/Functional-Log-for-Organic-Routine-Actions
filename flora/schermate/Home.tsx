@@ -1,18 +1,19 @@
 import React from "react";
-import {Text, View} from "react-native";
+import {Text} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
+import Background from "../components/Background";
 import NavBar from "../components/NavBar";
 import AggiungiPiantaButton from "../components/AggiungiPiantaButton";
-import { globalStyles } from "../styles/global";
 import HomeButton from "../components/HomeButton";
 import ProssimiInterventi from "../components/ProssimiInterventi";
+import { globalStyles } from "../styles/global";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function Home({ navigation }: Props) {
     return (
-        <View style={globalStyles.background}>
+        <Background>
             <NavBar />
 
             {/* Sezione Lista Piante */}
@@ -24,6 +25,6 @@ export default function Home({ navigation }: Props) {
 
             {/* Pulsante aggiungi pianta */}
             <AggiungiPiantaButton />
-        </View>
+        </Background>
     );
 }

@@ -5,7 +5,6 @@ export const isMobile: boolean = Platform.OS === "android" || Platform.OS === "i
 export const globalStyles = StyleSheet.create({
     // Container principale dell'applicazione
     background: {
-        backgroundColor: '#d0e7b6',
         padding: 16,
         flex: 1,
         paddingVertical: isMobile ? 50 : 16,

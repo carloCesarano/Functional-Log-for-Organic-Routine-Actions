@@ -1,6 +1,6 @@
 import { StyleSheet, Platform } from "react-native";
 
-const isMobile = Platform.OS === "android" || Platform.OS === "ios";
+export const isMobile = Platform.OS === "android" || Platform.OS === "ios";
 
 export const navbarStyles = StyleSheet.create({
     navbar: {
@@ -15,6 +15,7 @@ export const navbarStyles = StyleSheet.create({
     },
     searchBox: {
         flexDirection: 'row',
+        backgroundColor: '#dcf2d5',
         alignItems: 'center',
         height: isMobile ? 40 : 60,
         width: 240,
@@ -33,6 +34,7 @@ export const navbarStyles = StyleSheet.create({
         color: 'black',
     },
     hamburgerMenu: {
+        marginLeft: isMobile ? 0 : 20,
     },
     hamburgerMenuIcon: {
         color: "black",
