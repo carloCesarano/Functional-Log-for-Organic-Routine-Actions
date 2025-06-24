@@ -3,7 +3,6 @@ import {Text, View} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import NavBar from "../components/NavBar";
-import Button from "../components/Button";
 import AggiungiPiantaButton from "../components/AggiungiPiantaButton";
 import { globalStyles } from "../styles/global";
 import HomeButton from "../components/HomeButton";
@@ -16,10 +15,14 @@ export default function Home({ navigation }: Props) {
         <View style={globalStyles.background}>
             <NavBar />
 
+            {/* Sezione Lista Piante */}
             <Text style={globalStyles.titolo}>Ultime piante aggiunte</Text>
             <HomeButton title="Vedi tutte le piante" onPress={() => navigation.navigate('ListaPiante', { searched: '' })} />
-            <Button title="Info Pianta" onPress={() => navigation.navigate('InfoPianta', { plantId: '123' })} />
+
+            {/* Sezione Countdown Interventi  */}
             <ProssimiInterventi navigation={navigation}/>
+
+            {/* Pulsante aggiungi pianta */}
             <AggiungiPiantaButton />
         </View>
     );

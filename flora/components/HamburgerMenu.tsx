@@ -5,8 +5,8 @@ import {navbarStyles} from "../styles/navbar";
 
 export default function HamburgerMenu() {
     return (
-        <TouchableOpacity>
-            <Ionicons name="menu" size={24} style={navbarStyles.hamburgerMenu} />
+        <TouchableOpacity style={navbarStyles.hamburgerMenu}>
+            <Ionicons name="menu" size={32} style={navbarStyles.hamburgerMenuIcon} />
         </TouchableOpacity>
     )
 }

@@ -5,6 +5,8 @@ import {StackNavigationProp} from "@react-navigation/stack";
 import {RootStackParamList} from "../types";
 import SearchBox from "./SearchBox";
 import {navbarStyles} from "../styles/navbar";
+import HamburgerMenu from "./HamburgerMenu";
+import {globalStyles, isMobile} from "../styles/global";
 
 export default function NavBar() {
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -17,8 +19,18 @@ export default function NavBar() {
     return (
         <View style={navbarStyles.navbar}>
             <Image style={navbarStyles.icon} source={require('../assets/full_logo.png')} />
-            <SearchBox onSubmit={handleSearch}/>
-
+            {isMobile ? (
+                <>
+                    <SearchBox onSubmit={handleSearch} />
+                    <HamburgerMenu />
+                </>
+            ) : (
+                <View style={globalStyles.hbox}>
+                    <SearchBox onSubmit={handleSearch} />
+                    <HamburgerMenu />
+                </View>
+            )}
         </View>
     );
+
 }

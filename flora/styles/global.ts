@@ -1,6 +1,6 @@
 import {StyleSheet, Platform} from "react-native";
 
-const isPhone: boolean = Platform.OS !== 'web';
+export const isMobile: boolean = Platform.OS === "android" || Platform.OS === "ios";
 
 export const globalStyles = StyleSheet.create({
     // Container principale dell'applicazione
@@ -8,7 +8,7 @@ export const globalStyles = StyleSheet.create({
         backgroundColor: '#d0e7b6',
         padding: 16,
         flex: 1,
-        paddingVertical: isPhone ? 32 : 16,
+        paddingVertical: isMobile ? 50 : 16,
         paddingHorizontal: 16,
     },
     // Semplice contenitore orizzontale
