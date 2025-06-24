@@ -11,7 +11,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'AggiungiPianta'>;
 export default function AggiungiPianta({ navigation }: Props) {
     return (
         <View style={globalStyles.background}>
-            <NavBar navigation={navigation} />
+            <NavBar />
             <Text>Benvenuto in AggiungiPianta</Text>
             <Button title="Indietro" onPress={() => navigation.navigate('Home')} />
         </View>

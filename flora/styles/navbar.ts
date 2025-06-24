@@ -29,9 +29,11 @@ export const navbarStyles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     searchBoxText: {
-        flex: 1,
+        height: 60,
+        width: 200,
+        borderRadius: 50,
         fontSize: 32,
         paddingHorizontal: 10,
         color: '#fff',
-    }
+    },
 })

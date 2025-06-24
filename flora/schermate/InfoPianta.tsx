@@ -14,7 +14,7 @@ export default function InfoPianta({ navigation, route }: Props) {
 
     return (
         <View style={globalStyles.background}>
-            <NavBar navigation={navigation} />
+            <NavBar />
             <Text>Benvenuto in InfoPianta</Text>
             <Text>ID Pianta: {plantId}</Text>
             <Button title="Indietro" onPress={() => navigation.navigate('Home')} />

@@ -13,8 +13,8 @@ export default function ListaPiante({ navigation, route }: Props) {
 
     return (
         <View style={globalStyles.background}>
+            <NavBar  />
             <Text>{searched}</Text>
-            <NavBar navigation={navigation} />
             <Button title="Indietro" onPress={() => navigation.navigate('Home')} />
         </View>
     )

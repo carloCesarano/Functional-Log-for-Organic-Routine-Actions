@@ -12,7 +12,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 export default function Home({ navigation }: Props) {
     return (
         <View style={globalStyles.background}>
-            <NavBar navigation={navigation} />
+            <NavBar />
 
 
             <Button title="Lista Piante" onPress={() => navigation.navigate('ListaPiante', { searched: '' })} />
