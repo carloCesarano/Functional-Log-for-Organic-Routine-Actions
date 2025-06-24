@@ -1,6 +1,6 @@
-import {StyleSheet, Dimensions} from "react-native";
+import {StyleSheet, Platform} from "react-native";
 
-const isPhone = Dimensions.get('window').width < 768;
+const isPhone: boolean = Platform.OS !== 'web';
 
 export const globalStyles = StyleSheet.create({
     // Container principale dell'applicazione
@@ -18,36 +18,6 @@ export const globalStyles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 24,
     },
-    // L'icona presente nella main bar
-    icon: {
-        width: 150,
-        height: 150,
-    },
-
-    hamburgmenu:{
-        width:50,
-        height: 50,
-    },
-    searchBox: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: 60,
-        width: 240,
-        backgroundColor: '#52b04e',
-        borderRadius: 50,
-        borderWidth: 3,
-        borderColor: '#0e4523',
-        borderStyle: 'solid',
-        paddingHorizontal: 10,
-    },
-
-    searchBoxText: {
-        flex: 1,
-        fontSize: 32,
-        paddingHorizontal: 10,
-        color: '#fff',
-    },
-
     mainButton: {
         backgroundColor: '#52b04e',
         paddingVertical: 12,

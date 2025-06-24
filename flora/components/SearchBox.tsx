@@ -1,34 +1,27 @@
 import React, {useState} from 'react';
-import {
-    View,
-    TextInput,
-    TouchableOpacity,
-    NativeSyntheticEvent,
-    TextInputSubmitEditingEventData
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import {globalStyles} from "../styles/global";
+import {View, TextInput} from 'react-native';
+import {navbarStyles} from "../styles/navbar";
 
-type SearchBoxProps = {
+type Props = {
     onSubmit: (text: string) => void;
     placeholder?: string;
-    onMenuPress?: () => void;
 };
 
-export default function SearchBox({onSubmit, placeholder = "Cerca", onMenuPress}: SearchBoxProps) {
+export default function SearchBox({onSubmit, placeholder = "Cerca"}: Props) {
+
+    // Recupera il testo digitato dall'utente
     const [query, setQuery] = useState('');
 
-    const handleSubmit = (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => {
-        const text = e.nativeEvent.text;
-        console.log("Testo cercato: ", text);
-        onSubmit(text);
+    // Funzione chiamata quando l'utente invia la ricerca
+    const handleSubmit = () => {
+        console.log("Testo cercato: ", query);
+        onSubmit(query);
     };
 
     return (
-        <View style={globalStyles.searchBox}>
-
+        <View style={navbarStyles.searchBox}>
             <TextInput
-                style={globalStyles.searchBoxText}
+                style={navbarStyles.searchBoxText}
                 value={query}
                 onChangeText={setQuery}
                 onSubmitEditing={handleSubmit}
@@ -36,10 +29,6 @@ export default function SearchBox({onSubmit, placeholder = "Cerca", onMenuPress}
                 placeholderTextColor={"#eaeaea"}
                 returnKeyType={"search"}
             />
-            <TouchableOpacity onPress={onMenuPress} style={{ paddingHorizontal: 10 }}>
-                <Ionicons name="menu" size={24} color="#fff" />
-            </TouchableOpacity>
-
         </View>
     );
 }
