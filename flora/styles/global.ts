@@ -22,14 +22,15 @@ export const globalStyles = StyleSheet.create({
         backgroundColor: '#52b04e',
         paddingVertical: 12,
         paddingHorizontal: 24,
-        borderRadius: 8,
-        alignItems: 'center',
+        borderRadius: 30,
+        alignItems: 'flex-start',
         marginVertical: 8,
     },
     mainButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600'
+        color: 'black',
+        fontSize: 25,
+        fontWeight: '600',
+
     },
 
     addButton: {
@@ -43,10 +44,18 @@ export const globalStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 5,
-        shadowColor: '#000', 
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3,
         shadowRadius: 3,
+    },
+
+    titolo: {
+
+        textAlign: "center",
+        fontSize: 25,
+
+
     },
 
 });

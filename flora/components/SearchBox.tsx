@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, TextInput} from 'react-native';
 import {navbarStyles} from "../styles/navbar";
+import HamburgerMenu from "./HamburgerMenu";
 
 type Props = {
     onSubmit: (text: string) => void;
@@ -20,6 +21,7 @@ export default function SearchBox({onSubmit, placeholder = "Cerca"}: Props) {
 
     return (
         <View style={navbarStyles.searchBox}>
+            <HamburgerMenu />
             <TextInput
                 style={navbarStyles.searchBoxText}
                 value={query}

@@ -4,7 +4,6 @@ import {useNavigation} from "@react-navigation/native";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {RootStackParamList} from "../types";
 import SearchBox from "./SearchBox";
-import HamburgerMenu from "./HamburgerMenu";
 import {navbarStyles} from "../styles/navbar";
 
 export default function NavBar() {
@@ -19,7 +18,7 @@ export default function NavBar() {
         <View style={navbarStyles.navbar}>
             <Image style={navbarStyles.icon} source={require('../assets/full_logo.png')} />
             <SearchBox onSubmit={handleSearch}/>
-            <HamburgerMenu />
+
         </View>
     );
 }
