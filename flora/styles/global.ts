@@ -1,6 +1,6 @@
-import {StyleSheet, Dimensions} from "react-native";
+import {StyleSheet, Platform} from "react-native";
 
-const isPhone = Dimensions.get('window').width < 768;
+const isPhone: boolean = Platform.OS !== 'web';
 
 export const globalStyles = StyleSheet.create({
     // Container principale dell'applicazione
@@ -18,27 +18,6 @@ export const globalStyles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 24,
     },
-    // L'icona presente nella main bar
-    icon: {
-        width: 150,
-        height: 150,
-    },
-    searchBox: {
-        height: 90,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#52b04e",
-        borderRadius: 50,
-        borderStyle: "solid",
-        borderColor: "#0e4523",
-        borderWidth: 3,
-    },
-    searchBoxText: {
-        flex: 1,
-        fontSize: 32,
-        paddingHorizontal: 30,
-        borderRadius: 50,
-    },
     mainButton: {
         backgroundColor: '#52b04e',
         paddingVertical: 12,
@@ -51,5 +30,23 @@ export const globalStyles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: '600'
-    }
+    },
+
+    addButton: {
+        position: 'absolute',
+        bottom: 30,
+        right: 30,
+        backgroundColor: '#52b04e',
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 5,
+        shadowColor: '#000', 
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+    },
+
 });
