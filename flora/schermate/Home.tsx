@@ -52,8 +52,9 @@ export default function Home({ navigation }: Props) {
 
             <ProssimiInterventi navigation={navigation}/>
 
-            <AggiungiPiantaButton />
+
             </ScrollView>
+            <AggiungiPiantaButton />
         </Background>
     );
 }
