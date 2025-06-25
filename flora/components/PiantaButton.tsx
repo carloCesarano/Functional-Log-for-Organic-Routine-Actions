@@ -1,41 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { Image, Text, TouchableOpacity } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import { piantaButtonStyles } from "../styles/piantaButton";
-import SQLite from "react-native-sqlite-storage";
+import { selectPiantaInfo } from "../database/Database";
+import { DBRow } from "../database/Database";
 
-SQLite.enablePromise(true);
-const dbPromise = SQLite.openDatabase({ name: "database.sqlite", location: "default" });
 
 interface Props {
     piantaId: number;
 }
 
+interface PiantaInfo extends DBRow {
+    nome: string;
+    foto: string | null;
+}
+
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, "InfoPianta">;
 
 export default function PiantaButton({ piantaId }: Props) {
-    const [foto, setFoto] = useState<string | null>(null);
+    const [pianta, setPianta] = useState<PiantaInfo | null>(null);
     const navigation = useNavigation<NavigationProp>();
 
     useEffect(() => {
-        const fetchFoto = async () => {
-            try {
-                const db = await dbPromise;
-                const [results] = await db.executeSql("SELECT foto FROM PiantePossedute WHERE id = 1");
-                if (results.rows.length > 0) {
-                    const row = results.rows.item(0);
-                    console.log(row);
-                    setFoto(row.fotoUri);
-                }
-            } catch (error) {
-                console.error("Errore nel recuperare la foto:", error);
+        const caricaPianta = async () => {
+            const info = await selectPiantaInfo<PiantaInfo>(piantaId);
+            if (info) {
+                setPianta(info);
             }
         };
-
-        fetchFoto();
+        caricaPianta();
     }, [piantaId]);
+
+    const getImage = () => {
+        if (!pianta?.foto) {
+            return require('../assets/plant.png');
+        }
+
+        try {
+
+            // da dove prende le foto?
+
+        } catch (error) {
+            console.log("Errore caricamento immagine:", error);
+            return require('../assets/plant.png');
+        }
+    };
 
     const handlePress = () => {
         navigation.navigate("InfoPianta", { plantId: piantaId.toString() });
@@ -43,11 +54,14 @@ export default function PiantaButton({ piantaId }: Props) {
 
     return (
         <TouchableOpacity style={piantaButtonStyles.button} onPress={handlePress}>
-            {foto ? (
-                <Image source={{ uri: foto }} style={piantaButtonStyles.image} />
-            ) : (
-                <Text>Caricamento...</Text>
-            )}
+            <View>
+                <Image
+                    source={getImage()}
+                    style={piantaButtonStyles.image}
+                    defaultSource={require('../assets/plant.png')}
+                />
+                <Text style={piantaButtonStyles.text}>{pianta?.nome ?? 'Caricamento...'}</Text>
+            </View>
         </TouchableOpacity>
     );
 }

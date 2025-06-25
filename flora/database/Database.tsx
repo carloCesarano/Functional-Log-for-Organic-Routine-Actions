@@ -21,3 +21,11 @@ export async function update<T extends DBRow>(table: string, item: T) : Promise<
 export async function remove<T extends DBRow>(table: string, id: number) : Promise<void> {
     return DB.remove<T>(table, id);
 }
+
+export async function selectUltimeQuattro<T extends DBRow>() : Promise<T[]> {
+    return DB.selectUltimeQuattro<T>();
+}
+
+export async function selectPiantaInfo<T extends DBRow>(id: number): Promise<T | null> {
+    return DB.selectPiantaInfo<T>(id);
+}

@@ -6,11 +6,11 @@ interface IPianta {
   dataAcquisizione: Text;
   categoria: Text;
   stato: Text;
-  foto: Text; 
+  foto: Text;
   ultimaInnaffiatura: 'Intger';
-  frequenzaInnaffiatura: 'Integer'; 
-  frequenzaPotatura: 'Integer'; 
-  frequenzaRinvaso: 'Integer'; 
+  frequenzaInnaffiatura: 'Integer';
+  frequenzaPotatura: 'Integer';
+  frequenzaRinvaso: 'Integer';
   note: Text;
 }
 
@@ -22,26 +22,26 @@ class Pianta implements IPianta {
   dataAcquisizione: Text;
   categoria: Text;
   stato: Text;
-  foto: Text; 
+  foto: Text;
   ultimaInnaffiatura: 'Intger';
-  frequenzaInnaffiatura: 'Integer'; 
-  frequenzaPotatura: 'Integer'; 
-  frequenzaRinvaso: 'Integer'; 
+  frequenzaInnaffiatura: 'Integer';
+  frequenzaPotatura: 'Integer';
+  frequenzaRinvaso: 'Integer';
   note: Text;
 
   constructor(
-    id: 'Integer', // utile per il database
-  nome: Text,
-  specie: Text,
-  dataAcquisizione: Text,
-  categoria: Text,
-  stato: Text,
-  foto: Text,
-  ultimaInnaffiatura: 'Intger',
-  frequenzaInnaffiatura: 'Integer', 
-  frequenzaPotatura: 'Integer',
-  frequenzaRinvaso: 'Integer',
-  note: Text,
+      id: 'Integer', // utile per il database
+      nome: Text,
+      specie: Text,
+      dataAcquisizione: Text,
+      categoria: Text,
+      stato: Text,
+      foto: Text,
+      ultimaInnaffiatura: 'Intger',
+      frequenzaInnaffiatura: 'Integer',
+      frequenzaPotatura: 'Integer',
+      frequenzaRinvaso: 'Integer',
+      note: Text,
   ) {
     this.id = id;
     this.nome = nome;

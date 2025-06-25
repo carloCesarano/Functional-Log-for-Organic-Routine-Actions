@@ -14,6 +14,12 @@ function getDB() : SQLiteDatabase {
 
 function populateDB(db: SQLiteDatabase): void {
 
+    db.execSync(`
+        DROP TABLE IF EXISTS Categoria;
+        DROP TABLE IF EXISTS PiantePossedute;
+        DROP TABLE IF EXISTS WikiPiante;
+    `);
+
     db.execSync("PRAGMA foreign_keys = ON;");
 
     db.execSync(`
@@ -30,6 +36,7 @@ function populateDB(db: SQLiteDatabase): void {
     db.execSync(`
         CREATE TABLE IF NOT EXISTS PiantePossedute (
         id           INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome         TEXT NOT NULL,
         specie       TEXT NOT NULL,
         acquisizione TEXT,
         ultimaInnaff TEXT,
@@ -51,9 +58,7 @@ function populateDB(db: SQLiteDatabase): void {
         );
     `);
 
-    /*
 
-    SCRIPT PER INSERIRE RIGHE DI PROVA NELLE TABELLE
 
     db.execSync(
         "INSERT INTO WikiPiante (specie, nome, freqInnaff, freqPotat, freqRinv) VALUES " +
@@ -64,20 +69,55 @@ function populateDB(db: SQLiteDatabase): void {
 
 
     db.execSync(
-        "INSERT INTO PiantePossedute (specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
-        "('Monstera deliciosa', '2024-01-15', '2024-02-20', '2024-01-15', '2024-02-01', 'In salotto')"
+        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
+        "('Pianta1', 'Monstera deliciosa', '2024-01-15', '2024-02-20', '2024-01-15', '2024-02-01', 'In salotto')"
     );
     db.execSync(
-        "INSERT INTO PiantePossedute (specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
-        "('Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo')"
+        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
+        "('Pianta2', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo')"
+    );
+    db.execSync(
+        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
+        "('Pianta3', 'Ficus elastica', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Balcone')"
+    );
+
+    db.execSync(
+        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
+        "('Pianta4', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo')"
     );
 
 
-     */
 }
 
+export async function selectUltimeQuattro<T extends DBRow>() : Promise<T[]> {
+    try {
+        return getDB().getAllAsync<T>(
+            `SELECT id
+             FROM PiantePossedute
+             ORDER BY date(acquisizione) DESC, id DESC
+             LIMIT 4`
+        );
+    } catch (error) {
+        console.error("SELECT error for mobile:", error);
+        return [];
+    }
+}
 
+export async function selectPiantaInfo<T extends DBRow>(id: number): Promise<T | null> {
+    try {
+        const results = await getDB().getAllAsync<T>(
+            `SELECT p.id, p.nome, p.foto
+             FROM PiantePossedute p
+             WHERE p.id = ?`,
+            [id]
+        );
 
+        return results.length > 0 ? results[0] : null;
+    } catch (error) {
+        console.error("SELECT pianta info error:", error);
+        return null;
+    }
+}
 
 
 export async function select<T extends DBRow>(table: string) : Promise<T[]> {
