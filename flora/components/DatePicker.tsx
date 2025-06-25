@@ -4,27 +4,31 @@ import DateTimePicker, {DateTimePickerEvent} from "@react-native-community/datet
 import Button from "./Button";
 
 interface Props {
-    label?: string;
-    value: Date;
-    onChange: (date: Date) => void;
-    mode?: "date" | "time";
-    future?: boolean;
-    minDate?: Date;
-    buttonStyle?: StyleProp<ViewStyle>;
-    textStyle?: StyleProp<TextStyle>;
+    value        : Date;
+    onChange     : (date: Date) => void;
+    label       ?: string;
+    mode        ?: "date" | "time";
+    future      ?: boolean;
+    minDate     ?: Date;
+    buttonStyle ?: StyleProp<ViewStyle>;
+    textStyle   ?: StyleProp<TextStyle>;
 }
 
 export default function DatePicker({value, onChange, label, mode = "date", future = true, minDate, buttonStyle, textStyle} : Props) {
     const [show, setShow] = useState(false);
 
-    const handleChange = (_event: DateTimePickerEvent, nuovaData?: Date) => {
+    const handleChange = (_event: DateTimePickerEvent, nuovaData?: Date) : void => {
         setShow(Platform.OS === "ios");
         if (nuovaData) onChange(nuovaData);
     };
+
+    const formatDate = (date: Date) =>
+        date.toLocaleDateString("it-IT", {day: "2-digit", month: "2-digit", year: "2-digit"});
+
     return (
-        <View>
+        <View style={{width: "100%"}}>
             <Button
-                title={label ? `${label}: ${value.toLocaleDateString("it-IT", {day: "2-digit", month: "2-digit", year: "2-digit"})}` : value.toLocaleDateString("it-IT", {day: "2-digit", month: "2-digit", year: "2-digit"})}
+                title={label ? `${label}: ${formatDate(value)}` : formatDate(value)}
                 onPress={() => setShow(true)}
                 buttonStyle={buttonStyle}
                 textStyle={textStyle} />
