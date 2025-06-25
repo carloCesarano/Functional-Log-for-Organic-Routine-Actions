@@ -39,4 +39,34 @@ export const navbarStyles = StyleSheet.create({
     hamburgerMenuIcon: {
         color: "black",
     },
+
+    hamburgerContainer: {
+        position: 'relative',
+    },
+    hamburgerButton: {
+        padding: 10,
+    },
+    hamburgerIcon: {
+        color: '#000',
+    },
+    menuDropdown: {
+        position: 'absolute',
+        top: '100%',
+        right: 0,
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 4,
+        padding: 10,
+        minWidth: 150,
+        zIndex: 100,
+    },
+    menuItem: {
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+    },
+    menuItemText: {
+        fontSize: 16,
+        color: '#333',
+    },
 });

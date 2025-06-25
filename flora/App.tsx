@@ -7,6 +7,8 @@ import Home from './schermate/Home';
 import InfoPianta from './schermate/InfoPianta';
 import AggiungiPianta from './schermate/AggiungiPianta';
 import ListaPiante from "./schermate/ListaPiante";
+import Analisi from './schermate/Analisi';
+import Categoria from './schermate/Categoria';
 
 // Definisce uno stack di pagine vuoto
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -20,6 +22,8 @@ export default function App() {
                 <Stack.Screen name="InfoPianta" component={InfoPianta} />
                 <Stack.Screen name="AggiungiPianta" component={AggiungiPianta} />
                 <Stack.Screen name="ListaPiante" component={ListaPiante} />
+                <Stack.Screen name="Analisi" component={Analisi} />
+                <Stack.Screen name="Categoria" component={Categoria} />
             </Stack.Navigator>
         </NavigationContainer>
     )

@@ -1,12 +1,16 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import {StyleProp, TouchableOpacity, ViewStyle} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import {RootStackParamList} from "../types";
 import { globalStyles } from "../styles/global";
 import {StackNavigationProp} from "@react-navigation/stack";
 
-export default function AggiungiPiantaButton() {
+interface Props {
+    style?: StyleProp<ViewStyle>; // Aggiungi questa linea
+}
+
+export default function AggiungiPiantaButton({style}:Props) {
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
     return (
