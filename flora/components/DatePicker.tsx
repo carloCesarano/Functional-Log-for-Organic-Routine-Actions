@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Platform, StyleProp, TextStyle, View, ViewStyle} from "react-native";
+import {Platform, StyleProp, TextStyle, ViewStyle} from "react-native";
 import DateTimePicker, {DateTimePickerEvent} from "@react-native-community/datetimepicker";
 import Button from "./Button";
 
@@ -26,7 +26,7 @@ export default function DatePicker({value, onChange, label, mode = "date", futur
         date.toLocaleDateString("it-IT", {day: "2-digit", month: "2-digit", year: "2-digit"});
 
     return (
-        <View style={{width: "100%"}}>
+        <>
             <Button
                 title={label ? `${label}: ${formatDate(value)}` : formatDate(value)}
                 onPress={() => setShow(true)}
@@ -42,6 +42,6 @@ export default function DatePicker({value, onChange, label, mode = "date", futur
                     minimumDate={minDate}
                 />
             )}
-        </View>
+        </>
     );
 }
