@@ -1,12 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export const aggiungiPiantaStyles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    backgroundColor: "#D4EDB6",
-    padding: 16,
-  },
-  title: {
+   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 12,

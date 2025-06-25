@@ -1,19 +1,12 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  Alert,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import { Picker } from "@react-native-picker/picker";
-
+import Background from "../components/Background";
+import NavBar from "../components/NavBar";
+import Button from "../components/Button";
 import { aggiungiPiantaStyles as styles } from "../styles/aggiungiPianta";
-import { navbarStyles } from "../styles/navbar";
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
@@ -45,23 +38,8 @@ export default function AggiungiPianta({ navigation }: Props) {
   };
 
   return (
-    <View style={styles.wrapper}>
-      {/* NAVBAR */}
-      <View style={navbarStyles.navbar}>
-        <Image source={require("../assets/full_logo.png")} style={navbarStyles.icon} />
-
-        <View style={navbarStyles.searchBox}>
-          <TextInput
-            placeholder="Cerca..."
-            style={navbarStyles.searchBoxText}
-            placeholderTextColor="#555"
-          />
-        </View>
-
-        <TouchableOpacity style={navbarStyles.hamburgerMenu}>
-          <Text style={navbarStyles.hamburgerMenuIcon}>☰</Text>
-        </TouchableOpacity>
-      </View>
+    <Background>
+      <NavBar />
 
       <Text style={styles.title}>Aggiungi una nuova pianta</Text>
 
@@ -122,14 +100,18 @@ export default function AggiungiPianta({ navigation }: Props) {
         </ScrollView>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-            <Text style={styles.cancelText}>Annulla</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.addButton} onPress={handleAdd}>
-            <Text style={styles.addText}>Aggiungi</Text>
-          </TouchableOpacity>
+          <Button
+              title="Annulla"
+              onPress={handleCancel}
+              buttonStyle={styles.cancelButton}
+              textStyle={styles.cancelText}/>
+          <Button
+              title="Aggiungi"
+              onPress={handleAdd}
+              buttonStyle={styles.addButton}
+              textStyle={styles.addText}/>
         </View>
       </View>
-    </View>
+    </Background>
   );
 }
