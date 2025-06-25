@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import {Text, View, StyleSheet, ScrollView} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import Background from "../components/Background";
@@ -41,7 +41,7 @@ export default function Home({ navigation }: Props) {
     return (
         <Background>
             <NavBar />
-
+            <ScrollView>
             <Text style={globalStyles.titolo}>Ultime piante aggiunte</Text>
             <View style={styles.piantaContainer}>
                 {ultimePiante.map(id => (
@@ -53,6 +53,7 @@ export default function Home({ navigation }: Props) {
             <ProssimiInterventi navigation={navigation}/>
 
             <AggiungiPiantaButton />
+            </ScrollView>
         </Background>
     );
 }
