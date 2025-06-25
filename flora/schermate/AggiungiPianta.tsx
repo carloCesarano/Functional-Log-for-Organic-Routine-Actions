@@ -1,117 +1,155 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from "react-native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types";
-import { Picker } from "@react-native-picker/picker";
+import React, {useState} from "react";
+import {View, Image, Text, TextInput, TouchableOpacity, ScrollView, Alert} from "react-native";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {RootStackParamList} from "../types";
+import * as ImagePicker from "expo-image-picker";
 import Background from "../components/Background";
 import NavBar from "../components/NavBar";
 import Button from "../components/Button";
-import { aggiungiPiantaStyles as styles } from "../styles/aggiungiPianta";
+import DatePicker from "../components/DatePicker";
+import {aggiungiPiantaStyles as styles} from "../styles/aggiungiPianta";
 
 type Props = {
-  navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
+    navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
 };
 
-export default function AggiungiPianta({ navigation }: Props) {
-  const [nome, setNome] = useState("");
-  const [specie, setSpecie] = useState("");
-  const [dataAcquisizione, setDataAcquisizione] = useState("");
-  const [categoria, setCategoria] = useState("");
-  const [stato, setStato] = useState("");
+export default function AggiungiPianta({navigation}: Props) {
+    const [foto,              setFoto]              = useState<string | null>(null);
+    const [nome,              setNome]              = useState("");
+    const [dataAcq,           setDataAcq]           = useState(new Date());
+    const [categoria,         setCategoria]         = useState("");
+    const [ultimaInnaff,      setUltimaInnaff]      = useState(new Date());
+    const [ultimaPotat,       setUltimaPotat]       = useState(new Date());
+    const [ultimoRinv,        setUltimoRinv]        = useState(new Date());
+    const [note,              setNote]              = useState("");
 
-  const handleAdd = () => {
-    if (!nome || !specie || !dataAcquisizione || !categoria || !stato) {
-      Alert.alert("Attenzione", "Compila tutti i campi obbligatori.");
-      return;
-    }
-    navigation.navigate("InfoPianta", {
-      plantId: "nuova123",
-    });
-  };
+    const handleSelectPhoto = async () => {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            quality: 1,
+        });
+        if (!result.canceled) {
+            setFoto(result.assets[0].uri);
+        }
+    };
 
-  const handleCancel = () => {
-    navigation.navigate("Home");
-  };
+    const handleSubmit = () => {
+        if (!nome || !dataAcq) {
+            Alert.alert("Errore", "Nome e Data di Acquisizione sono obbligatori")
+            return;
+        }
 
-  const handleSelectPhoto = () => {
-    Alert.alert("Info", "Funzione di caricamento foto non ancora implementata.");
-  };
+        console.log({
+            foto,
+            nome,
+            dataAcq,
+            categoria,
+            ultimaInnaff,
+            ultimaPotat,
+            ultimoRinv
+        });
+        Alert.alert("Successo", "Controlla il log per i dati");
+    };
 
-  return (
-    <Background>
-      <NavBar />
+    const handleCancel = () => {
+        navigation.navigate('Home');
+    };
 
-      <Text style={styles.title}>Aggiungi una nuova pianta</Text>
+    return (
+        <Background>
+            <NavBar/>
 
-      <View style={styles.container}>
-        <ScrollView style={styles.scrollArea} contentContainerStyle={styles.form}>
-          <TouchableOpacity style={styles.photoBox} onPress={handleSelectPhoto}>
-            <Text style={styles.photoText}>Foto</Text>
-          </TouchableOpacity>
+            <Text style={styles.title}>Aggiungi una nuova pianta</Text>
 
-          <TextInput
-            placeholder="Nome"
-            style={styles.input}
-            value={nome}
-            onChangeText={setNome}
-            placeholderTextColor="#888"
-          />
-          <TextInput
-            placeholder="Specie"
-            style={styles.input}
-            value={specie}
-            onChangeText={setSpecie}
-            placeholderTextColor="#888"
-          />
-          <TextInput
-            placeholder="Data Acquisizione"
-            style={styles.input}
-            value={dataAcquisizione}
-            onChangeText={setDataAcquisizione}
-            placeholderTextColor="#888"
-          />
-          <TextInput
-            placeholder="Categoria"
-            style={styles.input}
-            value={categoria}
-            onChangeText={setCategoria}
-            placeholderTextColor="#888"
-          />
+            <View style={styles.container}>
+                <ScrollView style={styles.scrollArea} contentContainerStyle={styles.form}>
 
-          <View style={styles.pickerWrapper}>
-            <Picker
-              selectedValue={stato}
-              onValueChange={(itemValue) => setStato(itemValue)}
-              style={styles.picker}
-              dropdownIconColor="#888"
-              mode="dropdown"
-              itemStyle={{
-                color: stato ? "#2E4A2C" : "#888",
-                fontSize: 16,
-                textAlign: "left",
-              }}
-            >
-              <Picker.Item label="Seleziona stato" value="" color="#888" />
-              <Picker.Item label="Sana" value="sana" />
-              <Picker.Item label="Da controllare" value="da_controllare" />
-              <Picker.Item label="Malata" value="malata" />
-            </Picker>
-          </View>
-        </ScrollView>
+                    <TouchableOpacity
+                        style={styles.photoBox}
+                        onPress={handleSelectPhoto}>
+                        {foto ? (
+                            <Image
+                                source={{uri: foto}}
+                                style={styles.photo}
+                                resizeMode="cover"
+                            />
+                        ) : (
+                            <Text style={styles.photoText}>Foto</Text>
+                        )}
+                    </TouchableOpacity>
 
-        <View style={styles.buttonContainer}>
-          <Button
-              title="Annulla"
-              onPress={handleCancel}
-              buttonStyle={styles.cancelButton}
-              textStyle={styles.cancelText}/>
-          <Button
-              title="Aggiungi"
-              onPress={handleAdd}
-              buttonStyle={styles.addButton}
-              textStyle={styles.addText}/>
-        </View>
-      </View>
-    </Background>
-  );
+                    <TextInput
+                        placeholder="Nome"
+                        style={styles.input}
+                        value={nome}
+                        onChangeText={setNome}
+                        placeholderTextColor="#888"/>
+
+                    <DatePicker
+                        label="Data acquisizione"
+                        value={dataAcq}
+                        onChange={setDataAcq}
+                        future={false}
+                        buttonStyle={styles.picker}
+                        textStyle={styles.pickerText}
+                    />
+
+                    <TextInput
+                        placeholder="Categoria"
+                        style={styles.input}
+                        value={categoria}
+                        onChangeText={setCategoria}
+                        placeholderTextColor="#888"/>
+
+                    <DatePicker
+                        label="Ultima innaffiatura"
+                        value={ultimaInnaff}
+                        onChange={setUltimaInnaff}
+                        future={false}
+                        buttonStyle={styles.picker}
+                        textStyle={styles.pickerText}
+                        minDate={dataAcq} />
+
+                    <DatePicker
+                        label="Ultima potatura"
+                        value={ultimaPotat}
+                        onChange={setUltimaPotat}
+                        future={false}
+                        buttonStyle={styles.picker}
+                        textStyle={styles.pickerText}
+                        minDate={dataAcq} />
+
+                    <DatePicker
+                        label="Ultimo rinvaso"
+                        value={ultimoRinv}
+                        onChange={setUltimoRinv}
+                        future={false}
+                        buttonStyle={styles.picker}
+                        textStyle={styles.pickerText}
+                        minDate={dataAcq} />
+
+                    <TextInput
+                        placeholder="Note"
+                        style={styles.input}
+                        value={note}
+                        onChangeText={setNote}
+                        multiline={true}
+                        placeholderTextColor="#888"/>
+                </ScrollView>
+
+                <View style={styles.buttonContainer}>
+                    <Button
+                        title="Annulla"
+                        onPress={handleCancel}
+                        buttonStyle={styles.cancelButton}
+                        textStyle={styles.cancelText}/>
+                    <Button
+                        title="Aggiungi"
+                        onPress={handleSubmit}
+                        buttonStyle={styles.addButton}
+                        textStyle={styles.addText}/>
+                </View>
+            </View>
+        </Background>
+    );
 }
