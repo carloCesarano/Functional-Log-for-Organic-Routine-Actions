@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Text, FlatList, View, StyleSheet, TouchableOpacity} from "react-native";
+import { Text, FlatList, View, Image, TouchableOpacity } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import Background from "../components/Background";
@@ -8,18 +8,21 @@ import Button from "../components/Button";
 import { select } from "../database/Database";
 import { globalStyles } from "../styles/global";
 import AggiungiPiantaButton from "../components/AggiungiPiantaButton";
+import { listaPianteStyles as styles } from "../styles/listaPiante";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ListaPiante'>;
 
 interface PiantaPosseduta {
-    [key: string]: string | number;
     id: number;
+    nome: string;
     specie: string;
     acquisizione: string;
     ultimaInnaff: string;
     ultimaPotat: string;
     ultimoRinv: string;
     note: string;
+    foto: string | null;
+    [key: string]: string | number | null;
 }
 
 export default function ListaPiante({ navigation, route }: Props) {
@@ -47,70 +50,6 @@ export default function ListaPiante({ navigation, route }: Props) {
         console.log(`Filtra per: ${type}`);
     };
 
-    const styles = StyleSheet.create({
-        card: {
-            padding: 15,
-            margin: 10,
-            backgroundColor: '#fff',
-            borderRadius: 8,
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.25,
-            elevation: 5,
-        },
-        specie: {
-            fontSize: 18,
-            fontWeight: 'bold',
-        },
-        data: {
-            fontSize: 14,
-            color: '#666',
-        },
-        filterMenu: {
-            position: 'absolute',
-            bottom: 50,
-            backgroundColor: 'white',
-            borderRadius: 8,
-            padding: 10,
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.80,
-            elevation: 5,
-            zIndex: 1,
-            minWidth: 150,
-        },
-        filterOption: {
-            padding: 10,
-        },
-        filterOptionText: {
-            fontSize: 16,
-        },
-        buttonContainer: {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingHorizontal: 20,
-            marginBottom: 10,
-        },
-        backButton: {
-            flex: 1,
-            marginRight: 10,
-        },
-        filterButtonContainer: {
-            flex: 1,
-            position: 'relative',
-            alignItems: 'center',
-        },
-
-        customAddButton: {
-            flex: 1,
-            alignItems: 'flex-end',
-            width: 150,
-            height: 50,
-            borderRadius: 25,
-        },
-    });
 
     return (
         <Background>
@@ -119,18 +58,37 @@ export default function ListaPiante({ navigation, route }: Props) {
             <Text style={globalStyles.titolo}>Le mie piante</Text>
 
             <FlatList
+                style={styles.flatList}
                 data={piantePossedute}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <View style={styles.card}>
-                        <Text style={styles.specie}>{item.specie}</Text>
-                        <Text style={styles.data}>Acquisita: {item.acquisizione}</Text>
-                    </View>
+                    <TouchableOpacity
+                        style={styles.card}
+                        onPress={() => navigation.navigate('InfoPianta', { plantId: item.id.toString() })}
+                    >
+                        <View style={styles.cardContent}>
+                            <Text style={styles.nome}>{item.nome}</Text>
+                            <Text style={styles.categoria}>{item.specie}</Text>
+                            <Text style={styles.acquisizione}>
+                                Acquisita: {new Date(item.acquisizione).toLocaleDateString()}
+                            </Text>
+                        </View>
+                        <Image
+                            source={item.foto ? { uri: item.foto } : require('../assets/plant.png')}
+                            style={styles.cardImage}
+                            defaultSource={require('../assets/plant.png')}
+                        />
+                    </TouchableOpacity>
                 )}
             />
-
             <View style={styles.buttonContainer}>
-                <View style={{ position: 'relative' }}>
+                <Button
+                    title="Indietro"
+                    onPress={() => navigation.navigate('Home')}
+                    buttonStyle={styles.backButton}
+                />
+
+                <View style={styles.filterButtonContainer}>
                     <Button
                         title="Filtra:"
                         onPress={toggleFilterMenu}
@@ -152,7 +110,7 @@ export default function ListaPiante({ navigation, route }: Props) {
                         </View>
                     )}
                 </View>
-            <Button title="Indietro" onPress={() => navigation.navigate('Home')} />
+
                 <AggiungiPiantaButton style={styles.customAddButton} />
             </View>
         </Background>
