@@ -12,36 +12,73 @@ function getDB() : SQLiteDatabase {
     return db;
 }
 
-function populateDB(db : SQLiteDatabase) : void {
+function populateDB(db: SQLiteDatabase): void {
+
     db.execSync("PRAGMA foreign_keys = ON;");
+
     db.execSync(`
-    CREATE TABLE IF NOT EXISTS PiantePossedute (
-        id           INT PRIMARY KEY AUTOINCREMENT,
+        CREATE TABLE IF NOT EXISTS WikiPiante (
+        id         INTEGER PRIMARY KEY AUTOINCREMENT,
+        specie     TEXT NOT NULL UNIQUE,  
+        nome       TEXT NOT NULL,
+        freqInnaff INTEGER NOT NULL,
+        freqPotat  INTEGER NOT NULL,
+        freqRinv   INTEGER NOT NULL
+        );
+    `);
+
+    db.execSync(`
+        CREATE TABLE IF NOT EXISTS PiantePossedute (
+        id           INTEGER PRIMARY KEY AUTOINCREMENT,
         specie       TEXT NOT NULL,
         acquisizione TEXT,
         ultimaInnaff TEXT,
         ultimaPotat  TEXT,
         ultimoRinv   TEXT,
         note         TEXT,
-        FOREIGN KEY (specie) REFERENCES WikiPiante (specie)
-    );
-    CREATE TABLE WikiPiante (
-        id         INT PRIMARY KEY AUTOINCREMENT,
-        specie     TEXT NOT NULL,
-        nome       TEXT NOT NULL,
-        freqInnaff INT NOT NULL,
-        freqPotat  INT NOT NULL,
-        freqRinv   INT NOT NULL
-    );
-    CREATE TABLE Categoria (
-        id           INT PRIMARY KEY AUTOINCREMENT,
-        piantaID     INT NOT NULL,
+        foto         TEXT,
+        FOREIGN KEY (specie) REFERENCES WikiPiante(specie) ON UPDATE CASCADE ON DELETE RESTRICT
+        );
+    `);
+
+    db.execSync(`
+        CREATE TABLE IF NOT EXISTS Categoria (
+        id           INTEGER PRIMARY KEY AUTOINCREMENT,
+        piantaID     INTEGER NOT NULL,
         categoria    TEXT,
         dataAggiunta TEXT,
-        FOREIGN KEY (piantaID) REFERENCES PiantePossedute (id)
-    )
+        FOREIGN KEY (piantaID) REFERENCES PiantePossedute(id) ON UPDATE CASCADE ON DELETE CASCADE
+        );
     `);
+
+    /*
+
+    SCRIPT PER INSERIRE RIGHE DI PROVA NELLE TABELLE
+
+    db.execSync(
+        "INSERT INTO WikiPiante (specie, nome, freqInnaff, freqPotat, freqRinv) VALUES " +
+        "('Monstera deliciosa', 'Monstera', 7, 180, 30)," +
+        "('Ficus elastica', 'Ficus', 7, 90, 30)," +
+        "('Strelitzia reginae', 'Uccello del paradiso', 5, 120, 20);"
+    );
+
+
+    db.execSync(
+        "INSERT INTO PiantePossedute (specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
+        "('Monstera deliciosa', '2024-01-15', '2024-02-20', '2024-01-15', '2024-02-01', 'In salotto')"
+    );
+    db.execSync(
+        "INSERT INTO PiantePossedute (specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
+        "('Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo')"
+    );
+
+
+     */
 }
+
+
+
+
 
 export async function select<T extends DBRow>(table: string) : Promise<T[]> {
     try {
