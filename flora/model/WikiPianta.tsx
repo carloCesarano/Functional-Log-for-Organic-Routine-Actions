@@ -44,13 +44,13 @@ export class WikiPianta {
     getFreqRinv()   : number { return this.freqRinv   }
 
     /**
-     * Recupera la specie dal nome comune.
-     * @param nome Nome della pianta
+     * Recupera la pianta dalla specie.
+     * @param specie Specie della pianta
      * @returns Istanza di WikiPianta o null se non trovata
      */
-    static async daNome(nome: string): Promise<WikiPianta | null> {
+    static async daSpecie(specie: string): Promise<WikiPianta | null> {
         const wiki = await Database.select<Props>("WikiPiante");
-        wiki.filter(p => p.nome === nome);
+        wiki.filter(p => p.specie === specie);
         return (wiki.length === 0) ? null : new WikiPianta(wiki[0]);
     }
 

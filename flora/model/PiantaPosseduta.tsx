@@ -82,7 +82,7 @@ export class PiantaPosseduta {
      */
     static async creaNuova(riga: Props) : Promise<PiantaPosseduta> {
         const pianta = new PiantaPosseduta(riga);
-        const wiki = await WikiPianta.daNome(pianta.nome);
+        const wiki = await WikiPianta.daSpecie(pianta.specie);
 
         if (!(wiki instanceof WikiPianta)) throw new Error("Unknown species");
 

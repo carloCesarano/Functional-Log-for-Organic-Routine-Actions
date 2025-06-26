@@ -60,13 +60,13 @@ function populateDB(db: SQLiteDatabase): void {
         ('Ficus elastica', 'Ficus', 7, 90, 30),
         ('Strelitzia reginae', 'Uccello del paradiso', 5, 120, 20);
     INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note, categoria) VALUES
-        ('Pianta1', 'Monstera deliciosa', '2024-01-15', '2024-02-20', '2024-01-15', '2024-02-01', 'In salotto', 'Da giardino'),
-        ('Pianta2', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', 'Da terrazzo'),
-        ('Pianta3', 'Ficus elastica', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Balcone', 'Da interno'),
-        ('Pianta4', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', 'Da camera'),
-        ('Pianta5', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', null),
-        ('Pianta6', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', null),
-        ('Pianta7', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', null);
+        ('Pianta1', 'Monstera deliciosa', '2024-01-15', '2025-06-24', '2024-01-15', '2024-02-01', 'In salotto', 'Da giardino'),
+        ('Pianta2', 'Strelitzia reginae', '2025-01-15', '2025-06-22', '2025-07-15', '2026-05-01', 'Terrazzo', 'Da terrazzo'),
+        ('Pianta3', 'Ficus elastica',     '2025-01-15', '2025-06-25', '2025-07-15', '2026-05-01', 'Balcone', 'Da interno'),
+        ('Pianta4', 'Strelitzia reginae', '2025-01-15', '2025-06-21', '2025-07-15', '2026-05-01', 'Terrazzo', 'Da camera'),
+        ('Pianta5', 'Strelitzia reginae', '2025-01-15', '2025-06-20', '2025-07-15', '2026-05-01', 'Terrazzo', null),
+        ('Pianta6', 'Strelitzia reginae', '2025-01-15', '2025-06-24', '2025-07-15', '2026-05-01', 'Terrazzo', null),
+        ('Pianta7', 'Strelitzia reginae', '2025-01-15', '2025-06-23', '2025-07-15', '2026-05-01', 'Terrazzo', null);
     `);
 }
 

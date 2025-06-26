@@ -11,6 +11,7 @@ import { globalStyles } from "../styles/global";
 import PiantaButton from "../components/PiantaButton";
 import {select} from "../database/Database";
 import { DBRow } from "../database/Database";
+import {PiantaPosseduta} from "../model/PiantaPosseduta";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -27,6 +28,9 @@ export default function Home({ navigation }: Props) {
             risultato.sort((a,b) => b.id - a.id);
             const ultimeQuattro = risultato.slice(0, 4);
             setUltimePiante(ultimeQuattro.map(pianta => pianta.id));
+            const p = await PiantaPosseduta.getAllPiante();
+            p.map(p => console.log(`${p.getSpecie()} - INN ${p.getFreqInnaff()}, POT ${p.getFreqPotat()}, RIN ${p.getFreqRinv()}`));
+
         };
         caricaUltimePiante();
     }, []);
