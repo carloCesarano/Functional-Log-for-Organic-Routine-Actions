@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types"; // importa il tuo tipo
 
@@ -28,19 +28,17 @@ export default function ProssimiInterventi({ navigation }: Props) {
         <View style={styles.wrapper}>
             <Text style={styles.title}>Prossimi interventi</Text>
             <View style={styles.container}>
-                <ScrollView style={styles.scrollArea}>
-                    {interventi.map((item) => (
-                        <TouchableOpacity
-                            key={item.id}
-                            style={styles.card}
-                            onPress={() =>
-                                navigation.navigate("InfoPianta", { plantId: item.plantId })
-                            }
-                        >
-                            <Text style={styles.cardText}>{item.title}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>
+                {interventi.map((item) => (
+                    <TouchableOpacity
+                        key={item.id}
+                        style={styles.card}
+                        onPress={() =>
+                            navigation.navigate("InfoPianta", { plantId: item.plantId })
+                        }
+                    >
+                        <Text style={styles.cardText}>{item.title}</Text>
+                    </TouchableOpacity>
+                ))}
             </View>
         </View>
     );

@@ -75,7 +75,7 @@ export default function InfoPianta({ navigation, route }: Props) {
                 Alert.alert("Errore", "Impossibile selezionare l'immagine");
                 console.log('ImagePicker Error: ', response.errorMessage);
             } else if (response.assets && response.assets.length > 0) {
-                setPlantData({...plantData, foto: response.assets[0].uri});
+                setPlantData({...plantData, foto: response.assets[0].uri ?? null});
             }
         });
     };
