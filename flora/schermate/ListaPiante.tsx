@@ -36,11 +36,22 @@ export default function ListaPiante({ navigation, route }: Props) {
     const [categorie, setCategorie] = useState<string[]>([]);
     const [showCategoryList, setShowCategoryList] = useState(false);
 
+
     useEffect(() => {
         const caricaPiantePossedute = async () => {
             const risultato = await select<PiantaPosseduta>('PiantePossedute');
-            setPiantePossedute(risultato);
             setAllPiante(risultato);
+
+            if (searched && searched.trim() !== "") {
+                const filtro = searched.toLowerCase().trim();
+                const filtrate = risultato.filter(p =>
+                    p.nome.toLowerCase().includes(filtro) ||
+                    p.specie.toLowerCase().includes(filtro)
+                );
+                setPiantePossedute(filtrate);
+            } else {
+                setPiantePossedute(risultato);
+            }
         };
 
         const caricaCategorie = async () => {
@@ -53,9 +64,9 @@ export default function ListaPiante({ navigation, route }: Props) {
             }
         };
 
-        caricaPiantePossedute();
-        caricaCategorie();
-    }, []);
+        caricaPiantePossedute().catch((error) => console.error("Errore nel caricamento delle piante:", error));
+        caricaCategorie().catch((error) => console.error("Errore nel caricamento delle categorie:", error));
+    }, [searched]);
 
     const toggleFilterMenu = () => {
         setShowFilterMenu(!showFilterMenu);
@@ -93,7 +104,7 @@ export default function ListaPiante({ navigation, route }: Props) {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={styles.card}
-                        onPress={() => navigation.navigate('InfoPianta', { plantId: item.id.toString() })}
+                        onPress={() => navigation.navigate('InfoPianta', { plantId: item.id })}
                     >
                         <View style={styles.cardContent}>
                             <Text style={styles.nome}>{item.nome}</Text>

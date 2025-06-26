@@ -1,29 +1,25 @@
-import React, {useState} from 'react';
-import {View, TextInput} from 'react-native';
-import {navbarStyles} from "../styles/navbar";
+import React from 'react';
+import { View, TextInput } from 'react-native';
+import { navbarStyles } from "../styles/navbar";
 
 type Props = {
+    value: string;
+    onChangeText: (text: string) => void;
     onSubmit: (text: string) => void;
     placeholder?: string;
 };
 
-export default function SearchBox({onSubmit, placeholder = "Cerca"}: Props) {
-
-    // Recupera il testo digitato dall'utente
-    const [query, setQuery] = useState('');
-
-    // Funzione chiamata quando l'utente invia la ricerca
+export default function SearchBox({ value, onChangeText, onSubmit, placeholder = "Cerca" }: Props) {
     const handleSubmit = () => {
-        console.log("Testo cercato: ", query);
-        onSubmit(query);
+        onSubmit(value);
     };
 
     return (
         <View style={navbarStyles.searchBox}>
             <TextInput
                 style={navbarStyles.searchBoxText}
-                value={query}
-                onChangeText={setQuery}
+                value={value}
+                onChangeText={onChangeText}
                 onSubmitEditing={handleSubmit}
                 placeholder={placeholder}
                 placeholderTextColor={"#767676"}

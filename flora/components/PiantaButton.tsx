@@ -47,7 +47,7 @@ export default function PiantaButton({ piantaId }: Props) {
     };
 
     const handlePress = () => {
-        navigation.navigate("InfoPianta", { plantId: piantaId.toString() });
+        navigation.navigate("InfoPianta", { plantId: piantaId });
     };
 
     return (
