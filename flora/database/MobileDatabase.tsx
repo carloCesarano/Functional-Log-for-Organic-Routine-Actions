@@ -35,7 +35,8 @@ function populateDB(db: SQLiteDatabase): void {
 
     db.execSync(`
         CREATE TABLE IF NOT EXISTS Categoria (
-        categoria   TEXT PRIMARY KEY 
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        categoria   TEXT UNIQUE 
         );
     `);
 
