@@ -13,100 +13,61 @@ function getDB() : SQLiteDatabase {
 }
 
 function populateDB(db: SQLiteDatabase): void {
-
+    db.execSync("PRAGMA foreign_keys = ON;");
     db.execSync(`
-        DROP TABLE IF EXISTS Categoria;
         DROP TABLE IF EXISTS PiantePossedute;
+        DROP TABLE IF EXISTS Categoria;
         DROP TABLE IF EXISTS WikiPiante;
     `);
-
-    db.execSync("PRAGMA foreign_keys = ON;");
-
     db.execSync(`
         CREATE TABLE IF NOT EXISTS WikiPiante (
-        id         INTEGER PRIMARY KEY AUTOINCREMENT,
-        specie     TEXT NOT NULL UNIQUE,  
-        nome       TEXT NOT NULL,
-        freqInnaff INTEGER NOT NULL,
-        freqPotat  INTEGER NOT NULL,
-        freqRinv   INTEGER NOT NULL
+            id           INTEGER PRIMARY KEY AUTOINCREMENT,
+            specie       TEXT    NOT NULL UNIQUE,
+            nome         TEXT    NOT NULL,
+            freqInnaff   INTEGER NOT NULL,
+            freqPotat    INTEGER NOT NULL,
+            freqRinv     INTEGER NOT NULL
         );
-    `);
-
-    db.execSync(`
         CREATE TABLE IF NOT EXISTS Categoria (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        categoria   TEXT UNIQUE 
+            id           INTEGER PRIMARY KEY AUTOINCREMENT,
+            categoria    TEXT    UNIQUE 
         );
-    `);
-
-
-    db.execSync(
-        "INSERT INTO Categoria (categoria) VALUES " +
-        "('Da giardino')," +
-        "('Da terrazzo')," +
-        "('Da interno')," +
-        "('Da camera')"
-    );
-
-
-    db.execSync(`
         CREATE TABLE IF NOT EXISTS PiantePossedute (
-        id           INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome         TEXT NOT NULL,
-        specie       TEXT NOT NULL,
-        acquisizione TEXT,
-        ultimaInnaff TEXT,
-        ultimaPotat  TEXT,
-        ultimoRinv   TEXT,
-        note         TEXT,
-        categoria    TEXT,
-        foto         TEXT,
-        
-        FOREIGN KEY (categoria) REFERENCES Categoria(categoria) ON UPDATE CASCADE ON DELETE RESTRICT,
-        FOREIGN KEY (specie) REFERENCES WikiPiante(specie) ON UPDATE CASCADE ON DELETE RESTRICT
+            id           INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome         TEXT    NOT NULL,
+            specie       TEXT    NOT NULL,
+            acquisizione TEXT,
+            ultimaInnaff TEXT,
+            ultimaPotat  TEXT,
+            ultimoRinv   TEXT,
+            note         TEXT,
+            categoria    TEXT,
+            foto         TEXT,
+            FOREIGN KEY (categoria) REFERENCES Categoria(categoria) ON UPDATE CASCADE ON DELETE RESTRICT,
+            FOREIGN KEY (specie) REFERENCES WikiPiante(specie) ON UPDATE CASCADE ON DELETE RESTRICT
         );
     `);
 
-    db.execSync(
-        "INSERT INTO WikiPiante (specie, nome, freqInnaff, freqPotat, freqRinv) VALUES " +
-        "('Monstera deliciosa', 'Monstera', 7, 180, 30)," +
-        "('Ficus elastica', 'Ficus', 7, 90, 30)," +
-        "('Strelitzia reginae', 'Uccello del paradiso', 5, 120, 20);"
-    );
-
-
-    db.execSync(
-        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note, categoria) VALUES " +
-        "('Pianta1', 'Monstera deliciosa', '2024-01-15', '2024-02-20', '2024-01-15', '2024-02-01', 'In salotto', 'Da giardino')"
-    );
-    db.execSync(
-        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note, categoria) VALUES " +
-        "('Pianta2', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', 'Da terrazzo')"
-    );
-    db.execSync(
-        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note, categoria) VALUES " +
-        "('Pianta3', 'Ficus elastica', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Balcone', 'Da interno')"
-    );
-
-    db.execSync(
-        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note, categoria) VALUES " +
-        "('Pianta4', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', 'Da camera')"
-    );
-    db.execSync(
-        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
-        "('Pianta5', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo')"
-    );
-    db.execSync(
-        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
-        "('Pianta6', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo')"
-    );
-    db.execSync(
-        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
-        "('Pianta7', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo')"
-    );
-
-
+    // Esempio
+    db.execSync(`
+    INSERT INTO Categoria (categoria) VALUES
+        ('Da giardino'),
+        ('Da terrazzo'),
+        ('Da interno'),
+        ('Da camera');
+    INSERT INTO WikiPiante (specie, nome, freqInnaff, freqPotat, freqRinv) VALUES
+        ('Monstera deliciosa', 'Monstera', 7, 180, 30),
+        ('Ficus elastica', 'Ficus', 7, 90, 30),
+        ('Strelitzia reginae', 'Uccello del paradiso', 5, 120, 20);
+    INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note, categoria) VALUES
+        ('Pianta1', 'Monstera deliciosa', '2024-01-15', '2024-02-20', '2024-01-15', '2024-02-01', 'In salotto', 'Da giardino'),
+        ('Pianta2', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', 'Da terrazzo'),
+        ('Pianta3', 'Ficus elastica', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Balcone', 'Da interno'),
+        ('Pianta4', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', 'Da camera'),
+        ('Pianta5', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', null),
+        ('Pianta6', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', null),
+        ('Pianta7', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', null);
+    `);
 }
 
 export async function selectUltimeQuattro<T extends DBRow>() : Promise<T[]> {
