@@ -57,25 +57,6 @@ export async function remove<T extends DBRow>(table: string, id: number) : Promi
     }
 }
 
-export async function selectUltimeQuattro<T extends DBRow>(): Promise<T[]> {
-    try {
-        const data = localStorage.getItem('PiantePossedute');
-        if (!data) return [];
-
-        const piante = JSON.parse(data) as T[];
-        return piante
-            .sort((a, b) => {
-                const dateA = new Date(a.acquisizione as string);
-                const dateB = new Date(b.acquisizione as string);
-                return dateB.getTime() - dateA.getTime();
-            })
-            .slice(0, 4);
-    } catch (error) {
-        console.error("SELECT error for web:", error);
-        return [];
-    }
-}
-
 export async function get<T extends DBRow>(table: string, id: number): Promise<T | null> {
     try {
         const result = await getDB().table<T>(table)

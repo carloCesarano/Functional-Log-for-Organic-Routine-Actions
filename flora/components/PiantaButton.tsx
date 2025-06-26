@@ -4,9 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import { piantaButtonStyles } from "../styles/piantaButton";
-import { selectPiantaInfo } from "../database/Database";
-import { DBRow } from "../database/Database";
-
+import { DBRow, get } from "../database/Database";
 
 interface Props {
     piantaId: number;
@@ -25,7 +23,7 @@ export default function PiantaButton({ piantaId }: Props) {
 
     useEffect(() => {
         const caricaPianta = async () => {
-            const info = await selectPiantaInfo<PiantaInfo>(piantaId);
+            const info = await get<PiantaInfo>("PiantePossedute", piantaId);
             if (info) {
                 setPianta(info);
             }

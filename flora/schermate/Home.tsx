@@ -9,7 +9,7 @@ import HomeButton from "../components/HomeButton";
 import ProssimiInterventi from "../components/ProssimiInterventi";
 import { globalStyles } from "../styles/global";
 import PiantaButton from "../components/PiantaButton";
-import { selectUltimeQuattro } from "../database/Database";
+import {select} from "../database/Database";
 import { DBRow } from "../database/Database";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
@@ -23,8 +23,10 @@ export default function Home({ navigation }: Props) {
 
     useEffect(() => {
         const caricaUltimePiante = async () => {
-            const risultato = await selectUltimeQuattro<UltimePiante>();
-            setUltimePiante(risultato.map(pianta => pianta.id));
+            const risultato = await select<UltimePiante>("PiantePossedute");
+            risultato.sort((a,b) => b.id - a.id);
+            const ultimeQuattro = risultato.slice(0, 4);
+            setUltimePiante(ultimeQuattro.map(pianta => pianta.id));
         };
         caricaUltimePiante();
     }, []);

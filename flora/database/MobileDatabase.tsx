@@ -70,36 +70,7 @@ function populateDB(db: SQLiteDatabase): void {
     `);
 }
 
-export async function selectUltimeQuattro<T extends DBRow>() : Promise<T[]> {
-    try {
-        return getDB().getAllAsync<T>(
-            `SELECT id
-             FROM PiantePossedute
-             ORDER BY date(acquisizione) DESC, id DESC
-             LIMIT 4`
-        );
-    } catch (error) {
-        console.error("SELECT error for mobile:", error);
-        return [];
-    }
-}
-
-export async function get<T extends DBRow>(table: string, id: number): Promise<T | null> {
-    try {
-        const results = await getDB().getAllAsync<T>(
-            `SELECT *
-             FROM ${table}
-             WHERE id = ${id}`
-        );
-
-        return results.length > 0 ? results[0] : null;
-    } catch (error) {
-        console.error("GET error for mobile:", error);
-        return null;
-    }
-}
-
-        export async function select<T extends DBRow>(table: string) : Promise<T[]> {
+export async function select<T extends DBRow>(table: string) : Promise<T[]> {
     try {
         return getDB().getAllAsync<T>(`SELECT * FROM ${table}`);
     } catch (error) {
@@ -192,5 +163,20 @@ export async function remove<T extends DBRow>(table: string, id: number) : Promi
         getDB().execSync(query);
     } catch (error) {
         console.error("REMOVE error for mobile:", error);
+    }
+}
+
+export async function get<T extends DBRow>(table: string, id: number): Promise<T | null> {
+    try {
+        const results = await getDB().getAllAsync<T>(
+            `SELECT *
+             FROM ${table}
+             WHERE id = ${id}`
+        );
+
+        return results.length > 0 ? results[0] : null;
+    } catch (error) {
+        console.error("GET error for mobile:", error);
+        return null;
     }
 }
