@@ -53,7 +53,6 @@ function populateDB(db: SQLiteDatabase): void {
         id           INTEGER PRIMARY KEY AUTOINCREMENT,
         piantaID     INTEGER NOT NULL,
         categoria    TEXT,
-        dataAggiunta TEXT,
         FOREIGN KEY (piantaID) REFERENCES PiantePossedute(id) ON UPDATE CASCADE ON DELETE CASCADE
         );
     `);
@@ -96,6 +95,14 @@ function populateDB(db: SQLiteDatabase): void {
     db.execSync(
         "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
         "('Pianta7', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo')"
+    );
+
+
+    db.execSync(
+        "INSERT INTO Categoria (piantaID, categoria) VALUES " +
+        "(5, 'Da giardino')," +
+        "(1, 'Da terrazzo')," +
+        "(2, 'Da interno');"
     );
 
 

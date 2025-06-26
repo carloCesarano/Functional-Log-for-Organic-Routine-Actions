@@ -8,6 +8,7 @@ export const navbarStyles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 24,
+        zIndex: 100,
     },
     icon: {
         width: isMobile ? 50 : 150,
