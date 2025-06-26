@@ -52,8 +52,13 @@ export default function AggiungiPianta({navigation}: Props) {
     };
 
     const handleCancel = () => {
-        navigation.navigate('Home');
+        if (navigation.canGoBack()) {
+            navigation.goBack();
+        } else {
+            navigation.navigate('Home');
+        }
     };
+
 
     return (
         <Background>
