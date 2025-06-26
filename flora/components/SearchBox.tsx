@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { navbarStyles } from "../styles/navbar";
+import { useRoute } from "@react-navigation/native";
 
 type Props = {
     value: string;
@@ -12,6 +13,13 @@ type Props = {
 export default function SearchBox({ value, onChangeText, onSubmit, placeholder = "Cerca" }: Props) {
     const handleSubmit = () => {
         onSubmit(value);
+    };
+    const route = useRoute();
+    const handleClear = () => {
+        onChangeText("");
+        if (route.name === "ListaPiante") {
+            onSubmit("");
+        }
     };
 
     return (
@@ -25,6 +33,11 @@ export default function SearchBox({ value, onChangeText, onSubmit, placeholder =
                 placeholderTextColor={"#767676"}
                 returnKeyType={"search"}
             />
+            {value.length > 0 && (
+                <TouchableOpacity onPress={handleClear} style={navbarStyles.clearButton}>
+                    <Text style={navbarStyles.clearButtonText}>X</Text>
+                </TouchableOpacity>
+            )}
         </View>
     );
 }

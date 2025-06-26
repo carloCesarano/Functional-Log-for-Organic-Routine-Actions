@@ -19,7 +19,7 @@ export const navbarStyles = StyleSheet.create({
         backgroundColor: '#dcf2d5',
         alignItems: 'center',
         height: isMobile ? 40 : 60,
-        width: 240,
+        width: 250,
         borderRadius: 50,
         borderWidth: 2,
         borderColor: '#185730',
@@ -70,4 +70,19 @@ export const navbarStyles = StyleSheet.create({
         fontSize: 16,
         color: '#333',
     },
+
+    clearButton: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        borderRadius: 15,
+        width: 30,
+        height: 30,
+    },
+        clearButtonText: {
+            color: '#000',
+            fontSize: 16,
+            fontWeight: 'bold',
+        },
+
 });
