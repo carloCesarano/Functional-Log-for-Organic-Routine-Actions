@@ -59,7 +59,7 @@ function populateDB(db: SQLiteDatabase): void {
         ultimaPotat  TEXT,
         ultimoRinv   TEXT,
         note         TEXT,
-        categoria   TEXT,
+        categoria    TEXT,
         foto         TEXT,
         
         FOREIGN KEY (categoria) REFERENCES Categoria(categoria) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -122,18 +122,17 @@ export async function selectUltimeQuattro<T extends DBRow>() : Promise<T[]> {
     }
 }
 
-export async function selectPiantaInfo<T extends DBRow>(id: number): Promise<T | null> {
+export async function get<T extends DBRow>(table: string, id: number): Promise<T | null> {
     try {
         const results = await getDB().getAllAsync<T>(
-            `SELECT p.id, p.nome, p.foto
-             FROM PiantePossedute p
-             WHERE p.id = ?`,
-            [id]
+            `SELECT *
+             FROM ${table}
+             WHERE id = ${id}`
         );
 
         return results.length > 0 ? results[0] : null;
     } catch (error) {
-        console.error("SELECT pianta info error:", error);
+        console.error("GET error for mobile:", error);
         return null;
     }
 }

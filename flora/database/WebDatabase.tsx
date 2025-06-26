@@ -76,15 +76,15 @@ export async function selectUltimeQuattro<T extends DBRow>(): Promise<T[]> {
     }
 }
 
-export async function selectPiantaInfo<T extends DBRow>(id: number): Promise<T | null> {
+export async function get<T extends DBRow>(table: string, id: number): Promise<T | null> {
     try {
-        const result = await getDB().table<T>('PiantePossedute')
+        const result = await getDB().table<T>(table)
             .where('id')
             .equals(id)
             .first();
         return result || null;
     } catch (error) {
-        console.error("SELECT pianta info error for web:", error);
+        console.error("GET error for web:", error);
         return null;
     }
 }
