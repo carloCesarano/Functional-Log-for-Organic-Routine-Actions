@@ -20,8 +20,20 @@ export const prossimiInterventiStyles = StyleSheet.create({
   scrollArea: {
     maxHeight: 170,
   },
-  card: {
+  cardGood: {
     backgroundColor: "#2f9e44",
+    padding: 12,
+    borderRadius: 20,
+    marginBottom: 10,
+  },
+  cardMeh: {
+    backgroundColor: "#dfe23e",
+    padding: 12,
+    borderRadius: 20,
+    marginBottom: 10,
+  },
+  cardBad: {
+    backgroundColor: "#cc1818",
     padding: 12,
     borderRadius: 20,
     marginBottom: 10,

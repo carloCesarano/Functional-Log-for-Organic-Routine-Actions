@@ -166,4 +166,22 @@ export class PiantaPosseduta {
         return valori.reduce((a, b) => a + b, 0) / valori.length;
     }
 
+    /**
+     * Restituisce tutte le piante possedute presenti
+     * nel database.
+     *
+     * @returns Array di istanze di PiantaPosseduta
+     */
+    static async getAllPiante(): Promise<PiantaPosseduta[]> {
+        const risultatoQuery = await Database.select<Props>("PiantePossedute");
+        const risultato : PiantaPosseduta[] = [];
+
+        for (const riga of risultatoQuery) {
+            const pianta = await this.creaNuova(riga);
+            risultato.push(pianta);
+        }
+
+        return risultato;
+    }
+
 }
