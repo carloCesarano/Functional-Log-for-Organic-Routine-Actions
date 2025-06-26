@@ -34,6 +34,12 @@ function populateDB(db: SQLiteDatabase): void {
     `);
 
     db.execSync(`
+        CREATE TABLE IF NOT EXISTS Categoria (
+        categoria   TEXT PRIMARY KEY 
+        );
+    `);
+
+    db.execSync(`
         CREATE TABLE IF NOT EXISTS PiantePossedute (
         id           INTEGER PRIMARY KEY AUTOINCREMENT,
         nome         TEXT NOT NULL,
@@ -44,20 +50,11 @@ function populateDB(db: SQLiteDatabase): void {
         ultimoRinv   TEXT,
         note         TEXT,
         foto         TEXT,
+        categoria   TEXT,
+        FOREIGN KEY (categoria) REFERENCES Categoria(categoria) ON UPDATE CASCADE ON DELETE RESTRICT,
         FOREIGN KEY (specie) REFERENCES WikiPiante(specie) ON UPDATE CASCADE ON DELETE RESTRICT
         );
     `);
-
-    db.execSync(`
-        CREATE TABLE IF NOT EXISTS Categoria (
-        id           INTEGER PRIMARY KEY AUTOINCREMENT,
-        piantaID     INTEGER NOT NULL,
-        categoria    TEXT,
-        FOREIGN KEY (piantaID) REFERENCES PiantePossedute(id) ON UPDATE CASCADE ON DELETE CASCADE
-        );
-    `);
-
-
 
     db.execSync(
         "INSERT INTO WikiPiante (specie, nome, freqInnaff, freqPotat, freqRinv) VALUES " +
@@ -99,10 +96,11 @@ function populateDB(db: SQLiteDatabase): void {
 
 
     db.execSync(
-        "INSERT INTO Categoria (piantaID, categoria) VALUES " +
-        "(5, 'Da giardino')," +
-        "(1, 'Da terrazzo')," +
-        "(2, 'Da interno');"
+        "INSERT INTO Categoria (categoria) VALUES " +
+        "('Da giardino')," +
+        "('Da terrazzo')," +
+        "('Da interno')," +
+        "('Da camera')"
     );
 
 
@@ -138,8 +136,7 @@ export async function selectPiantaInfo<T extends DBRow>(id: number): Promise<T |
     }
 }
 
-
-export async function select<T extends DBRow>(table: string) : Promise<T[]> {
+        export async function select<T extends DBRow>(table: string) : Promise<T[]> {
     try {
         return getDB().getAllAsync<T>(`SELECT * FROM ${table}`);
     } catch (error) {
