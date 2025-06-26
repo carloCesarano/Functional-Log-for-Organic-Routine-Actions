@@ -39,6 +39,16 @@ function populateDB(db: SQLiteDatabase): void {
         );
     `);
 
+
+    db.execSync(
+        "INSERT INTO Categoria (categoria) VALUES " +
+        "('Da giardino')," +
+        "('Da terrazzo')," +
+        "('Da interno')," +
+        "('Da camera')"
+    );
+
+
     db.execSync(`
         CREATE TABLE IF NOT EXISTS PiantePossedute (
         id           INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -49,8 +59,9 @@ function populateDB(db: SQLiteDatabase): void {
         ultimaPotat  TEXT,
         ultimoRinv   TEXT,
         note         TEXT,
-        foto         TEXT,
         categoria   TEXT,
+        foto         TEXT,
+        
         FOREIGN KEY (categoria) REFERENCES Categoria(categoria) ON UPDATE CASCADE ON DELETE RESTRICT,
         FOREIGN KEY (specie) REFERENCES WikiPiante(specie) ON UPDATE CASCADE ON DELETE RESTRICT
         );
@@ -65,21 +76,21 @@ function populateDB(db: SQLiteDatabase): void {
 
 
     db.execSync(
-        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
-        "('Pianta1', 'Monstera deliciosa', '2024-01-15', '2024-02-20', '2024-01-15', '2024-02-01', 'In salotto')"
+        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note, categoria) VALUES " +
+        "('Pianta1', 'Monstera deliciosa', '2024-01-15', '2024-02-20', '2024-01-15', '2024-02-01', 'In salotto', 'Da giardino')"
     );
     db.execSync(
-        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
-        "('Pianta2', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo')"
+        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note, categoria) VALUES " +
+        "('Pianta2', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', 'Da terrazzo')"
     );
     db.execSync(
-        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
-        "('Pianta3', 'Ficus elastica', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Balcone')"
+        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note, categoria) VALUES " +
+        "('Pianta3', 'Ficus elastica', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Balcone', 'Da interno')"
     );
 
     db.execSync(
-        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
-        "('Pianta4', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo')"
+        "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note, categoria) VALUES " +
+        "('Pianta4', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo', 'Da camera')"
     );
     db.execSync(
         "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
@@ -92,15 +103,6 @@ function populateDB(db: SQLiteDatabase): void {
     db.execSync(
         "INSERT INTO PiantePossedute (nome, specie, acquisizione, ultimaInnaff, ultimaPotat, ultimoRinv, note) VALUES " +
         "('Pianta7', 'Strelitzia reginae', '2025-01-15', '2025-05-20', '2025-07-15', '2026-05-01', 'Terrazzo')"
-    );
-
-
-    db.execSync(
-        "INSERT INTO Categoria (categoria) VALUES " +
-        "('Da giardino')," +
-        "('Da terrazzo')," +
-        "('Da interno')," +
-        "('Da camera')"
     );
 
 
