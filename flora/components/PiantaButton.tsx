@@ -31,21 +31,6 @@ export default function PiantaButton({ piantaId }: Props) {
         caricaPianta();
     }, [piantaId]);
 
-    const getImage = () => {
-        if (!pianta?.foto) {
-            return require('../assets/plant.png');
-        }
-
-        try {
-
-            // da dove prende le foto?
-
-        } catch (error) {
-            console.log("Errore caricamento immagine:", error);
-            return require('../assets/plant.png');
-        }
-    };
-
     const handlePress = () => {
         navigation.navigate("InfoPianta", { plantId: piantaId });
     };
@@ -54,7 +39,7 @@ export default function PiantaButton({ piantaId }: Props) {
         <TouchableOpacity style={piantaButtonStyles.button} onPress={handlePress}>
             <View>
                 <Image
-                    source={getImage()}
+                    source={pianta?.foto ? { uri: pianta.foto } : require('../assets/plant.png')}
                     style={piantaButtonStyles.image}
                     defaultSource={require('../assets/plant.png')}
                 />
