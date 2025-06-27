@@ -1,17 +1,4 @@
-import * as Database from "../database/Database";
-import {WikiPianta} from "./WikiPianta";
-
-interface Props extends Database.DBRow {
-    id           : number;
-    nome         : string;
-    specie       : string;
-    acquisizione : Date;
-    ultimaInnaff : Date;
-    ultimaPotat  : Date;
-    ultimoRinv   : Date;
-    note         : string;
-    foto         : string;
-}
+import {RigaTabella, insert, generaPiantaDaRiga} from "../database/PiantePosseduteDAO";
 
 export class PiantaPosseduta {
     id           : number | undefined;
@@ -33,7 +20,7 @@ export class PiantaPosseduta {
      *
      * @param riga Oggetto con i dati della pianta
      */
-    constructor(riga: Props) {
+    constructor(riga: RigaTabella) {
         this.id = riga.id;
         this.nome = riga.nome;
         this.specie = riga.specie;
@@ -80,40 +67,9 @@ export class PiantaPosseduta {
      * @returns Istanza della istanza con id aggiornato
      * @throws {Error} Se la specie non è riconosciuta
      */
-    static async creaNuova(riga: Props) : Promise<PiantaPosseduta> {
-        const pianta = new PiantaPosseduta(riga);
-        const wiki = await WikiPianta.daSpecie(pianta.specie);
-
-        if (!(wiki instanceof WikiPianta)) throw new Error("Unknown species");
-
-        pianta.freqInnaff = wiki.getFreqInnaff();
-        pianta.freqPotat = wiki.getFreqPotat();
-        pianta.freqRinv = wiki.getFreqRinv();
-
-        const {id: _, ...senzaId} = riga;
-        const nuovoId : number | undefined = await Database.insert<Props>("PiantePossedute", senzaId);
-        pianta.id = nuovoId ?? -1;
-
-        return pianta;
-    }
-
-    /**
-     * Carica una pianta dal database dato il suo id.
-     *
-     * @param id Id della pianta
-     * @return Istanza della pianta o null se non trovata
-     */
-    static async daID(id: number): Promise<PiantaPosseduta | null> {
-        const riga = await Database.get<Props>('PiantePossedute', id);
-        if (riga === null) return null;
-
-        const wiki = await WikiPianta.daSpecie(riga.specie);
-        if (!(wiki instanceof WikiPianta)) throw new Error("Unknown species");
-
-        const pianta = new PiantaPosseduta(riga);
-        pianta.freqInnaff = wiki.getFreqInnaff();
-        pianta.freqPotat = wiki.getFreqPotat();
-        pianta.freqRinv = wiki.getFreqRinv();
+    static async creaNuova(riga: RigaTabella) : Promise<PiantaPosseduta> {
+        const pianta = await generaPiantaDaRiga(riga);
+        await insert(pianta);
         return pianta;
     }
 
@@ -122,10 +78,9 @@ export class PiantaPosseduta {
      *  sia <=0, allora la pianta è 'Da innaffiare'.
      */
     giorniAllaProssimaInnaff() : number {
-        if (this.freqInnaff === undefined) return NaN;
         const oggi = new Date();
         const prossima = new Date(this.ultimaInnaff);
-        prossima.setDate(prossima.getDate() + this.freqInnaff);
+        prossima.setDate(prossima.getDate() + this.getFreqInnaff());
         return Math.ceil((prossima.getTime() - oggi.getTime()) / (1000 * 60 * 60 * 24))
     }
 
@@ -134,10 +89,9 @@ export class PiantaPosseduta {
      *  sia <=0, allora la pianta è 'Da potare'.
      */
     giorniAllaProssimaPotat() : number {
-        if (this.freqPotat === undefined) return NaN;
         const oggi = new Date();
         const prossima = new Date(this.ultimaPotat);
-        prossima.setDate(prossima.getDate() + this.freqPotat);
+        prossima.setDate(prossima.getDate() + this.getFreqPotat());
         return Math.ceil((prossima.getTime() - oggi.getTime()) / (1000 * 60 * 60 * 24))
     }
 
@@ -146,12 +100,15 @@ export class PiantaPosseduta {
      *  sia <=0, allora la pianta è 'Da rinvasare'.
      */
     giorniAlProssimoRinv() : number {
-        if (this.freqRinv === undefined) return NaN;
         const oggi = new Date();
         const prossima = new Date(this.ultimoRinv);
-        prossima.setDate(prossima.getDate() + this.freqRinv);
+        prossima.setDate(prossima.getDate() + this.getFreqRinv());
         return Math.ceil((prossima.getTime() - oggi.getTime()) / (1000 * 60 * 60 * 24))
     }
+
+    LIMITE_INNAFF : number = 3;
+    LIMITE_POTAT  : number = 14;
+    LIMITE_RINV   : number = 30;
 
     /**
      * Calcola lo stato di salute della pianta da 0 (pessima)
@@ -161,55 +118,18 @@ export class PiantaPosseduta {
      * @returns Stato normalizzato tra 0 e 1
      */
     stato(): number {
-        function normalizza(giorni: number): number {
-            if (giorni <= -10) return 0;
+        function normalizza(giorni: number, limiteCritico: number): number {
+            if (giorni <= -limiteCritico) return 0;
             if (giorni >= 0) return 1;
             return giorni/10 + 1;
         }
 
-        const innaff = normalizza(this.giorniAllaProssimaInnaff());
-        const potat = normalizza(this.giorniAllaProssimaPotat());
-        const rinv = normalizza(this.giorniAlProssimoRinv());
+        const innaff = normalizza(this.giorniAllaProssimaInnaff(), this.LIMITE_INNAFF);
+        const potat = normalizza(this.giorniAllaProssimaPotat(), this.LIMITE_POTAT);
+        const rinv = normalizza(this.giorniAlProssimoRinv(), this.LIMITE_RINV);
         const valori = [innaff, potat, rinv].filter(v => !isNaN(v));
         if (valori.length === 0) return 0;
         return valori.reduce((a, b) => a + b, 0) / valori.length;
-    }
-
-    /**
-     * Restituisce tutte le piante possedute presenti
-     * nel database.
-     *
-     * @returns Array di istanze di PiantaPosseduta
-     */
-    static async getAllPiante(): Promise<PiantaPosseduta[]> {
-        const risultatoQuery = await Database.select<Props>("PiantePossedute");
-
-        return await Promise.all(risultatoQuery.map(async (riga) => {
-            const wiki = await WikiPianta.daSpecie(riga.specie);
-            if (!(wiki instanceof WikiPianta))
-                throw new Error("Unknown species");
-
-            const pianta = new PiantaPosseduta(riga);
-            pianta.freqInnaff = wiki.getFreqInnaff();
-            pianta.freqPotat = wiki.getFreqPotat();
-            pianta.freqRinv = wiki.getFreqRinv();
-
-            return pianta;
-        }));
-    }
-
-    toProps() : Props {
-        return {
-            id           : this.getId(),
-            nome         : this.getNome(),
-            specie       : this.getSpecie(),
-            acquisizione : this.getDataAcq(),
-            ultimaInnaff : this.getUltimaInnaff(),
-            ultimaPotat  : this.getUltimaPotat(),
-            ultimoRinv   : this.getUltimoRinv(),
-            foto         : this.getFoto(),
-            note         : this.getNote()
-        }
     }
 
 }

@@ -5,7 +5,7 @@ import {WikiPianta} from "../model/WikiPianta";
 /**
  * Rappresenta una riga della tabella "PiantePossedute" del database
  */
-interface Props extends Database.DBRow {
+export interface RigaTabella extends Database.DBRow {
     id           : number;
     nome         : string;
     specie       : string;
@@ -24,7 +24,7 @@ interface Props extends Database.DBRow {
  * @returns Lista delle piante possedute
  */
 export async function getAll(): Promise<PiantaPosseduta[]> {
-    const risultatoQuery : Props[] = await Database.select<Props>("PiantePossedute");
+    const risultatoQuery : RigaTabella[] = await Database.select<RigaTabella>("PiantePossedute");
     return await Promise.all(risultatoQuery.map(riga => generaPiantaDaRiga(riga)))
 }
 
@@ -36,8 +36,8 @@ export async function getAll(): Promise<PiantaPosseduta[]> {
  * @throws Error Se l'inserimento fallisce
  */
 export async function insert(pianta: PiantaPosseduta): Promise<void> {
-    const riga : Omit<Props, "id"> = pianta.toProps();
-    const idInserito = await Database.insert<Props>("PiantePossedute", riga);
+    const riga : Omit<RigaTabella, "id"> = generaRigaDaPianta(pianta);
+    const idInserito = await Database.insert<RigaTabella>("PiantePossedute", riga);
     if (idInserito !== undefined)
         pianta.id = idInserito;
     else
@@ -51,7 +51,7 @@ export async function insert(pianta: PiantaPosseduta): Promise<void> {
  * @param pianta Oggetto pianta da aggiornare
  */
 export async function update(pianta: PiantaPosseduta): Promise<void> {
-    await Database.update<Props>("PiantePossedute", pianta.toProps());
+    await Database.update<RigaTabella>("PiantePossedute", generaRigaDaPianta(pianta));
 }
 
 /**
@@ -60,7 +60,7 @@ export async function update(pianta: PiantaPosseduta): Promise<void> {
  * @param pianta Oggetto pianta da eliminare
  */
 export async function remove(pianta: PiantaPosseduta): Promise<void> {
-    await Database.remove<Props>("PiantePossedute", pianta.getId());
+    await Database.remove<RigaTabella>("PiantePossedute", pianta.getId());
 }
 
 /**
@@ -71,7 +71,7 @@ export async function remove(pianta: PiantaPosseduta): Promise<void> {
  * @throws Error Se la pianta non esiste
  */
 export async function get(id: number): Promise<PiantaPosseduta> {
-    const riga: Props | null = await Database.get<Props>("PiantePossedute", id);
+    const riga: RigaTabella | null = await Database.get<RigaTabella>("PiantePossedute", id);
     if (riga === null)
         throw new Error("Get fallito");
     return await generaPiantaDaRiga(riga);
@@ -99,7 +99,7 @@ const wikiCache: Record<string, WikiPianta> = {};
  * @returns Oggetto PiantaPosseduta completo
  * @throws Error Se la specie non è presente nel database
  */
-async function generaPiantaDaRiga(riga: Props) : Promise<PiantaPosseduta> {
+export async function generaPiantaDaRiga(riga: RigaTabella) : Promise<PiantaPosseduta> {
     let wiki : WikiPianta | null = wikiCache[riga.specie];
     if (!wiki) {
         wiki = await WikiPianta.daSpecie(riga.specie);
@@ -114,4 +114,26 @@ async function generaPiantaDaRiga(riga: Props) : Promise<PiantaPosseduta> {
     pianta.freqPotat  = wiki.getFreqPotat();
 
     return pianta;
+}
+
+/**
+ * Costruisce un oggetto RigaTabella utile per la
+ * comunicazione col database, partendo da un oggetto
+ * PiantaPosseduta.
+ *
+ * @param pianta Oggetto PiantaPosseduta da convertire
+ * @returns Oggetto RigaTabella
+ */
+export function generaRigaDaPianta(pianta: PiantaPosseduta): RigaTabella {
+    return {
+        id           : pianta.getId(),
+        nome         : pianta.getNome(),
+        specie       : pianta.getSpecie(),
+        acquisizione : pianta.getDataAcq(),
+        ultimaInnaff : pianta.getUltimaInnaff(),
+        ultimaPotat  : pianta.getUltimaPotat(),
+        ultimoRinv   : pianta.getUltimoRinv(),
+        foto         : pianta.getFoto(),
+        note         : pianta.getNote()
+    }
 }

@@ -5,6 +5,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import Button from "./Button";
 import {PiantaPosseduta} from "../model/PiantaPosseduta";
+import {getAll} from "../database/PiantePosseduteDAO";
 import { prossimiInterventiStyles as styles } from "../styles/prossimiInterventi";
 
 type Props = {
@@ -18,7 +19,7 @@ interface Intervento {
 }
 
 async function caricaInterventi(): Promise<Intervento[]> {
-    const piante = await PiantaPosseduta.getAllPiante();
+    const piante = await getAll();
     const interventi: Intervento[] = [];
 
     for (const pianta of piante) {
