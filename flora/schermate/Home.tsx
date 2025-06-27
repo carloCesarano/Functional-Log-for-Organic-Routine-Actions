@@ -2,30 +2,26 @@ import React, { useEffect, useState } from "react";
 import {Text, View, StyleSheet, ScrollView} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
+import {getAll} from "../database/PiantePosseduteDAO";
 import Background from "../components/Background";
 import NavBar from "../components/NavBar";
 import AggiungiPiantaButton from "../components/AggiungiPiantaButton";
 import HomeButton from "../components/HomeButton";
 import ProssimiInterventi from "../components/ProssimiInterventi";
 import PiantaButton from "../components/PiantaButton";
-import { select, DBRow } from "../database/Database";
 import { globalStyles } from "../styles/global";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
-
-interface UltimePiante extends DBRow {
-    id: number;
-}
 
 export default function Home({ navigation }: Props) {
     const [ultimePiante, setUltimePiante] = useState<number[]>([]);
 
     useEffect(() => {
         const caricaUltimePiante = async () => {
-            const risultato = await select<UltimePiante>("PiantePossedute");
-            risultato.sort((a,b) => b.id - a.id);
-            const ultimeQuattro = risultato.slice(0, 4);
-            setUltimePiante(ultimeQuattro.map(pianta => pianta.id));
+            const piantePossedute = (await getAll());
+            piantePossedute.sort((a,b) => b.getId() - a.getId());
+            const ultimeQuattro = piantePossedute.slice(0, 4);
+            setUltimePiante(ultimeQuattro.map(pianta => pianta.getId()));
         };
         caricaUltimePiante();
     }, []);
