@@ -12,7 +12,7 @@ export const listaPianteStyles = StyleSheet.create({
     },
     filterMenu: {
         position: 'absolute',
-        bottom: 50,
+        bottom: 70,
         backgroundColor: 'white',
         borderRadius: 8,
         padding: 10,
@@ -22,7 +22,9 @@ export const listaPianteStyles = StyleSheet.create({
         shadowRadius: 3.80,
         elevation: 5,
         zIndex: 1,
-        minWidth: 150,
+        minWidth: 200,
+        maxHeight: 300,
+        paddingBottom: 20,
     },
     filterOption: {
         padding: 10,
@@ -76,8 +78,6 @@ export const listaPianteStyles = StyleSheet.create({
         color: '#888',
     },
     card: {
-        flexDirection: 'row',
-        padding: 15,
         margin: 10,
         backgroundColor: '#fff',
         borderRadius: 8,
@@ -85,8 +85,6 @@ export const listaPianteStyles = StyleSheet.create({
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 0.25,
         elevation: 5,
-        justifyContent: 'space-between',
-        alignItems: 'center',
     },
     cardImage: {
         width: 60,
@@ -97,10 +95,16 @@ export const listaPianteStyles = StyleSheet.create({
     cardContent: {
         flex: 1,
     },
-
+    gradient: {
+        flexDirection: 'row',
+        flex: 1,
+        padding: 15,
+        borderRadius: 8,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
     flatList: {
         marginTop: 10,
         marginBottom: 80,
-
     },
 });
