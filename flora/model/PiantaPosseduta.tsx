@@ -11,7 +11,7 @@ export class PiantaPosseduta {
     ultimaPotat  : Date;
     freqRinv     : number | undefined;
     ultimoRinv   : Date;
-    foto         : string;
+    foto         : string | undefined;
     note         : string;
 
     /**
@@ -56,7 +56,7 @@ export class PiantaPosseduta {
     /** @returns Frequenza in giorni per rinvaso, default 1000 */
     getFreqRinv()     : number { return this.freqRinv   ?? 1000 }
     /** @returns Percorso della foto collegata */
-    getFoto()         : string { return this.foto               }
+    getFoto()         : string { return this.foto ?? ""         }
     /** @returns Note aggiuntive */
     getNote()         : string { return this.note               }
 
