@@ -14,7 +14,7 @@ export default function Button ({title, onPress, buttonStyle, textStyle}: Props)
         <TouchableOpacity
             style={[globalStyles.mainButton, buttonStyle]}
             onPress={onPress}>
-            <Text style={[globalStyles.mainButtonText, textStyle]}>
+            <Text style={[globalStyles.mainButtonText, textStyle]} numberOfLines={1} ellipsizeMode="tail">
                 {title}
             </Text>
         </TouchableOpacity>
