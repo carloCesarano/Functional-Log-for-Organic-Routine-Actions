@@ -69,7 +69,6 @@ function populateDB(db: SQLiteDatabase): void {
     `);
 }
 
-// Funzione select corretta
 export async function select<T extends DBRow>(table: string): Promise<T[]> {
     try {
         return await getDB().getAllAsync<T>(`SELECT * FROM ${table}`);
@@ -239,6 +238,7 @@ export async function insert<T extends DBRow>(table: string, item: Omit<T, "id">
 export async function update<T extends DBRow>(table: string, item: T): Promise<void> {
     try {
         if (item.id === undefined) {
+            // noinspection ExceptionCaughtLocallyJS
             throw new Error("Missing ID in UPDATE for web");
         }
         const updates: string = Object.entries(item)

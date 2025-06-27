@@ -14,18 +14,18 @@ interface Props extends Database.DBRow {
 }
 
 export class PiantaPosseduta {
-    private id           : number | undefined;
-    private nome         : string;
-    private specie       : string;
-    private dataAcq      : Date;
-    private freqInnaff   : number | undefined;
-    private ultimaInnaff : Date;
-    private freqPotat    : number | undefined;
-    private ultimaPotat  : Date;
-    private freqRinv     : number | undefined;
-    private ultimoRinv   : Date;
-    private foto         : string;
-    private note         : string;
+    id           : number | undefined;
+    nome         : string;
+    specie       : string;
+    dataAcq      : Date;
+    freqInnaff   : number | undefined;
+    ultimaInnaff : Date;
+    freqPotat    : number | undefined;
+    ultimaPotat  : Date;
+    freqRinv     : number | undefined;
+    ultimoRinv   : Date;
+    foto         : string;
+    note         : string;
 
     /**
      * Costruisce un'istanza di PiantaPosseduta da una riga di
@@ -196,6 +196,20 @@ export class PiantaPosseduta {
 
             return pianta;
         }));
+    }
+
+    toProps() : Props {
+        return {
+            id           : this.getId(),
+            nome         : this.getNome(),
+            specie       : this.getSpecie(),
+            acquisizione : this.getDataAcq(),
+            ultimaInnaff : this.getUltimaInnaff(),
+            ultimaPotat  : this.getUltimaPotat(),
+            ultimoRinv   : this.getUltimoRinv(),
+            foto         : this.getFoto(),
+            note         : this.getNote()
+        }
     }
 
 }
