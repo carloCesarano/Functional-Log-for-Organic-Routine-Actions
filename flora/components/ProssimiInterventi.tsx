@@ -42,8 +42,7 @@ async function caricaInterventi(): Promise<Intervento[]> {
 
     interventi.sort((a,b) => a.giorniRimanenti - b.giorniRimanenti);
 
-    return interventi;
-    // return interventi.filter(intervento => intervento.giorniRimanenti < 7);
+    return interventi.filter(intervento => intervento.giorniRimanenti < 7);
 }
 
 export default function ProssimiInterventi({ navigation }: Props) {
