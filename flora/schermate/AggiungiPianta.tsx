@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {View, Image, Text, TextInput, TouchableOpacity, ScrollView, Alert} from "react-native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../types";
@@ -8,6 +8,10 @@ import NavBar from "../components/NavBar";
 import Button from "../components/Button";
 import DatePicker from "../components/DatePicker";
 import {aggiungiPiantaStyles as styles} from "../styles/aggiungiPianta";
+import {customPickerStyles as stylesCustomPicker} from "../styles/customPicker";
+import {select} from "../database/Database";
+import CustomPicker from "../components/CustomPicker";
+
 
 type Props = {
     navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
@@ -18,10 +22,46 @@ export default function AggiungiPianta({navigation}: Props) {
     const [nome,              setNome]              = useState("");
     const [dataAcq,           setDataAcq]           = useState(new Date());
     const [categoria,         setCategoria]         = useState("");
+    const [categorie, setCategorie] = useState<string[]>([]);
+
+    const [specie,         setSpecie]         = useState("");
+    const [specieWiki, setSpecieWiki] = useState<string[]>([]);
     const [ultimaInnaff,      setUltimaInnaff]      = useState(new Date());
     const [ultimaPotat,       setUltimaPotat]       = useState(new Date());
     const [ultimoRinv,        setUltimoRinv]        = useState(new Date());
     const [note,              setNote]              = useState("");
+
+    const [categoriaModalVisible, setCategoriaModalVisible] = useState(false);
+    const [specieModalVisible, setSpecieModalVisible] = useState(false);
+
+
+    useEffect(() => {
+        const caricaCategorie = async () => {
+            try {
+                const risultatoCategorie = await select<{ categoria: string }>("Categoria");
+                const nomiCategorie = risultatoCategorie.map(c => c.categoria);
+
+                setCategorie(nomiCategorie.sort());
+            } catch (error) {
+                console.error("Errore nel caricamento delle categorie:", error);
+            }
+        };
+
+        const caricaSpecieWiki = async () => {
+            try {
+                const risultatoSpecie = await select<{ specie: string }>("WikiPiante");
+                const nomiSpecieWiki = risultatoSpecie.map(s => s.specie);
+
+                setSpecieWiki(nomiSpecieWiki.sort());
+            } catch (error) {
+                console.error("Errore nel caricamento delle specie:", error);
+            }
+        };
+
+        caricaCategorie().catch(error => console.error("Errore nel caricamento delle categorie:", error));
+        caricaSpecieWiki().catch(error => console.error("Errore nel caricamento delle Specie:", error));
+    }, []);
+
 
     const handleSelectPhoto = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -39,14 +79,18 @@ export default function AggiungiPianta({navigation}: Props) {
             return;
         }
 
+
         console.log({
             foto,
             nome,
-            dataAcq,
+            specie,
             categoria,
+            dataAcq,
             ultimaInnaff,
             ultimaPotat,
-            ultimoRinv
+            ultimoRinv,
+            note
+
         });
         Alert.alert("Successo", "Controlla il log per i dati");
     };
@@ -90,6 +134,29 @@ export default function AggiungiPianta({navigation}: Props) {
                         onChangeText={setNome}
                         placeholderTextColor="#888"/>
 
+
+                    <CustomPicker
+                        value={categoria}
+                        onValueChange={setCategoria}
+                        options={categorie}
+                        placeholder="Seleziona categoria"
+                        isVisible={categoriaModalVisible}
+                        onClose={() => setCategoriaModalVisible(false)}
+                        onOpen={() => setCategoriaModalVisible(true)}
+                        styles={stylesCustomPicker}
+                    />
+
+                    <CustomPicker
+                        value={specie}
+                        onValueChange={setSpecie}
+                        options={specieWiki}
+                        placeholder="Seleziona specie"
+                        isVisible={specieModalVisible}
+                        onClose={() => setSpecieModalVisible(false)}
+                        onOpen={() => setSpecieModalVisible(true)}
+                        styles={stylesCustomPicker}
+                    />
+
                     <DatePicker
                         label="Data acquisizione"
                         value={dataAcq}
@@ -97,14 +164,8 @@ export default function AggiungiPianta({navigation}: Props) {
                         future={false}
                         buttonStyle={styles.picker}
                         textStyle={styles.pickerText}
-                    />
 
-                    <TextInput
-                        placeholder="Categoria"
-                        style={styles.input}
-                        value={categoria}
-                        onChangeText={setCategoria}
-                        placeholderTextColor="#888"/>
+                    />
 
                     <DatePicker
                         label="Ultima innaffiatura"
