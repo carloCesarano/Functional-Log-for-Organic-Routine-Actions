@@ -105,7 +105,16 @@ export class PiantaPosseduta {
      */
     static async daID(id: number): Promise<PiantaPosseduta | null> {
         const riga = await Database.get<Props>('PiantePossedute', id);
-        return riga ? new PiantaPosseduta(riga) : null;
+        if (riga === null) return null;
+
+        const wiki = await WikiPianta.daSpecie(riga.specie);
+        if (!(wiki instanceof WikiPianta)) throw new Error("Unknown species");
+
+        const pianta = new PiantaPosseduta(riga);
+        pianta.freqInnaff = wiki.getFreqInnaff();
+        pianta.freqPotat = wiki.getFreqPotat();
+        pianta.freqRinv = wiki.getFreqRinv();
+        return pianta;
     }
 
     /*  Restituisce il numero di giorni che mancano
@@ -174,14 +183,19 @@ export class PiantaPosseduta {
      */
     static async getAllPiante(): Promise<PiantaPosseduta[]> {
         const risultatoQuery = await Database.select<Props>("PiantePossedute");
-        const risultato : PiantaPosseduta[] = [];
 
-        for (const riga of risultatoQuery) {
-            const pianta = await this.creaNuova(riga);
-            risultato.push(pianta);
-        }
+        return await Promise.all(risultatoQuery.map(async (riga) => {
+            const wiki = await WikiPianta.daSpecie(riga.specie);
+            if (!(wiki instanceof WikiPianta))
+                throw new Error("Unknown species");
 
-        return risultato;
+            const pianta = new PiantaPosseduta(riga);
+            pianta.freqInnaff = wiki.getFreqInnaff();
+            pianta.freqPotat = wiki.getFreqPotat();
+            pianta.freqRinv = wiki.getFreqRinv();
+
+            return pianta;
+        }));
     }
 
 }
