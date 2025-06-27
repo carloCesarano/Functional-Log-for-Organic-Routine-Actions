@@ -2,8 +2,8 @@ import {RigaTabella, insert, generaPiantaDaRiga} from "../database/PiantePossedu
 
 export class PiantaPosseduta {
     id           : number | undefined;
-    nome         : string;
     specie       : string;
+    nome         : string;
     dataAcq      : Date;
     freqInnaff   : number | undefined;
     ultimaInnaff : Date;
@@ -13,6 +13,7 @@ export class PiantaPosseduta {
     ultimoRinv   : Date;
     foto         : string | undefined;
     note         : string;
+    categorie    : string[];
 
     /**
      * Costruisce un'istanza di PiantaPosseduta da una riga di
@@ -22,43 +23,46 @@ export class PiantaPosseduta {
      */
     constructor(riga: RigaTabella) {
         this.id = riga.id;
-        this.nome = riga.nome;
         this.specie = riga.specie;
-        this.dataAcq = riga.acquisizione;
+        this.nome = riga.nome;
+        this.dataAcq = new Date(riga.dataAcq);
         this.freqInnaff = 1000;
-        this.ultimaInnaff = riga.ultimaInnaff;
+        this.ultimaInnaff = new Date(riga.ultimaInnaff);
         this.freqPotat = 1000;
-        this.ultimaPotat = riga.ultimaPotat;
+        this.ultimaPotat = new Date(riga.ultimaPotat);
         this.freqRinv = 1000;
-        this.ultimoRinv = riga.ultimoRinv;
+        this.ultimoRinv = new Date(riga.ultimoRinv);
         this.foto = riga.foto;
         this.note = riga.note;
+        this.categorie = [];
     }
 
     /** @returns Id della pianta, -1 se non definito */
-    getId()           : number { return this.id ?? -1           }
-    /** @returns Nome della pianta */
-    getNome()         : string { return this.nome               }
+    getId()           : number   { return this.id ?? -1           }
     /** @returns Specie della pianta */
-    getSpecie()       : string { return this.specie             }
+    getSpecie()       : string   { return this.specie             }
+    /** @returns Nome della pianta */
+    getNome()         : string   { return this.nome               }
     /** @returns Data di acquisizione della pianta */
-    getDataAcq()      : Date   { return this.dataAcq            }
+    getDataAcq()      : Date     { return this.dataAcq            }
     /** @returns Ultima data di innaffiatura */
-    getUltimaInnaff() : Date   { return this.ultimaInnaff       }
+    getUltimaInnaff() : Date     { return this.ultimaInnaff       }
     /** @returns Frequenza in giorni per innaffiatura, default 1000 */
-    getFreqInnaff()   : number { return this.freqInnaff ?? 1000 }
+    getFreqInnaff()   : number   { return this.freqInnaff ?? 1000 }
     /** @returns Ultima data di potatura */
-    getUltimaPotat()  : Date   { return this.ultimaPotat        }
+    getUltimaPotat()  : Date     { return this.ultimaPotat        }
     /** @returns Frequenza in giorni per potatura, default 1000 */
-    getFreqPotat()    : number { return this.freqPotat  ?? 1000 }
+    getFreqPotat()    : number   { return this.freqPotat  ?? 1000 }
     /** @returns Ultima data di rinvaso */
-    getUltimoRinv()   : Date   { return this.ultimoRinv         }
+    getUltimoRinv()   : Date     { return this.ultimoRinv         }
     /** @returns Frequenza in giorni per rinvaso, default 1000 */
-    getFreqRinv()     : number { return this.freqRinv   ?? 1000 }
+    getFreqRinv()     : number   { return this.freqRinv   ?? 1000 }
     /** @returns Percorso della foto collegata */
-    getFoto()         : string { return this.foto ?? ""         }
+    getFoto()         : string   { return this.foto ?? ""         }
     /** @returns Note aggiuntive */
-    getNote()         : string { return this.note               }
+    getNote()         : string   { return this.note               }
+    /** @returns Categoria */
+    getCategorie()    : string[] { return this.categorie          }
 
     /**
      * Crea una nuova pianta e la inserisce nel database.

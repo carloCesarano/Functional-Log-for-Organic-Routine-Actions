@@ -1,4 +1,5 @@
 import * as Database from "./Database";
+import {filtraPerPianta} from "./CategorieDAO";
 import {PiantaPosseduta} from "../model/PiantaPosseduta";
 import {WikiPianta} from "../model/WikiPianta";
 
@@ -7,9 +8,9 @@ import {WikiPianta} from "../model/WikiPianta";
  */
 export interface RigaTabella extends Database.DBRow {
     id           : number;
-    nome         : string;
     specie       : string;
-    acquisizione : Date;
+    nome         : string;
+    dataAcq      : Date;
     ultimaInnaff : Date;
     ultimaPotat  : Date;
     ultimoRinv   : Date;
@@ -60,7 +61,7 @@ export async function update(pianta: PiantaPosseduta): Promise<void> {
  * @param pianta Oggetto pianta da eliminare
  */
 export async function remove(pianta: PiantaPosseduta): Promise<void> {
-    await Database.remove<RigaTabella>("PiantePossedute", pianta.getId());
+    await Database.remove("PiantePossedute", pianta.getId());
 }
 
 /**
@@ -109,9 +110,11 @@ export async function generaPiantaDaRiga(riga: RigaTabella) : Promise<PiantaPoss
     }
 
     const pianta = new PiantaPosseduta(riga);
+
     pianta.freqInnaff = wiki.getFreqInnaff();
     pianta.freqRinv   = wiki.getFreqRinv();
     pianta.freqPotat  = wiki.getFreqPotat();
+    pianta.categorie = await filtraPerPianta(pianta);
 
     return pianta;
 }
@@ -129,11 +132,11 @@ export function generaRigaDaPianta(pianta: PiantaPosseduta): RigaTabella {
         id           : pianta.getId(),
         nome         : pianta.getNome(),
         specie       : pianta.getSpecie(),
-        acquisizione : pianta.getDataAcq(),
+        dataAcq      : pianta.getDataAcq(),
         ultimaInnaff : pianta.getUltimaInnaff(),
         ultimaPotat  : pianta.getUltimaPotat(),
         ultimoRinv   : pianta.getUltimoRinv(),
         foto         : pianta.getFoto(),
-        note         : pianta.getNote()
+        note         : pianta.getNote(),
     }
 }
