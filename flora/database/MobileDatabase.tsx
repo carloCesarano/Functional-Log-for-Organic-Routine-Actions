@@ -180,3 +180,18 @@ export async function get<T extends DBRow>(table: string, id: number): Promise<T
         return null;
     }
 }
+
+
+export async function selezionaNumeroCategorie<T extends DBRow>(): Promise<T[]> {
+    try {
+        return getDB().getAllAsync<T>(
+            `SELECT Categoria.categoria, COUNT(PiantePossedute.id) as count 
+             FROM Categoria 
+             LEFT JOIN PiantePossedute ON Categoria.categoria = PiantePossedute.categoria 
+             GROUP BY Categoria.categoria`
+        );
+    } catch (error) {
+        console.error("SELECT error for mobile:", error);
+        return [];
+    }
+}

@@ -68,3 +68,12 @@ export async function remove<T extends DBRow>(table: string, id: number) : Promi
 export async function get<T extends DBRow>(table: string, id: number): Promise<T | null> {
     return DB.get<T>(table, id);
 }
+
+
+/**
+ * Recupera, per ogni categoria, il numero di piante che fanno parte di quella categoria
+ * @returns 
+ */
+export async function selezionaNumCategorie<T extends DBRow>(): Promise<T[]> {
+    return DB.selezionaNumeroCategorie<T>();
+}

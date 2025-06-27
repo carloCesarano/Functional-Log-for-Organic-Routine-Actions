@@ -69,3 +69,22 @@ export async function get<T extends DBRow>(table: string, id: number): Promise<T
         return null;
     }
 }
+
+export async function selezionaNumeroCategorie<T extends DBRow>(): Promise<T[]> {
+    try {
+        return getDB().table('piantePossedute')
+            .orderBy('categoria')
+            .uniqueKeys()
+            .then(categorie =>
+                Promise.all(categorie.map(categoria =>
+                        getDB().table('piantePossedute')
+                            .where('categoria').equals(categoria)
+                            .count()
+                            .then(count => ({ categoria, count } as unknown as T))
+                    ))
+                );
+    } catch (error) {
+        console.error("SELECT categories count error for web:", error);
+        return [];
+    }
+}
