@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
+import {LinearGradient} from "expo-linear-gradient";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types"; // importa il tuo tipo
-
-import { prossimiInterventiStyles as styles } from "../styles/prossimiInterventi";
+import { RootStackParamList } from "../types";
+import Button from "./Button";
 import {PiantaPosseduta} from "../model/PiantaPosseduta";
+import { prossimiInterventiStyles as styles } from "../styles/prossimiInterventi";
 
 type Props = {
     navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
@@ -54,30 +55,50 @@ export default function ProssimiInterventi({ navigation }: Props) {
         }
         caricaDati();
     }, []);
+
+    const setTitolo = (item: Intervento) : string => {
+        const base = `${item.pianta.getNome()} - ${item.tipo}`
+        const giorni = item.giorniRimanenti;
+        if (giorni === 0)
+            return `${base} (oggi)`;
+        if (giorni === 1)
+            return `${base} (tra 1 giorno)`;
+        if (giorni > 1)
+            return `${base} (tra ${giorni} giorni)`;
+        if (giorni === -1)
+            return `${base} (in ritardo di 1 giorno)`;
+        return `${base} (in ritardo di ${-giorni} giorni)`;
+    }
+
+    const setColore = (giorni: number) => {
+        if (giorni >= 0)
+            return "#7bc53d"
+        if (giorni <= -10)
+            return "#d94949"
+        return "#ece179"
+    }
+
     return (
         <View style={styles.wrapper}>
             <Text style={styles.title}>Prossimi interventi</Text>
             <View style={styles.container}>
                 {interventi.map((item) => {
-                    // Costruiamo un titolo descrittivo
-                    const titolo = `${item.pianta.getNome()} - ${item.tipo} (${item.giorniRimanenti} giorni)`;
-                    const stile =
-                        item.giorniRimanenti >= 0
-                            ? styles.cardGood
-                            : item.giorniRimanenti < -10
-                                ? styles.cardBad
-                                : styles.cardMeh;
-                    // Un key unico, index va bene qui se nessun altro id disponibile
+                    const titolo = setTitolo(item);
+                    const colore = setColore(item.giorniRimanenti);
                     return (
-                        <TouchableOpacity
-                            key={`${item.pianta.getId()}_${item.tipo}`}
-                            style={stile}
-                            onPress={() =>
-                                navigation.navigate("InfoPianta", { plantId: item.pianta.getId() })
-                            }
+                        <LinearGradient
+                            key={`${item.pianta.getId()}-${item.tipo}`}
+                            colors={["transparent", colore]}
+                            style={styles.gradient}
+                            start={{x: 0, y: 0}}
+                            end={{x: 1, y: 0}}
                         >
-                            <Text style={styles.cardText}>{titolo}</Text>
-                        </TouchableOpacity>
+                            <Button
+                                title={titolo}
+                                onPress={() => navigation.navigate("InfoPianta", {plantId: item.pianta.getId()})}
+                                buttonStyle={styles.button}
+                                textStyle={styles.cardText} />
+                        </LinearGradient>
                     );
                 })}
             </View>
