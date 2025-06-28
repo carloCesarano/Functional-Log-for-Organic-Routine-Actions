@@ -47,27 +47,13 @@ export async function remove(categoria: string, pianta: PiantaPosseduta): Promis
 }
 
 export async function update(nomeVecchio: string, nomeNuovo: string): Promise<void> {
-    //aggiornamento necessario per gestire la creazione di una nuova categoria
     const tabella = await getAll();
-    const esiste = tabella.some(riga => riga.categoria === nomeVecchio);
-
-    if (!esiste) {
-        // Creazione nuova categoria
-        await Database.insert<RigaTabella>("Categorie", {
-            categoria: nomeNuovo,
-            pianta: 0 // ID pianta generica
-        });
-        return;
-    }
-
-    //normale aggiornamento di una categoria esistente
     const filtered = tabella.filter(riga => riga.categoria === nomeVecchio);
     await Promise.all(filtered.map(async riga => {
         riga.categoria = nomeNuovo;
         await Database.update<RigaTabella>("Categorie", riga);
     }));
 }
-
 export async function filtraPerCategoria(categoria: string): Promise<PiantaPosseduta[]> {
     const tabella = await getAll();
     const filtered = tabella.filter(riga => riga.categoria === categoria);

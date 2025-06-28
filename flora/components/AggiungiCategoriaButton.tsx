@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, TextInput, StyleSheet, Alert } from "react-native";
+import { View, TextInput, StyleSheet, Alert, Modal } from "react-native";
 import Button from "./Button";
-import { insert, update } from "../database/CategorieDAO";
+import { update } from "../database/CategorieDAO";
+import {aggiungiCategoriaStyles as styles} from "../styles/aggiungiCategoria";
 
 interface AggiungiCategoriaButtonProps {
     onAggiuntaCompletata: () => void;
@@ -20,7 +21,6 @@ const AggiungiCategoriaButton: React.FC<AggiungiCategoriaButtonProps> = ({
         }
 
         try {
-            // Inserisce una nuova categoria con pianta ID 0 (generica)
             await update(nuovaCategoria, nuovaCategoria);
             setNuovaCategoria("");
             setModalVisible(false);
@@ -32,43 +32,50 @@ const AggiungiCategoriaButton: React.FC<AggiungiCategoriaButtonProps> = ({
     };
 
     return (
-        <View>
+        <View style={styles.container}>
             <Button
-                title="Aggiungi Nuova Categoria"
+                title="Aggiungi Categoria"
                 onPress={() => setModalVisible(true)}
             />
 
-            {modalVisible && (
-                <View>
-                    <TextInput
-
-                        placeholder="Nome della nuova categoria"
-                        value={nuovaCategoria}
-                        onChangeText={setNuovaCategoria}
-                        autoFocus={true}
-                    />
-
-                    <View>
-                        <Button
-                            title="Annulla"
-                            onPress={() => {
-                                setNuovaCategoria("");
-                                setModalVisible(false);
-                            }}
-
+            <Modal
+                visible={modalVisible}
+                transparent={true}
+                animationType="fade"
+                onRequestClose={() => setModalVisible(false)}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContainer}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Nome della nuova categoria"
+                            value={nuovaCategoria}
+                            onChangeText={setNuovaCategoria}
+                            autoFocus={true}
                         />
 
-                        <Button
-                            title="Conferma"
-                            onPress={handleAggiungiCategoria}
-                        />
+                        <View style={styles.buttonRow}>
+                            <Button
+                                title="Annulla"
+                                onPress={() => {
+                                    setNuovaCategoria("");
+                                    setModalVisible(false);
+                                }}
+                                style={styles.secondaryButton}
+                            />
+
+                            <Button
+                                title="Conferma"
+                                onPress={handleAggiungiCategoria}
+                                style={styles.primaryButton}
+                            />
+                        </View>
                     </View>
                 </View>
-            )}
+            </Modal>
         </View>
     );
 };
-
 
 
 export default AggiungiCategoriaButton;

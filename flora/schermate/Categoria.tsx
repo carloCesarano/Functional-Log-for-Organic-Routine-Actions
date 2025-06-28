@@ -8,6 +8,7 @@ import { contaPerCategoria } from "../database/CategorieDAO";
 import { categoriaStyles as styles } from "../styles/categoria";
 import { useNavigation } from "@react-navigation/native";
 import AggiungiCategoriaButton from "../components/AggiungiCategoriaButton";
+import ModificaCategoriaButton from "../components/ModificaCategoriaButton";
 
 interface CategoriaStat {
     categoria: string;
@@ -83,12 +84,12 @@ export default function Categoria() {
                         )}
 
                         <View style={styles.buttonContainer}>
-                            <Button
-                                title="Modifica Categoria"
-                                onPress={() => categoriaSelezionata && console.log("Modifica:", categoriaSelezionata.categoria)}
+                            <ModificaCategoriaButton
+                                onModificaCompletata={ricaricaCategorie}
+                                categoriaSelezionata={categoriaSelezionata?.categoria || null}
+                                categorieEsistenti={statsCategorie.map(c => c.categoria)}
                             />
                             <AggiungiCategoriaButton
-
                              onAggiuntaCompletata={ricaricaCategorie}/>
                             <Button
                                 title="Indietro"
