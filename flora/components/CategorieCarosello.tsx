@@ -1,46 +1,38 @@
 import React, { useEffect, useState } from "react";
-import {
-    View,
-    StyleSheet,
-    Text,
-    ActivityIndicator,
-    ScrollView,
-    Dimensions,
-    TouchableOpacity
-} from "react-native";
-import { DBRow, select } from "../database/Database";
-import {categoriaStyles as styles} from "../styles/categoria";
+import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
+import { categoriaStyles as styles } from "../styles/categoria";
 
-interface CarouselItem extends DBRow {
+interface CarouselItem {
     id: number;
     nome: string;
-    count:number;
+    count: number;
 }
 
 interface CategorieCaroselloProps {
     onCategoriaSelezionata: (categoria: string) => void;
-    categorieCount?: Array<{ categoria: string, count: number }>;
+    categorieCount?: Array<{ categoria: string, conteggio: number }>;
 }
 
-const CategorieCarosello = ({ onCategoriaSelezionata, categorieCount }: CategorieCaroselloProps) => {
+const CategorieCarosello: React.FC<CategorieCaroselloProps> = ({
+                                                                   onCategoriaSelezionata,
+                                                                   categorieCount
+                                                               }) => {
     const [carouselItems, setCarouselItems] = useState<CarouselItem[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedId, setSelectedId] = useState<number | null>(null);
 
     useEffect(() => {
-        const caricaCategorie = async () => {
+        const caricaCategorie = () => {
             try {
-                const items = categorieCount
-                    ? categorieCount.map((c, index) => ({
-                        id: index,
-                        nome: c.categoria,
-                        count: c.count
-                    }))
-                    : []; // Fallback se categorieCount è undefined
+                const items = categorieCount?.map((c, index) => ({
+                    id: index,
+                    nome: c.categoria,
+                    count: c.conteggio
+                })) || [];
 
                 setCarouselItems(items);
             } catch (error) {
-                console.error("Errore nel caricamento delle categorie:", error);
+                console.error("Errore nel caricamento:", error);
             } finally {
                 setLoading(false);
             }
@@ -64,9 +56,7 @@ const CategorieCarosello = ({ onCategoriaSelezionata, categorieCount }: Categori
             ]}
         >
             <Text style={styles.itemText}>{item.nome}</Text>
-            {'count' in item && (
-                <Text style={styles.countText}>{item.count} piante</Text>
-            )}
+            <Text style={styles.countText}>{item.count} piante</Text>
         </TouchableOpacity>
     );
 
@@ -93,11 +83,10 @@ const CategorieCarosello = ({ onCategoriaSelezionata, categorieCount }: Categori
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.scrollContent}
             >
-                {carouselItems.map((item) => renderItem(item))}
+                {carouselItems.map(renderItem)}
             </ScrollView>
         </View>
     );
 };
-
 
 export default CategorieCarosello;
