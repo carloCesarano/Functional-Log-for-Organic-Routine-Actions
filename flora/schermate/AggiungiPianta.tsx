@@ -11,6 +11,9 @@ import {aggiungiPiantaStyles as styles} from "../styles/aggiungiPianta";
 import {customPickerStyles as stylesCustomPicker} from "../styles/customPicker";
 import {select} from "../database/Database";
 import CustomPicker from "../components/CustomPicker";
+import {PiantaPosseduta} from "../model/PiantaPosseduta";
+import * as CategorieDAO from "../database/CategorieDAO";
+import {RigaTabella} from "../database/PiantePosseduteDAO";
 
 
 type Props = {
@@ -38,10 +41,9 @@ export default function AggiungiPianta({navigation}: Props) {
     useEffect(() => {
         const caricaCategorie = async () => {
             try {
-                const risultatoCategorie = await select<{ categoria: string }>("Categoria");
-                const nomiCategorie = risultatoCategorie.map(c => c.categoria);
 
-                setCategorie(nomiCategorie.sort());
+                const nomiCategorie = await CategorieDAO.getAllCategorie();
+                setCategorie(nomiCategorie);
             } catch (error) {
                 console.error("Errore nel caricamento delle categorie:", error);
             }
@@ -51,17 +53,15 @@ export default function AggiungiPianta({navigation}: Props) {
             try {
                 const risultatoSpecie = await select<{ specie: string }>("WikiPiante");
                 const nomiSpecieWiki = risultatoSpecie.map(s => s.specie);
-
                 setSpecieWiki(nomiSpecieWiki.sort());
             } catch (error) {
                 console.error("Errore nel caricamento delle specie:", error);
             }
         };
 
-        caricaCategorie().catch(error => console.error("Errore nel caricamento delle categorie:", error));
-        caricaSpecieWiki().catch(error => console.error("Errore nel caricamento delle Specie:", error));
+        caricaCategorie();
+        caricaSpecieWiki();
     }, []);
-
 
     const handleSelectPhoto = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -73,26 +73,45 @@ export default function AggiungiPianta({navigation}: Props) {
         }
     };
 
-    const handleSubmit = () => {
-        if (!nome || !dataAcq) {
-            Alert.alert("Errore", "Nome e Data di Acquisizione sono obbligatori")
+    const handleSubmit = async () => {
+
+        if (!nome || !specie) {
+            Alert.alert("Errore", "Nome e Specie sono campi obbligatori");
             return;
         }
 
+        try {
+            const nuovaPianta: RigaTabella = {
+                id: -1,     // id che non verrà utilizzato
+                nome: nome,
+                specie: specie,
+                dataAcq: dataAcq.toISOString(),
+                ultimaInnaff: ultimaInnaff.toISOString(),
+                ultimaPotat: ultimaPotat.toISOString(),
+                ultimoRinv: ultimoRinv.toISOString(),
+                note: note,
+                foto: foto ?? ""
+            };
 
-        console.log({
-            foto,
-            nome,
-            specie,
-            categoria,
-            dataAcq,
-            ultimaInnaff,
-            ultimaPotat,
-            ultimoRinv,
-            note
+            const pianta = await PiantaPosseduta.creaNuova(nuovaPianta);
 
-        });
-        Alert.alert("Successo", "Controlla il log per i dati");
+            if (categoria) {
+                await CategorieDAO.insert(categoria, pianta);
+            }
+
+            Alert.alert(
+                "Successo",
+                "La pianta '" + nome + "' è stata aggiunta correttamente",
+                [{ text: "OK", onPress: () => navigation.navigate('Home') }]
+            );
+
+        } catch (error) {
+            console.error("Errore durante l'aggiunta della pianta:", error);
+            Alert.alert(
+                "Errore",
+                "Si è verificato un errore durante l'aggiunta della pianta"
+            );
+        }
     };
 
     const handleCancel = () => {

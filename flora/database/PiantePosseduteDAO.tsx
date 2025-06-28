@@ -10,10 +10,10 @@ export interface RigaTabella extends Database.DBRow {
     id           : number;
     specie       : string;
     nome         : string;
-    dataAcq      : Date;
-    ultimaInnaff : Date;
-    ultimaPotat  : Date;
-    ultimoRinv   : Date;
+    dataAcq      : string;
+    ultimaInnaff : string;
+    ultimaPotat  : string;
+    ultimoRinv   : string;
     note         : string;
     foto         : string;
 }
@@ -37,8 +37,9 @@ export async function getAll(): Promise<PiantaPosseduta[]> {
  * @throws Error Se l'inserimento fallisce
  */
 export async function insert(pianta: PiantaPosseduta): Promise<void> {
-    const riga : Omit<RigaTabella, "id"> = generaRigaDaPianta(pianta);
-    const idInserito = await Database.insert<RigaTabella>("PiantePossedute", riga);
+    const { id, ...rigaSenzaId } = generaRigaDaPianta(pianta);
+    const idInserito = await Database.insert("PiantePossedute", rigaSenzaId);
+
     if (idInserito !== undefined)
         pianta.id = idInserito;
     else
@@ -132,10 +133,10 @@ export function generaRigaDaPianta(pianta: PiantaPosseduta): RigaTabella {
         id           : pianta.getId(),
         nome         : pianta.getNome(),
         specie       : pianta.getSpecie(),
-        dataAcq      : pianta.getDataAcq(),
-        ultimaInnaff : pianta.getUltimaInnaff(),
-        ultimaPotat  : pianta.getUltimaPotat(),
-        ultimoRinv   : pianta.getUltimoRinv(),
+        dataAcq      : pianta.getDataAcq().toISOString(),
+        ultimaInnaff : pianta.getUltimaInnaff().toISOString(),
+        ultimaPotat  : pianta.getUltimaPotat().toISOString(),
+        ultimoRinv   : pianta.getUltimoRinv().toISOString(),
         foto         : pianta.getFotoPath(),
         note         : pianta.getNote(),
     }
