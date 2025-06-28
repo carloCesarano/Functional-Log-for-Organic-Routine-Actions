@@ -3,6 +3,18 @@ import {RigaTabella, insert, generaPiantaDaRiga} from "../database/PiantePossedu
 const LIMITE_INNAFF : number =  3;
 const LIMITE_POTAT  : number = 14;
 const LIMITE_RINV   : number = 30;
+const IMAGE_MOCKUPS : {[key: string]: any} = {
+    "mockup:ficus"       : require("../assets/plantsMockup/FICUS.webp"     ),
+    "mockup:sanseveria"  : require("../assets/plantsMockup/SANSEVERIA.jpg" ),
+    "mockup:pothos"      : require("../assets/plantsMockup/POTHOS.jpg"     ),
+    "mockup:zamioculca"  : require("../assets/plantsMockup/ZAMIOCULCA.jpg" ),
+    "mockup:spatifillo"  : require("../assets/plantsMockup/SPATIFILLO.jpg" ),
+    "mockup:orchidea"    : require("../assets/plantsMockup/ORCHIDEA.jpg"   ),
+    "mockup:begonia"     : require("../assets/plantsMockup/BEGONIA.jpg"    ),
+    "mockup:anthurium"   : require("../assets/plantsMockup/ANTHURIUM.jpg"  ),
+    "mockup:peperoncino" : require("../assets/plantsMockup/PEPERONCINO.jpg"),
+    "mockup:basilico"    : require("../assets/plantsMockup/BASILICO.webp"  )
+}
 
 export class PiantaPosseduta {
     id           : number | undefined;
@@ -62,11 +74,19 @@ export class PiantaPosseduta {
     /** @returns Frequenza in giorni per rinvaso, default 1000 */
     getFreqRinv()     : number   { return this.freqRinv   ?? 1000 }
     /** @returns Percorso della foto collegata, stringa vuota se non definito */
-    getFoto()         : string   { return this.foto ?? ""         }
+    getFotoPath()     : string   { return this.foto ?? ""         }
     /** @returns Note aggiuntive */
     getNote()         : string   { return this.note               }
     /** @returns Categoria */
     getCategorie()    : string[] { return this.categorie          }
+
+    getFoto() : any {
+        if (this.getFotoPath() === "")
+            return require("../assets/plantsMockup/generic.png");
+        return IMAGE_MOCKUPS[this.getFotoPath()]
+            ?? {uri: this.getFotoPath()}
+            ?? require("../assets/plantsMockup/generic.png");
+    }
 
     /** Crea una nuova pianta e la inserisce nel database.
      *
@@ -174,7 +194,33 @@ export class PiantaPosseduta {
         const potat  = normalizza(this.giorniAllaProssimaPotat(),  LIMITE_POTAT );
         const rinv   = normalizza(this.giorniAlProssimoRinv(),     LIMITE_RINV  );
 
-        return innaff * potat * rinv;
+        const valori : number[] = [innaff, potat, rinv];
+        if (valori.some(v => v <= 0.3))
+            return (valori.reduce((a,b) => a+b))/10;
+        return valori.reduce((a,b) => a*b);
     }
+
+    coloreStato() : string {
+        const stato = this.stato();
+
+        let r: number, g: number, b: number;
+        if (stato <= 0.5) {
+            const t = stato / 0.5;
+            r = 230;
+            g = Math.round(125 + (210 - 125) * t);
+            b = 125;
+        } else if (stato < 0.85) {
+            const t = (stato - 0.5) / (0.85 - 0.5);
+            r = Math.round(230 + (115 - 230) * t);
+            g = Math.round(210 + (205 - 210) * t);
+            b = Math.round(125 + (110 - 125) * t);
+        } else {
+            r = 115;
+            g = 205;
+            b = 110;
+        }
+
+        return `rgb(${r},${g},${b})`;
+    };
 
 }

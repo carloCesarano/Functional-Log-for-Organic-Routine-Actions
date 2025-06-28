@@ -1,32 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
+import { PiantaPosseduta } from "../model/PiantaPosseduta";
+import { get } from "../database/PiantePosseduteDAO"
 import { piantaButtonStyles } from "../styles/piantaButton";
-import { DBRow, get } from "../database/Database";
+import {LinearGradient} from "expo-linear-gradient";
 
 interface Props {
     piantaId: number;
 }
 
-interface PiantaInfo extends DBRow {
-    nome: string;
-    foto: string | null;
-}
-
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, "InfoPianta">;
 
 export default function PiantaButton({ piantaId }: Props) {
-    const [pianta, setPianta] = useState<PiantaInfo | null>(null);
+    const [pianta, setPianta] = useState<PiantaPosseduta | null>(null);
     const navigation = useNavigation<NavigationProp>();
 
     useEffect(() => {
         const caricaPianta = async () => {
-            const info = await get<PiantaInfo>("PiantePossedute", piantaId);
-            if (info) {
-                setPianta(info);
-            }
+            setPianta(await get(piantaId))
         };
         caricaPianta();
     }, [piantaId]);
@@ -37,14 +31,23 @@ export default function PiantaButton({ piantaId }: Props) {
 
     return (
         <TouchableOpacity style={piantaButtonStyles.button} onPress={handlePress}>
-            <View>
+            <LinearGradient
+                colors={["#e2f0d5", pianta?.coloreStato() ?? "#ababab"]}
+                start={{x: 0, y: 0}}
+                end={{x:0.8, y: 0.8}}
+                style={piantaButtonStyles.gradient}
+            >
                 <Image
-                    source={pianta?.foto ? { uri: pianta.foto } : require('../assets/plant.png')}
+                    source={pianta?.getFoto()}
                     style={piantaButtonStyles.image}
-                    defaultSource={require('../assets/plant.png')}
+                    defaultSource={require('../assets/plantsMockup/generic.png')}
                 />
-                <Text style={piantaButtonStyles.text}>{pianta?.nome ?? 'Caricamento...'}</Text>
-            </View>
+                <Text
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                    style={piantaButtonStyles.text}
+                >{pianta?.getNome() ?? 'Caricamento...'}</Text>
+            </LinearGradient>
         </TouchableOpacity>
     );
 }

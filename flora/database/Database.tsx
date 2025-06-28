@@ -55,7 +55,7 @@ function popolaDB(db: SQLiteDatabase): void {
     INSERT INTO WikiPiante (specie, freqInnaff, freqPotat, freqRinv) VALUES
         ('Ficus',              7,  60, 365),
         ('Sanseveria',        14, 180, 730),
-        ('Photos',             5,  30, 365),
+        ('Pothos',             5,  30, 365),
         ('Zamioculca',        10,  90, 730),
         ('Spatifillo',         4,  45, 365),
         ('Orchidea',           7,  60, 730),
@@ -74,16 +74,16 @@ function popolaDB(db: SQLiteDatabase): void {
         ('Basilico',           2,  15,  90),
         ('Peperoncino',        3,  30, 180);
     INSERT INTO PiantePossedute (nome, specie, dataAcq, ultimaInnaff, ultimaPotat, ultimoRinv, note, foto) VALUES
-        ('Fico da salotto',       'Ficus',       '2024-10-01', '2025-06-25', '2025-05-01', '2025-01-01', '', ''),
-        ('Serpente verde',        'Sanseveria',  '2023-05-10', '2025-06-20', '2024-12-20', '2023-06-01', '', ''),
-        ('Rampicante da ufficio', 'Photos',      '2024-09-15', '2025-06-26', '2025-06-01', '2025-01-01', '', ''),
-        ('Zamia',                 'Zamioculca',  '2024-03-20', '2025-06-22', '2025-04-01', '2023-03-20', '', ''),
-        ('Fiore della pace',      'Spatifillo',  '2025-02-01', '2025-06-26', '2025-05-10', '2025-02-01', '', ''),
-        ('Mini orchidea',         'Orchidea',    '2024-12-25', '2025-06-20', '2025-06-01', '2024-12-25', '', ''),
-        ('Begonia da cucina',     'Begonia',     '2025-04-15', '2025-06-24', '2025-06-01', '2025-04-15', '', ''),
-        ('Rosso passione',        'Anthurium',   '2024-11-11', '2025-06-25', '2025-05-01', '2024-11-11', '', ''),
-        ('Peperoncino nano',      'Peperoncino', '2025-03-01', '2025-06-26', '2025-05-30', '2025-03-01', '', ''),
-        ('Basilico fresco',       'Basilico',    '2025-06-01', '2025-06-27', '2025-06-20', '2025-06-10', '', '');
+        ('Fico da salotto',       'Ficus',       '2024-10-01', '2025-06-25', '2025-05-01', '2025-01-01', '', 'mockup:ficus'      ),
+        ('Serpente verde',        'Sanseveria',  '2023-05-10', '2025-06-20', '2024-12-20', '2023-06-01', '', 'mockup:sanseveria' ),
+        ('Rampicante da ufficio', 'Pothos',      '2024-09-15', '2025-06-26', '2025-06-01', '2025-01-01', '', 'mockup:pothos'     ),
+        ('Zamia',                 'Zamioculca',  '2024-03-20', '2025-06-22', '2025-04-01', '2023-03-20', '', 'mockup:zamioculca' ),
+        ('Fiore della pace',      'Spatifillo',  '2025-02-01', '2025-06-26', '2025-05-10', '2025-02-01', '', 'mockup:spatifillo' ),
+        ('Mini orchidea',         'Orchidea',    '2024-12-25', '2025-06-20', '2025-06-01', '2024-12-25', '', 'mockup:orchidea'   ),
+        ('Begonia da cucina',     'Begonia',     '2025-04-15', '2025-06-24', '2025-06-01', '2025-04-15', '', 'mockup:begonia'    ),
+        ('Rosso passione',        'Anthurium',   '2024-11-11', '2025-06-25', '2025-05-01', '2024-11-11', '', 'mockup:anthurium'  ),
+        ('Peperoncino nano',      'Peperoncino', '2025-03-01', '2025-06-23', '2025-05-24', '2025-03-01', '', 'mockup:peperoncino'),
+        ('Basilico fresco',       'Basilico',    '2025-06-01', '2025-06-25', '2025-06-20', '2025-06-10', '', 'mockup:basilico'   );
     INSERT INTO Categorie (categoria, pianta) VALUES
         ('Salotto',     1),
         ('Preferite',   1),

@@ -29,7 +29,6 @@ export const globalStyles = StyleSheet.create({
         color: 'black',
         fontSize: 25,
         fontWeight: '600',
-
     },
 
     addButton: {
@@ -43,10 +42,6 @@ export const globalStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 5,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
     },
 
     titolo: {

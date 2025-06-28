@@ -130,7 +130,7 @@ export default function InfoPianta({ navigation, route }: Props) {
                             {plantData.foto ? (
                                 <Image source={{ uri: plantData.foto }} style={styles.plantImage} />
                             ) : (
-                                <Image source={require("../assets/plant.png")} style={styles.plantImage} />
+                                <Image source={require("../assets/plantsMockup/generic.png")} style={styles.plantImage} />
                             )}
                             {isEditing && (
                                 <View style={styles.editOverlay}>

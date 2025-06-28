@@ -136,7 +136,7 @@ export function generaRigaDaPianta(pianta: PiantaPosseduta): RigaTabella {
         ultimaInnaff : pianta.getUltimaInnaff(),
         ultimaPotat  : pianta.getUltimaPotat(),
         ultimoRinv   : pianta.getUltimoRinv(),
-        foto         : pianta.getFoto(),
+        foto         : pianta.getFotoPath(),
         note         : pianta.getNote(),
     }
 }

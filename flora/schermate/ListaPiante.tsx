@@ -57,7 +57,7 @@ export default function ListaPiante({ navigation, route }: Props) {
             if (statiSelezionati.includes("Da rinvasare"))
                 filtrate = filtrate.filter(pianta => pianta.daRinvasare());
 
-            setPianteMostrate(filtrate);
+            setPianteMostrate(filtrate.sort((a,b) => b.getId() - a.getId()));
         };
 
         filtraPiante();
@@ -86,19 +86,6 @@ export default function ListaPiante({ navigation, route }: Props) {
                 setMostraStati(true);
                 break;
         }
-    };
-
-    const statoColor = (pianta: PiantaPosseduta) => {
-        const stato = pianta.stato();
-        const r = stato < 0.5
-            ? 255
-            : Math.round(255 - (stato - 0.5) * 2 * 255); // da 255 a 0
-        const g = stato < 0.5
-            ? Math.round(stato * 2 * 150) // da 0 a 255
-            : 150;
-        const b = 0;
-
-        return `rgb(${r},${g},${b})`;
     };
 
     const handleStatoSelezionato = (stato: string) => {
@@ -133,7 +120,7 @@ export default function ListaPiante({ navigation, route }: Props) {
                         onPress={() => navigation.navigate('InfoPianta', { plantId: item.getId() })}
                     >
                         <LinearGradient
-                            colors={["white", statoColor(item)]}
+                            colors={["white", item.coloreStato()]}
                             start={{x: 0.25, y: 0}}
                             end={{x: 1, y: 0}}
                             style={styles.gradient}
@@ -146,9 +133,8 @@ export default function ListaPiante({ navigation, route }: Props) {
                                 </Text>
                             </View>
                             <Image
-                                source={item.getFoto() ? { uri: item.getFoto() } : require('../assets/plant.png')}
+                                source={item.getFoto()}
                                 style={styles.cardImage}
-                                defaultSource={require('../assets/plant.png')}
                             />
                         </LinearGradient>
                     </TouchableOpacity>
