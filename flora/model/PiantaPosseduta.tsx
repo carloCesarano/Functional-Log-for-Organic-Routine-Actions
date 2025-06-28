@@ -1,5 +1,9 @@
 import {RigaTabella, insert, generaPiantaDaRiga} from "../database/PiantePosseduteDAO";
 
+const LIMITE_INNAFF : number =  3;
+const LIMITE_POTAT  : number = 14;
+const LIMITE_RINV   : number = 30;
+
 export class PiantaPosseduta {
     id           : number | undefined;
     specie       : string;
@@ -57,15 +61,14 @@ export class PiantaPosseduta {
     getUltimoRinv()   : Date     { return this.ultimoRinv         }
     /** @returns Frequenza in giorni per rinvaso, default 1000 */
     getFreqRinv()     : number   { return this.freqRinv   ?? 1000 }
-    /** @returns Percorso della foto collegata */
+    /** @returns Percorso della foto collegata, stringa vuota se non definito */
     getFoto()         : string   { return this.foto ?? ""         }
     /** @returns Note aggiuntive */
     getNote()         : string   { return this.note               }
     /** @returns Categoria */
     getCategorie()    : string[] { return this.categorie          }
 
-    /**
-     * Crea una nuova pianta e la inserisce nel database.
+    /** Crea una nuova pianta e la inserisce nel database.
      *
      * @param riga Dati completi della pianta da creare
      * @returns Istanza della istanza con id aggiornato
@@ -77,7 +80,7 @@ export class PiantaPosseduta {
         return pianta;
     }
 
-    /*  Restituisce il numero di giorni che mancano
+    /**  Restituisce il numero di giorni che mancano
      *  alla prossima innaffiatura. Nel caso il numero
      *  sia <=0, allora la pianta è 'Da innaffiare'.
      */
@@ -88,7 +91,7 @@ export class PiantaPosseduta {
         return Math.ceil((prossima.getTime() - oggi.getTime()) / (1000 * 60 * 60 * 24))
     }
 
-    /*  Restituisce il numero di giorni che mancano
+    /**  Restituisce il numero di giorni che mancano
      *  alla prossima potatura. Nel caso il numero
      *  sia <=0, allora la pianta è 'Da potare'.
      */
@@ -99,9 +102,11 @@ export class PiantaPosseduta {
         return Math.ceil((prossima.getTime() - oggi.getTime()) / (1000 * 60 * 60 * 24))
     }
 
-    /*  Restituisce il numero di giorni che mancano
-     *  al prossimo rinvaso. Nel caso il numero
-     *  sia <=0, allora la pianta è 'Da rinvasare'.
+    /** Restituisce il numero di giorni che mancano
+     * al prossimo rinvaso. Nel caso il numero
+     * sia <=0, allora la pianta è 'Da rinvasare'.
+     *
+     * @returns Numero di giorni al prossimo rinvaso
      */
     giorniAlProssimoRinv() : number {
         const oggi = new Date();
@@ -110,9 +115,46 @@ export class PiantaPosseduta {
         return Math.ceil((prossima.getTime() - oggi.getTime()) / (1000 * 60 * 60 * 24))
     }
 
-    LIMITE_INNAFF : number = 3;
-    LIMITE_POTAT  : number = 14;
-    LIMITE_RINV   : number = 30;
+    /** Controlla se la pianta è da innaffiare in
+     * base al numero di giorni rimanenti alla
+     * prossima innaffiatura.
+     *
+     * @returns true se è da innaffiare
+     */
+    daInnaffiare() : boolean {
+        return this.giorniAllaProssimaInnaff() <= 0;
+    }
+
+    /** Controlla se la pianta è da potare in
+     * base al numero di giorni rimanenti alla
+     * prossima potatura.
+     *
+     * @returns true se è da potare
+     */
+    daPotare() : boolean {
+        return this.giorniAllaProssimaPotat() <= 0;
+    }
+
+    /** Controlla se la pianta è da rinvasare in
+     * base al numero di giorni rimanenti al
+     * prossimo rinvaso.
+     *
+     * @returns true se è da rinvasare
+     */
+    daRinvasare() : boolean {
+        return this.giorniAlProssimoRinv() <= 0;
+    }
+
+    /** Controlla se la pianta è in salute in
+     * base a se necessita interventi
+     *
+     * @returns true se è in salute
+     */
+    inSalute() : boolean {
+        return !this.daInnaffiare()
+            && !this.daPotare()
+            && !this.daRinvasare();
+    }
 
     /**
      * Calcola lo stato di salute della pianta da 0 (pessima)
@@ -128,12 +170,11 @@ export class PiantaPosseduta {
             return giorni/10 + 1;
         }
 
-        const innaff = normalizza(this.giorniAllaProssimaInnaff(), this.LIMITE_INNAFF);
-        const potat = normalizza(this.giorniAllaProssimaPotat(), this.LIMITE_POTAT);
-        const rinv = normalizza(this.giorniAlProssimoRinv(), this.LIMITE_RINV);
-        const valori = [innaff, potat, rinv].filter(v => !isNaN(v));
-        if (valori.length === 0) return 0;
-        return valori.reduce((a, b) => a + b, 0) / valori.length;
+        const innaff = normalizza(this.giorniAllaProssimaInnaff(), LIMITE_INNAFF);
+        const potat  = normalizza(this.giorniAllaProssimaPotat(),  LIMITE_POTAT );
+        const rinv   = normalizza(this.giorniAlProssimoRinv(),     LIMITE_RINV  );
+
+        return innaff * potat * rinv;
     }
 
 }

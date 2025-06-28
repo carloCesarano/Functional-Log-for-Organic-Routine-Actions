@@ -48,11 +48,20 @@ export default function ListaPiante({ navigation, route }: Props) {
                 );
             }
 
+            if (statiSelezionati.includes("In salute"))
+                filtrate = filtrate.filter(pianta => pianta.inSalute());
+            if (statiSelezionati.includes("Da innaffiare"))
+                filtrate = filtrate.filter(pianta => pianta.daInnaffiare());
+            if (statiSelezionati.includes("Da potare"))
+                filtrate = filtrate.filter(pianta => pianta.daPotare());
+            if (statiSelezionati.includes("Da rinvasare"))
+                filtrate = filtrate.filter(pianta => pianta.daRinvasare());
+
             setPianteMostrate(filtrate);
         };
 
         filtraPiante();
-    }, [categorieSelezionate, allPiante, searched]);
+    }, [categorieSelezionate, statiSelezionati, allPiante, searched]);
 
     useEffect(() => {
         const caricaCategorie = async () => {
@@ -91,6 +100,23 @@ export default function ListaPiante({ navigation, route }: Props) {
 
         return `rgb(${r},${g},${b})`;
     };
+
+    const handleStatoSelezionato = (stato: string) => {
+        setStatiSelezionati(prev => {
+            // Se era già selezionato, deseleziona
+            if (prev.includes(stato))
+                return prev.filter(s => s !== stato)
+
+            // Se si seleziona "In salute", deseleziona
+            // gli altri stati
+            if (stato === "In salute")
+                return [stato];
+
+            // Se si seleziona uno stato diverso da "In salute",
+            // rimuovi "In salute"
+            return [...prev.filter(s => s !== "In salute"), stato];
+        });
+    }
 
     return (
         <Background>
@@ -188,14 +214,7 @@ export default function ListaPiante({ navigation, route }: Props) {
                                     key={index}
                                     title={stato}
                                     checked={statiSelezionati.includes(stato)}
-                                    onPress={() => {
-                                        setStatiSelezionati(prev => {
-                                            if (prev.includes(stato))
-                                                return prev.filter(c => c !== stato);
-                                            else
-                                                return [...prev, stato];
-                                        })
-                                    }}
+                                    onPress={() => handleStatoSelezionato(stato)}
                                     textStyle={styles.filterOptionText}
                                 />
                             ))}
