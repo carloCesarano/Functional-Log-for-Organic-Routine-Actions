@@ -8,4 +8,6 @@ export type RootStackParamList = {
     ListaPiante: {searched: string};
     Analisi: undefined,
     Categoria: undefined,
+
+    DBTest: undefined,
 };
