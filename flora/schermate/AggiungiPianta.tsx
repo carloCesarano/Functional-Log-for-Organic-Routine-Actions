@@ -21,18 +21,18 @@ type Props = {
 };
 
 export default function AggiungiPianta({navigation}: Props) {
-    const [foto,              setFoto]              = useState<string | null>(null);
-    const [nome,              setNome]              = useState("");
-    const [dataAcq,           setDataAcq]           = useState(new Date());
-    const [categoria,         setCategoria]         = useState("");
-    const [categorie, setCategorie] = useState<string[]>([]);
+    const [foto,         setFoto]         = useState<string | null>(null);
+    const [nome,         setNome]         = useState("");
+    const [dataAcq,      setDataAcq]      = useState(new Date());
+    const [categoria,    setCategoria]    = useState("");
+    const [categorie,    setCategorie]    = useState<string[]>([]);
 
-    const [specie,         setSpecie]         = useState("");
-    const [specieWiki, setSpecieWiki] = useState<string[]>([]);
-    const [ultimaInnaff,      setUltimaInnaff]      = useState(new Date());
-    const [ultimaPotat,       setUltimaPotat]       = useState(new Date());
-    const [ultimoRinv,        setUltimoRinv]        = useState(new Date());
-    const [note,              setNote]              = useState("");
+    const [specie,       setSpecie]       = useState("");
+    const [specieWiki,   setSpecieWiki]   = useState<string[]>([]);
+    const [ultimaInnaff, setUltimaInnaff] = useState(new Date());
+    const [ultimaPotat,  setUltimaPotat]  = useState(new Date());
+    const [ultimoRinv,   setUltimoRinv]   = useState(new Date());
+    const [note,         setNote]         = useState("");
 
     const [categoriaModalVisible, setCategoriaModalVisible] = useState(false);
     const [specieModalVisible, setSpecieModalVisible] = useState(false);

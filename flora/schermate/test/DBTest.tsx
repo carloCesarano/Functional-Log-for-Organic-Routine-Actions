@@ -1,35 +1,32 @@
 import React, {useEffect, useState} from "react";
 import {ScrollView, Text} from 'react-native';
-import {NativeStackScreenProps} from "@react-navigation/native-stack";
-import {RootStackParamList} from "../../types";
 import {PiantaPosseduta} from "../../model/PiantaPosseduta";
-import {insert, getAll} from "../../database/PiantePosseduteDAO";
-
-type Props = NativeStackScreenProps<RootStackParamList, 'DBTest'>;
+import {getAll} from "../../database/PiantePosseduteDAO";
 
 
-export default function DBTest({ navigation }: Props) {
-    const [testo, setTesto] = useState<string>("")
+export default function DBTest() {
+    const [testo, setTesto] = useState<string>("");
 
-    const piantaTest = new PiantaPosseduta({
-        id: 0,
-        specie: "Ficus",
-        nome: "Alberto",
-        dataAcq: "2025-01-01",
-        ultimaInnaff: "2025-01-02",
-        ultimaPotat: "2025-01-03",
-        ultimoRinv: "2025-01-04",
-        foto: "",
-        note: "NOTES"
-    })
+
 
     useEffect(() => {
-        const testInsert = async (pianta: PiantaPosseduta) => {
-            await insert(pianta);
+        const testInsert = async () => {
+            await PiantaPosseduta.creaNuova({
+                id: -1,     // id che non verrà utilizzato
+                nome: "Alberto",
+                specie: "Ficus",
+                dataAcq: (new Date()).toISOString(),
+                ultimaInnaff: (new Date()).toISOString(),
+                ultimaPotat: (new Date()).toISOString(),
+                ultimoRinv: (new Date()).toISOString(),
+                note: "Note",
+                foto: ""
+            });
+
             const piante : PiantaPosseduta[] = await getAll();
 
-            let tipiEValori = '';
             for (const pianta of piante) {
+                let tipiEValori = '';
 
                 for (const key in pianta) {
                     // @ts-ignore
@@ -39,10 +36,10 @@ export default function DBTest({ navigation }: Props) {
                 }
 
                 tipiEValori += "\n\n";
+                setTesto(tipiEValori);
             }
-            setTesto(tipiEValori);
         };
-        testInsert(piantaTest);
+        testInsert();
     }, []);
 
     return (
