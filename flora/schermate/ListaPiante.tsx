@@ -150,7 +150,7 @@ export default function ListaPiante({ navigation, route }: Props) {
 
                 <View style={styles.filterButtonContainer}>
                     <Button
-                        title="Filtra:"
+                        title="Filtra"
                         onPress={handleFiltriCliccato}
                     />
 
