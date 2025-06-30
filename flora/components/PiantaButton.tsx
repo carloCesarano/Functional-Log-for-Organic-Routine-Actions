@@ -16,11 +16,18 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, "InfoPianta"
 
 export default function PiantaButton({ piantaId }: Props) {
     const [pianta, setPianta] = useState<PiantaPosseduta | null>(null);
+    const [foto,   setFoto  ] = useState<any>(null);
     const navigation = useNavigation<NavigationProp>();
 
     useEffect(() => {
         const caricaPianta = async () => {
-            setPianta(await get(piantaId))
+            const piantaCaricata = await get(piantaId);
+            setPianta(piantaCaricata);
+
+            if (piantaCaricata)
+                setFoto(await piantaCaricata.getFoto());
+            else
+                setFoto(require("../assets/plantsMockup/generic.png"));
         };
         caricaPianta();
     }, [piantaId]);
@@ -38,7 +45,7 @@ export default function PiantaButton({ piantaId }: Props) {
                 style={piantaButtonStyles.gradient}
             >
                 <Image
-                    source={pianta?.getFoto()}
+                    source={foto}
                     style={piantaButtonStyles.image}
                     defaultSource={require('../assets/plantsMockup/generic.png')}
                 />

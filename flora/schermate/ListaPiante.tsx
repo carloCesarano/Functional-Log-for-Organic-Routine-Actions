@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import {Text, FlatList, View, Image, TouchableOpacity, ScrollView} from "react-native";
-import { CheckBox } from 'react-native-elements';
+import { Text, FlatList, View, TouchableOpacity, ScrollView } from "react-native";
+import { CheckBox } from "react-native-elements";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
-import {PiantaPosseduta} from "../model/PiantaPosseduta";
+import { PiantaPosseduta } from "../model/PiantaPosseduta";
 import * as PiantePosseduteDAO from "../database/PiantePosseduteDAO";
 import * as CategorieDAO from "../database/CategorieDAO";
 import Background from "../components/Background";
 import NavBar from "../components/NavBar";
 import Button from "../components/Button";
+import CardPianta from "../components/CardPianta";
 import AggiungiPiantaButton from "../components/AggiungiPiantaButton";
 import { globalStyles } from "../styles/global";
 import { listaPianteStyles as styles } from "../styles/listaPiante";
-import {LinearGradient} from "expo-linear-gradient";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ListaPiante'>;
 
@@ -115,29 +115,7 @@ export default function ListaPiante({ navigation, route }: Props) {
                 data={pianteMostrate}
                 keyExtractor={(item) => item.getId().toString()}
                 renderItem={({ item }) => (
-                    <TouchableOpacity
-                        style={styles.card}
-                        onPress={() => navigation.navigate('InfoPianta', { plantId: item.getId() })}
-                    >
-                        <LinearGradient
-                            colors={["white", item.coloreStato()]}
-                            start={{x: 0.25, y: 0}}
-                            end={{x: 1, y: 0}}
-                            style={styles.gradient}
-                        >
-                            <View style={styles.cardContent}>
-                                <Text style={styles.nome}>{item.getNome()}</Text>
-                                <Text style={styles.categoria}>{item.getSpecie()}</Text>
-                                <Text style={styles.acquisizione}>
-                                    Acquisita: {item.getDataAcq().toLocaleDateString()}
-                                </Text>
-                            </View>
-                            <Image
-                                source={item.getFoto()}
-                                style={styles.cardImage}
-                            />
-                        </LinearGradient>
-                    </TouchableOpacity>
+                    <CardPianta pianta={item} />
                 )}
             />
 
