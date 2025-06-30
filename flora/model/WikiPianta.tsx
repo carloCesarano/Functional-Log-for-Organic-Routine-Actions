@@ -59,7 +59,8 @@ export class WikiPianta {
 
     /** @returns Istanza della foto generica */
     getFoto() : any {
-        return IMAGE_MOCKUPS['mockup:' + this.getSpecie()]
+        return IMAGE_MOCKUPS[this.getFotoPath()]
+            ?? IMAGE_MOCKUPS['mockup:' + this.getSpecie()]
             ?? {uri: this.getFotoPath()}
             ?? IMAGE_MOCKUPS["mockup:generic"];
     }

@@ -28,6 +28,7 @@ export const customPickerStyles = StyleSheet.create({
         padding: 20,
         borderRadius: 20,
         minHeight: 250,
+        maxHeight: "90%",
         alignSelf: 'center',
         marginVertical: 20,
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Modal, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Button from './Button';
 
-type CustomPickerProps = {
+type Props = {
     value: string;
     onValueChange: (value: string) => void;
     options: string[];
@@ -14,7 +14,7 @@ type CustomPickerProps = {
     styles: any;
 };
 
-export default function CustomPicker({value, onValueChange, options, placeholder = "Seleziona un'opzione", isVisible, onClose, onOpen, styles}: CustomPickerProps) {
+export default function SinglePicker({value, onValueChange, options, placeholder = "Seleziona un'opzione", isVisible, onClose, onOpen, styles}: Props) {
 
     return (
         <>
@@ -22,7 +22,11 @@ export default function CustomPicker({value, onValueChange, options, placeholder
                 style={styles.input}
                 onPress={onOpen}
             >
-                <Text style={{ color: value ? "#000" : "#888", marginTop: 13, fontSize: 16}}>
+                <Text
+                    style={{ color: value ? "#000" : "#888", marginTop: 13, fontSize: 16}}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                >
                     {value || placeholder}
                 </Text>
             </TouchableOpacity>
@@ -40,11 +44,12 @@ export default function CustomPicker({value, onValueChange, options, placeholder
                                 onValueChange(itemValue);
                                 onClose();
                             }}
-
+                            style={{width: "100%", height: 150}}
+                            itemStyle={{color: 'black', fontSize: 18}}
                         >
-                            <Picker.Item label={placeholder} value="" />
+                            <Picker.Item label={placeholder} value="" style={{color: "black"}} />
                             {options.map((option, index) => (
-                                <Picker.Item key={index} label={option} value={option} />
+                                <Picker.Item key={index} label={option} value={option} style={{color: "black"}} />
                             ))}
                         </Picker>
 

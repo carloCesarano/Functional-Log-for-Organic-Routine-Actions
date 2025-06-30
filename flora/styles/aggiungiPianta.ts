@@ -1,7 +1,7 @@
 import {StyleSheet} from "react-native";
 
 export const aggiungiPiantaStyles = StyleSheet.create({
-    title: {
+    titolo: {
         fontSize: 24,
         fontWeight: "bold",
         marginBottom: 12,
@@ -24,7 +24,7 @@ export const aggiungiPiantaStyles = StyleSheet.create({
         gap: 12,
         paddingVertical: 8,
     },
-    photoBox: {
+    fotoContainer: {
         width: 120,
         height: 120,
         backgroundColor: "#fff",
@@ -34,12 +34,12 @@ export const aggiungiPiantaStyles = StyleSheet.create({
         overflow: "hidden",
         marginBottom: 16,
     },
-    photo: {
+    foto: {
         width: "100%",
         height: "100%",
         borderRadius: 8,
     },
-    photoText: {
+    fotoText: {
         color: "#888",
         fontWeight: "500",
     },
@@ -53,7 +53,23 @@ export const aggiungiPiantaStyles = StyleSheet.create({
         color: "black",
         borderWidth: 0,
     },
-    picker: {
+    categoriePicker: {
+        position: 'absolute',
+        bottom: 70,
+        backgroundColor: 'white',
+        borderRadius: 8,
+        padding: 10,
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.25,
+        shadowRadius: 3.80,
+        elevation: 5,
+        zIndex: 1,
+        minWidth: 200,
+        maxHeight: 300,
+        paddingBottom: 20,
+    },
+    datePicker: {
         height: 44,
         alignSelf: "stretch",
         backgroundColor: "#fff",
@@ -63,26 +79,25 @@ export const aggiungiPiantaStyles = StyleSheet.create({
         color: "#2E4A2C",
         borderWidth: 0,
     },
-    pickerText: {
+    datePickerText: {
         fontSize: 16,
         fontWeight: "normal",
     },
-    buttonContainer: {
+    buttons: {
         flexDirection: "row",
         justifyContent: "space-between",
         marginBottom: 10,
         marginTop: 10
     },
-    cancelButton: {
+    annullaButton: {
         backgroundColor: "#C69C91",
         paddingVertical: 12,
         paddingHorizontal: 24,
         borderRadius: 10,
         flex: 1,
         marginRight: 8,
-
     },
-    addButton: {
+    aggiungiButton: {
         backgroundColor: "#7DBB8D",
         paddingVertical: 12,
         paddingHorizontal: 24,
@@ -90,13 +105,7 @@ export const aggiungiPiantaStyles = StyleSheet.create({
         flex: 1,
         marginLeft: 8,
     },
-    cancelText: {
-        color: "#2E4A2C",
-        textAlign: "center",
-        fontWeight: "bold",
-
-    },
-    addText: {
+    buttonText: {
         color: "#2E4A2C",
         textAlign: "center",
         fontWeight: "bold",
