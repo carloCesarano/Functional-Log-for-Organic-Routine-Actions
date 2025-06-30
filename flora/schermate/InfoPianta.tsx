@@ -4,9 +4,9 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import * as DAO from "../database/PiantePosseduteDAO";
 import {PiantaPosseduta} from "../model/PiantaPosseduta";
-import Background from "../components/Background";
-import NavBar from "../components/NavBar";
-import Button from "../components/Button";
+import Background from "../components/commons/Background";
+import NavBar from "../components/navbar/NavBar";
+import Button from "../components/inputs/Button";
 import { styles } from "../styles/infoPianta";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'InfoPianta'>;

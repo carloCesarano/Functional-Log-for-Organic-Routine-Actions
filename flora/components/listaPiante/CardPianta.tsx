@@ -1,10 +1,10 @@
-import {PiantaPosseduta} from "../model/PiantaPosseduta";
+import {PiantaPosseduta} from "../../model/PiantaPosseduta";
 import {useNavigation} from "@react-navigation/native";
 import {StackNavigationProp} from "@react-navigation/stack";
-import {RootStackParamList} from "../types";
+import {RootStackParamList} from "../../types";
 import React, {useEffect, useState} from "react";
 import {Image, Text, TouchableOpacity, View} from "react-native";
-import {listaPianteStyles as styles} from "../styles/listaPiante";
+import {listaPianteStyles as styles} from "../../styles/listaPiante";
 import {LinearGradient} from "expo-linear-gradient";
 
 export default function CardPianta({pianta}: {pianta: PiantaPosseduta}) {

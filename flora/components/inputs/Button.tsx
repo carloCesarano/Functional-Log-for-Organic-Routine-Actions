@@ -1,6 +1,6 @@
 import React from "react";
 import {TouchableOpacity, Text, StyleProp, ViewStyle, TextStyle} from "react-native";
-import {globalStyles} from "../styles/global";
+import {globalStyles} from "../../styles/global";
 
 interface Props {
     title: string,

@@ -2,11 +2,11 @@ import React, {useEffect, useState} from "react";
 import { View, Text } from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types";
-import Button from "./Button";
-import {PiantaPosseduta} from "../model/PiantaPosseduta";
-import {getAll} from "../database/PiantePosseduteDAO";
-import { prossimiInterventiStyles as styles } from "../styles/prossimiInterventi";
+import { RootStackParamList } from "../../types";
+import Button from "../inputs/Button";
+import {PiantaPosseduta} from "../../model/PiantaPosseduta";
+import {getAll} from "../../database/PiantePosseduteDAO";
+import { prossimiInterventiStyles as styles } from "../../styles/prossimiInterventi";
 
 type Props = {
     navigation: NativeStackNavigationProp<RootStackParamList, "Home">;

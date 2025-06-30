@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, TextInput, StyleSheet, Alert, Modal } from "react-native";
-import Button from "./Button";
-import { update } from "../database/CategorieDAO";
-import { modificaCategoriaStyles as styles } from "../styles/modificaCategoria";
+import Button from "../inputs/Button";
+import { update } from "../../database/CategorieDAO";
+import { modificaCategoriaStyles as styles } from "../../styles/modificaCategoria";
 
 interface ModificaCategoriaButtonProps {
     onModificaCompletata: () => void;

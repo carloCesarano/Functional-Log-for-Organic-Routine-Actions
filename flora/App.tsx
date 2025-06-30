@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import ToastMessage from "./components/ToastMessage";
+import ToastMessage from "./components/commons/ToastMessage";
 
 import {RootStackParamList} from "./types";
 import Home from './schermate/Home';
@@ -9,7 +9,7 @@ import InfoPianta from './schermate/InfoPianta';
 import AggiungiPianta from './schermate/AggiungiPianta';
 import ListaPiante from "./schermate/ListaPiante";
 import Analisi from './schermate/Analisi';
-import Categoria from './schermate/Categoria';
+import Categorie from './schermate/Categorie';
 
 import DBTest from './schermate/test/DBTest';
 
@@ -27,7 +27,7 @@ export default function App() {
                     <Stack.Screen name="AggiungiPianta" component={AggiungiPianta} />
                     <Stack.Screen name="ListaPiante" component={ListaPiante} />
                     <Stack.Screen name="Analisi" component={Analisi} />
-                    <Stack.Screen name="Categoria" component={Categoria} />
+                    <Stack.Screen name="Categorie" component={Categorie} />
                 </Stack.Navigator>
             </NavigationContainer>
             <ToastMessage/>

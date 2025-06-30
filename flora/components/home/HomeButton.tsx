@@ -2,7 +2,7 @@ import React from "react";
 import {Text, TouchableOpacity} from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 import {AntDesign} from '@expo/vector-icons';
-import {styles} from "../styles/home";
+import {styles} from "../../styles/home";
 
 interface Props {
     title: string,

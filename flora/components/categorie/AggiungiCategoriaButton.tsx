@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, TextInput, StyleSheet, Alert, Modal } from "react-native";
-import Button from "./Button";
-import { update } from "../database/CategorieDAO";
-import {aggiungiCategoriaStyles as styles} from "../styles/aggiungiCategoria";
+import Button from "../inputs/Button";
+import { update } from "../../database/CategorieDAO";
+import {aggiungiCategoriaStyles as styles} from "../../styles/aggiungiCategoria";
 
 interface AggiungiCategoriaButtonProps {
     onAggiuntaCompletata: () => void;
@@ -61,13 +61,13 @@ const AggiungiCategoriaButton: React.FC<AggiungiCategoriaButtonProps> = ({
                                     setNuovaCategoria("");
                                     setModalVisible(false);
                                 }}
-                                style={styles.secondaryButton}
+                                buttonStyle={styles.secondaryButton}
                             />
 
                             <Button
                                 title="Conferma"
                                 onPress={handleAggiungiCategoria}
-                                style={styles.primaryButton}
+                                buttonStyle={styles.primaryButton}
                             />
                         </View>
                     </View>

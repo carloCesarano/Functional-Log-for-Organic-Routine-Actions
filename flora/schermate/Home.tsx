@@ -3,12 +3,12 @@ import {Text, View, StyleSheet, ScrollView} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import {getAll} from "../database/PiantePosseduteDAO";
-import Background from "../components/Background";
-import NavBar from "../components/NavBar";
-import AggiungiPiantaButton from "../components/AggiungiPiantaButton";
-import HomeButton from "../components/HomeButton";
-import ProssimiInterventi from "../components/ProssimiInterventi";
-import PiantaButton from "../components/PiantaButton";
+import Background from "../components/commons/Background";
+import NavBar from "../components/navbar/NavBar";
+import AggiungiPiantaButton from "../components/commons/AggiungiPiantaButton";
+import HomeButton from "../components/home/HomeButton";
+import ProssimiInterventi from "../components/home/ProssimiInterventi";
+import PiantaButton from "../components/home/PiantaButton";
 import { globalStyles } from "../styles/global";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;

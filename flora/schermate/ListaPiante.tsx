@@ -6,11 +6,11 @@ import { RootStackParamList } from "../types";
 import { PiantaPosseduta } from "../model/PiantaPosseduta";
 import * as PiantePosseduteDAO from "../database/PiantePosseduteDAO";
 import * as CategorieDAO from "../database/CategorieDAO";
-import Background from "../components/Background";
-import NavBar from "../components/NavBar";
-import Button from "../components/Button";
-import CardPianta from "../components/CardPianta";
-import AggiungiPiantaButton from "../components/AggiungiPiantaButton";
+import Background from "../components/commons/Background";
+import NavBar from "../components/navbar/NavBar";
+import Button from "../components/inputs/Button";
+import CardPianta from "../components/listaPiante/CardPianta";
+import AggiungiPiantaButton from "../components/commons/AggiungiPiantaButton";
 import { globalStyles } from "../styles/global";
 import { listaPianteStyles as styles } from "../styles/listaPiante";
 

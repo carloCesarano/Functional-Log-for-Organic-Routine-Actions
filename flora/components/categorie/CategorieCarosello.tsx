@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
-import { categoriaStyles as styles } from "../styles/categoria";
+import { categoriaStyles as styles } from "../../styles/categoria";
 
 interface CarouselItem {
     id: number;

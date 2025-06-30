@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Image, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types";
-import { PiantaPosseduta } from "../model/PiantaPosseduta";
-import { get } from "../database/PiantePosseduteDAO"
-import { piantaButtonStyles } from "../styles/piantaButton";
+import { RootStackParamList } from "../../types";
+import { PiantaPosseduta } from "../../model/PiantaPosseduta";
+import { get } from "../../database/PiantePosseduteDAO"
+import { piantaButtonStyles } from "../../styles/piantaButton";
 import {LinearGradient} from "expo-linear-gradient";
 
 interface Props {
@@ -27,7 +27,7 @@ export default function PiantaButton({ piantaId }: Props) {
             if (piantaCaricata)
                 setFoto(await piantaCaricata.getFoto());
             else
-                setFoto(require("../assets/plantsMockup/generic.png"));
+                setFoto(require("../../assets/plantsMockup/generic.png"));
         };
         caricaPianta();
     }, [piantaId]);
@@ -47,7 +47,7 @@ export default function PiantaButton({ piantaId }: Props) {
                 <Image
                     source={foto}
                     style={piantaButtonStyles.image}
-                    defaultSource={require('../assets/plantsMockup/generic.png')}
+                    defaultSource={require('../../assets/plantsMockup/generic.png')}
                 />
                 <Text
                     numberOfLines={2}

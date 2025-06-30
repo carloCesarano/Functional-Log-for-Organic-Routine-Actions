@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TextInput, TouchableOpacity, Text } from 'react-native';
-import { navbarStyles } from "../styles/navbar";
+import { navbarStyles } from "../../styles/navbar";
 import { useRoute } from "@react-navigation/native";
 
 type Props = {

@@ -3,9 +3,9 @@ import { ScrollView, Text, View, Dimensions } from "react-native";
 import { BarChart } from "react-native-chart-kit";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
-import Background from "../components/Background";
-import NavBar from "../components/NavBar";
-import Button from "../components/Button";
+import Background from "../components/commons/Background";
+import NavBar from "../components/navbar/NavBar";
+import Button from "../components/inputs/Button";
 import * as PiantePosseduteDAO from "../database/PiantePosseduteDAO";
 import styles from "../styles/analisi";
 

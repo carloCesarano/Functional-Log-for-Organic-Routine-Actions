@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TouchableOpacity, View, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { navbarStyles, isMobile } from "../styles/navbar";
+import { navbarStyles, isMobile } from "../../styles/navbar";
 
 export interface HamburgerProps {
     menuItems: string[]; // Array di voci di menu

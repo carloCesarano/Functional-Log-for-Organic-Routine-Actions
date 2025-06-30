@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
-import Background from "../components/Background";
-import NavBar from "../components/NavBar";
-import Button from "../components/Button";
-import CategorieCarosello from "../components/CategorieCarosello"; // Verifica il percorso
+import Background from "../components/commons/Background";
+import NavBar from "../components/navbar/NavBar";
+import Button from "../components/inputs/Button";
+import CategorieCarosello from "../components/categorie/CategorieCarosello"; // Verifica il percorso
 import { contaPerCategoria } from "../database/CategorieDAO";
 import { categoriaStyles as styles } from "../styles/categoria";
-import { useNavigation } from "@react-navigation/native";
-import AggiungiCategoriaButton from "../components/AggiungiCategoriaButton";
-import ModificaCategoriaButton from "../components/ModificaCategoriaButton";
+import AggiungiCategoriaButton from "../components/categorie/AggiungiCategoriaButton";
+import ModificaCategoriaButton from "../components/categorie/ModificaCategoriaButton";
+import {NativeStackScreenProps} from "@react-navigation/native-stack";
+import {RootStackParamList} from "../types";
 
 interface CategoriaStat {
     categoria: string;
     conteggio: number;
 }
 
-export default function Categoria() {
+type Props = NativeStackScreenProps<RootStackParamList, 'Categorie'>;
+
+export default function Categorie({navigation}: Props) {
     const [statsCategorie, setStatsCategorie] = useState<CategoriaStat[]>([]);
     const [loading, setLoading] = useState(true);
     const [categoriaSelezionata, setCategoriaSelezionata] = useState<CategoriaStat | null>(null);
-    const navigation = useNavigation();
     const [refreshKey, setRefreshKey] = useState(0);
     const ricaricaCategorie = () => {
         setRefreshKey(prev => prev + 1); // Forza il ricaricamento

@@ -2,11 +2,11 @@ import React, {useEffect, useState} from "react";
 import {Image, TouchableOpacity, View} from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "../../types";
 import SearchBox from "./SearchBox";
-import { navbarStyles } from "../styles/navbar";
-import HamburgerMenu from "./HamburgerMenu";
-import { globalStyles, isMobile } from "../styles/global";
+import { navbarStyles } from "../../styles/navbar";
+import HamburgerMenu from "../HamburgerMenu";
+import { globalStyles, isMobile } from "../../styles/global";
 
 export default function NavBar() {
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -52,7 +52,7 @@ export default function NavBar() {
         <View style={navbarStyles.navbar}>
             <TouchableOpacity
                 onPress={navigateHome}>
-                <Image style={navbarStyles.icon} source={require("../assets/full_logo.png")} />
+                <Image style={navbarStyles.icon} source={require("../../assets/full_logo.png")} />
             </TouchableOpacity>
             {isMobile ? (
                 <>
