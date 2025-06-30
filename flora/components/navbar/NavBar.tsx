@@ -5,7 +5,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types";
 import SearchBox from "./SearchBox";
 import { navbarStyles } from "../../styles/navbar";
-import HamburgerMenu from "../HamburgerMenu";
+import HamburgerMenu from "./HamburgerMenu";
 import { globalStyles, isMobile } from "../../styles/global";
 
 export default function NavBar() {
@@ -36,7 +36,7 @@ export default function NavBar() {
                 navigation.navigate("Analisi");
                 break;
             case "Categoria":
-                navigation.navigate("Categoria");
+                navigation.navigate("Categorie");
                 break;
             case "Impostazioni":
                 console.log("Impostazioni cliccato");

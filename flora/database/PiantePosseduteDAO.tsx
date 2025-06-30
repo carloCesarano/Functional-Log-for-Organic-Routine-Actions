@@ -39,12 +39,16 @@ export async function getAll(): Promise<PiantaPosseduta[]> {
  */
 export async function insert(pianta: PiantaPosseduta): Promise<void> {
     const { id, ...rigaSenzaId } = generaRigaDaPianta(pianta);
-    const idInserito = await Database.insert("PiantePossedute", rigaSenzaId);
+    try {
+        const idInserito = await Database.insert("PiantePossedute", rigaSenzaId);
 
-    if (idInserito !== undefined)
-        pianta.id = idInserito;
-    else
-        throw new Error("Insert fallito");
+        if (idInserito !== undefined)
+            pianta.id = idInserito;
+        else
+            throw new Error("Insert fallito");
+    } catch (error) {
+        console.log(JSON.stringify(error));
+    }
 }
 
 /**

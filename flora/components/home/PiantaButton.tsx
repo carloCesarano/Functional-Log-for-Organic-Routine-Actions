@@ -27,7 +27,7 @@ export default function PiantaButton({ piantaId }: Props) {
             if (piantaCaricata)
                 setFoto(await piantaCaricata.getFoto());
             else
-                setFoto(require("../../assets/plantsMockup/generic.png"));
+                setFoto(require("../../assets/plantsMockup/generic.jpg"));
         };
         caricaPianta();
     }, [piantaId]);
@@ -47,7 +47,7 @@ export default function PiantaButton({ piantaId }: Props) {
                 <Image
                     source={foto}
                     style={piantaButtonStyles.image}
-                    defaultSource={require('../../assets/plantsMockup/generic.png')}
+                    defaultSource={require('../../assets/plantsMockup/generic.jpg')}
                 />
                 <Text
                     numberOfLines={2}

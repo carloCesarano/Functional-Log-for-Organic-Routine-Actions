@@ -75,7 +75,7 @@ export class PiantaPosseduta {
             return (await get(this.getSpecie())).getFoto();
         return IMAGE_MOCKUPS[this.getFotoPath()]
             ?? {uri: this.getFotoPath()}
-            ?? require("../assets/plantsMockup/generic.png");
+            ?? require("../assets/plantsMockup/generic.jpg");
     }
 
     /** Crea una nuova pianta e la inserisce nel database.

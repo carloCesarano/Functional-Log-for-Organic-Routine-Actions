@@ -122,11 +122,13 @@ export async function insert<T extends DBRow>(table: string, item: Omit<T, "id">
                     return `'${v.replace(/'/g, "''")}'`;
                 if (v instanceof Date)
                     return `'${v.toISOString()}'`;
-                if (typeof v === 'boolean')
+                if (typeof v === 'boolean' || typeof v === 'number')
                     return Number(v).toString();
                 if (v === null || v === undefined)
                     return 'NULL';
-                return v;
+                if (v.uri)
+                    return `'${v.uri.replace(/'/g, "''")}'`;
+                throw new Error("Mapping error for:", v);
             })
             .join(', ');
         const query: string = `INSERT INTO ${table} (${keys.join(", ")})

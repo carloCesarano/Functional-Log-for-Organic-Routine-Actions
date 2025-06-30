@@ -1,7 +1,7 @@
 import * as Database from "../database/Database";
 
 export const IMAGE_MOCKUPS : {[key: string]: any} = {
-    "mockup:generic"     : require("../assets/plantsMockup/generic.png"    ),
+    "mockup:generic"     : require("../assets/plantsMockup/generic.jpg"    ),
     "mockup:Ficus"       : require("../assets/plantsMockup/FICUS.webp"     ),
     "mockup:Sanseveria"  : require("../assets/plantsMockup/SANSEVERIA.jpg" ),
     "mockup:Pothos"      : require("../assets/plantsMockup/POTHOS.jpg"     ),

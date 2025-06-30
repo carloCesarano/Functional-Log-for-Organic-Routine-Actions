@@ -80,7 +80,7 @@ export default function InfoPianta({ navigation, route }: Props) {
                 >{piantaAttuale?.getSpecie()}</Text>
                 <Image
                     source={foto}
-                    defaultSource={require("../assets/plantsMockup/generic.png")}
+                    defaultSource={require("../assets/plantsMockup/generic.jpg")}
                     style={styles.image}
                 />
                 <View style={styles.infoBox}>
