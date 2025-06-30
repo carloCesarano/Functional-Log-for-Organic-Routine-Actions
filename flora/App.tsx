@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ToastMessage from "./components/commons/ToastMessage";
-
+import { LogBox } from "react-native";
 import {RootStackParamList} from "./types";
 import Home from './schermate/Home';
 import InfoPianta from './schermate/InfoPianta';
@@ -12,12 +12,12 @@ import Impostazioni from "./schermate/Impostazioni";
 import Analisi from './schermate/Analisi';
 import Categorie from './schermate/Categorie';
 
-import DBTest from './schermate/test/DBTest';
-
 // Definisce uno stack di pagine vuoto
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
+    LogBox.ignoreLogs(['Require cycle']);
+
     return (
         <>
             <NavigationContainer>
@@ -36,14 +36,3 @@ export default function App() {
         </>
     )
 }
-
-// export default function App() {
-//     // Test
-//     return (
-//         <NavigationContainer>
-//             <Stack.Navigator initialRouteName="DBTest" screenOptions={{ title: "TEST" }}>
-//                 <Stack.Screen name="DBTest" component={DBTest} />
-//             </Stack.Navigator>
-//         </NavigationContainer>
-//     )
-// }
