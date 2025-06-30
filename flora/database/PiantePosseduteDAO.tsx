@@ -47,7 +47,7 @@ export async function insert(pianta: PiantaPosseduta): Promise<void> {
         else
             throw new Error("Insert fallito");
     } catch (error) {
-        console.log(JSON.stringify(error));
+        console.log("Error:", JSON.stringify(error));
     }
 }
 

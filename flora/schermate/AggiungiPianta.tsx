@@ -123,7 +123,7 @@ export default function AggiungiPianta({navigation}: Props) {
                 ultimaPotat: ultimaPotat.toISOString(),
                 ultimoRinv: ultimoRinv.toISOString(),
                 note: note,
-                foto: foto ?? ""
+                foto: typeof foto === 'number' ? "" : (foto ?? "")
             };
             await PiantaPosseduta.creaNuova(nuovaPianta);
             navigation.navigate('ListaPiante', {searched: nome});
@@ -133,7 +133,11 @@ export default function AggiungiPianta({navigation}: Props) {
                 text2: "Prenditi cura della tua nuova pianta di " + specie + "!"
             });
         } catch (error) {
-            console.log(error);
+            ToastShow({
+                type: "error",
+                title: "Errore",
+                message: "Errore nell'aggiunta della pianta"
+            })
         }
     }
 

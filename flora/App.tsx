@@ -8,6 +8,7 @@ import Home from './schermate/Home';
 import InfoPianta from './schermate/InfoPianta';
 import AggiungiPianta from './schermate/AggiungiPianta';
 import ListaPiante from "./schermate/ListaPiante";
+import Impostazioni from "./schermate/Impostazioni";
 import Analisi from './schermate/Analisi';
 import Categorie from './schermate/Categorie';
 
@@ -26,6 +27,7 @@ export default function App() {
                     <Stack.Screen name="InfoPianta" component={InfoPianta} />
                     <Stack.Screen name="AggiungiPianta" component={AggiungiPianta} />
                     <Stack.Screen name="ListaPiante" component={ListaPiante} />
+                    <Stack.Screen name="Impostazioni" component={Impostazioni} />
                     <Stack.Screen name="Analisi" component={Analisi} />
                     <Stack.Screen name="Categorie" component={Categorie} />
                 </Stack.Navigator>

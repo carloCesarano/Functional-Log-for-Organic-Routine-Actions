@@ -39,7 +39,7 @@ export default function NavBar() {
                 navigation.navigate("Categorie");
                 break;
             case "Impostazioni":
-                console.log("Impostazioni cliccato");
+                navigation.navigate('Impostazioni');
                 break;
             default:
                 console.log("Voce menu non gestita:", item);

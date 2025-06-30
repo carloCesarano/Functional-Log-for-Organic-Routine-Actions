@@ -10,6 +10,7 @@ import HomeButton from "../components/home/HomeButton";
 import ProssimiInterventi from "../components/home/ProssimiInterventi";
 import PiantaButton from "../components/home/PiantaButton";
 import { globalStyles } from "../styles/global";
+import {PiantaPosseduta} from "../model/PiantaPosseduta";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -18,7 +19,7 @@ export default function Home({ navigation }: Props) {
 
     useEffect(() => {
         const caricaUltimePiante = async () => {
-            const piantePossedute = (await getAll());
+            const piantePossedute: PiantaPosseduta[] = await getAll();
             piantePossedute.sort((a,b) => b.getId() - a.getId());
             const ultimeQuattro = piantePossedute.slice(0, 4);
             setUltimePiante(ultimeQuattro.map(pianta => pianta.getId()));
@@ -39,17 +40,14 @@ export default function Home({ navigation }: Props) {
         <Background>
             <NavBar />
             <ScrollView>
-            <Text style={globalStyles.titolo}>Ultime piante aggiunte</Text>
-            <View style={styles.piantaContainer}>
-                {ultimePiante.map(id => (
-                    <PiantaButton key={id} piantaId={id} />
-                ))}
-            </View>
-            <HomeButton title="Vedi tutte le piante" onPress={() => navigation.navigate('ListaPiante', { searched: '' })} />
-
-            <ProssimiInterventi navigation={navigation}/>
-
-
+                <Text style={globalStyles.titolo}>Ultime piante aggiunte</Text>
+                <View style={styles.piantaContainer}>
+                    {ultimePiante.map(id => (
+                        <PiantaButton key={id} piantaId={id} />
+                    ))}
+                </View>
+                <HomeButton title="Vedi tutte le piante" onPress={() => navigation.navigate('ListaPiante', { searched: '' })} />
+                <ProssimiInterventi navigation={navigation}/>
             </ScrollView>
             <AggiungiPiantaButton />
         </Background>

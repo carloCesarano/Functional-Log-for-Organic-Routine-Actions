@@ -213,4 +213,17 @@ export class PiantaPosseduta {
         return `rgb(${r},${g},${b})`;
     };
 
+    toString() : string {
+        return "(" + this.getId() + ") " + this.getNome() + " - " + this.getSpecie()
+            + " " + this.getDataAcq().toLocaleDateString()
+            + "\n\tFr. Innaff: " + this.getFreqInnaff()
+            + "\tInnaff: " + this.getDataAcq().toLocaleDateString()
+            + "\n\tFr. Potat: " + this.getFreqPotat()
+            + "\tPotat:  " + this.getDataAcq().toLocaleDateString()
+            + "\n\tFr. Rinv: " + this.getFreqRinv()
+            + "\tRinv:   " + this.getDataAcq().toLocaleDateString()
+            + "\n\tFoto: " + this.getFotoPath()
+            + "\n\tNote: " + this.getNote()
+    }
+
 }
