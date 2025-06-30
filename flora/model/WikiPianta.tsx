@@ -64,15 +64,4 @@ export class WikiPianta {
             ?? IMAGE_MOCKUPS["mockup:generic"];
     }
 
-    /**
-     * Recupera la pianta dalla specie.
-     * @param specie Specie della pianta
-     * @returns Istanza di WikiPianta o null se non trovata
-     */
-    static async daSpecie(specie: string): Promise<WikiPianta | null> {
-        const wiki = await Database.select<Props>("WikiPiante");
-        const filtered = wiki.filter(p => p.specie === specie);
-        return (filtered.length === 0) ? null : new WikiPianta(filtered[0]);
-    }
-
 }

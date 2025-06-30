@@ -1,20 +1,10 @@
 import {RigaTabella, insert, generaPiantaDaRiga} from "../database/PiantePosseduteDAO";
+import {get} from "../database/WikiPianteDAO";
+import {IMAGE_MOCKUPS} from "./WikiPianta";
 
 const LIMITE_INNAFF : number =  3;
 const LIMITE_POTAT  : number = 14;
 const LIMITE_RINV   : number = 30;
-const IMAGE_MOCKUPS : {[key: string]: any} = {
-    "mockup:ficus"       : require("../assets/plantsMockup/FICUS.webp"     ),
-    "mockup:sanseveria"  : require("../assets/plantsMockup/SANSEVERIA.jpg" ),
-    "mockup:pothos"      : require("../assets/plantsMockup/POTHOS.jpg"     ),
-    "mockup:zamioculca"  : require("../assets/plantsMockup/ZAMIOCULCA.jpg" ),
-    "mockup:spatifillo"  : require("../assets/plantsMockup/SPATIFILLO.jpg" ),
-    "mockup:orchidea"    : require("../assets/plantsMockup/ORCHIDEA.jpg"   ),
-    "mockup:begonia"     : require("../assets/plantsMockup/BEGONIA.jpg"    ),
-    "mockup:anthurium"   : require("../assets/plantsMockup/ANTHURIUM.jpg"  ),
-    "mockup:peperoncino" : require("../assets/plantsMockup/PEPERONCINO.jpg"),
-    "mockup:basilico"    : require("../assets/plantsMockup/BASILICO.webp"  )
-}
 
 export class PiantaPosseduta {
     id           : number | undefined;
@@ -80,9 +70,9 @@ export class PiantaPosseduta {
     /** @returns Categoria */
     getCategorie()    : string[] { return this.categorie          }
 
-    getFoto() : any {
+    async getFoto() : Promise<any> {
         if (this.getFotoPath() === "")
-            return require("../assets/plantsMockup/generic.png");
+            return (await get(this.getSpecie())).getFoto();
         return IMAGE_MOCKUPS[this.getFotoPath()]
             ?? {uri: this.getFotoPath()}
             ?? require("../assets/plantsMockup/generic.png");

@@ -2,6 +2,7 @@ import * as Database from "./Database";
 import {filtraPerPianta} from "./CategorieDAO";
 import {PiantaPosseduta} from "../model/PiantaPosseduta";
 import {WikiPianta} from "../model/WikiPianta";
+import {get as WikiGet} from "./WikiPianteDAO";
 
 /**
  * Rappresenta una riga della tabella "PiantePossedute" del database
@@ -104,9 +105,7 @@ const wikiCache: Record<string, WikiPianta> = {};
 export async function generaPiantaDaRiga(riga: RigaTabella) : Promise<PiantaPosseduta> {
     let wiki : WikiPianta | null = wikiCache[riga.specie];
     if (!wiki) {
-        wiki = await WikiPianta.daSpecie(riga.specie);
-        if (!(wiki instanceof WikiPianta))
-            throw new Error("Unknown species")
+        wiki = await WikiGet(riga.specie);
         wikiCache[riga.specie] = wiki;
     }
 
