@@ -6,7 +6,7 @@ import Background from '../Componenti/Comuni/Background';
 type Props = NativeStackScreenProps<RootStackParamList, 'InfoPianta'>;
 
 export default function InfoPianta({navigation, route}: Props) {
-    const {idPianta} = route.params;
+    const {ID} = route.params;
 
     return (
         <Background/>
