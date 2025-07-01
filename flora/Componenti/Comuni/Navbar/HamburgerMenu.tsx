@@ -3,8 +3,10 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../types';
 // COMPONENTI NATIVI
-import {TouchableOpacity, View, Text} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
+// COMPONENTI CUSTOM
+import Button from '../Input/Button';
 
 const OPZIONI = [
     "Impostazioni",
@@ -55,15 +57,13 @@ export default function HamburgerMenu() {
             {isAperto && (
                 <View>
                     {OPZIONI.map(opzione => (
-                        <TouchableOpacity
+                        <Button
                             key={opzione}
+                            testo={opzione}
                             onPress={() => {
                                 onOpzione(opzione);
                                 setAperto(false);
-                            }}>
-
-                            <Text>{opzione}</Text>
-                        </TouchableOpacity>
+                            }}/>
                     ))}
                 </View>
             )}

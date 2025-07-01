@@ -22,6 +22,7 @@ export default function NavBar() {
             <View>
                 <Icona/>
                 <BarraDiRicerca/>
+                <HamburgerMenu/>
             </View>
         )
 }
