@@ -1,6 +1,3 @@
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../types';
 import {isPortrait} from "./OrientazioneChecker";
 // COMPONENTI NATIVI
 import {View} from 'react-native';
@@ -10,8 +7,6 @@ import BarraDiRicerca from './Navbar/BarraDiRicerca';
 import HamburgerMenu  from './Navbar/HamburgerMenu';
 
 export default function NavBar() {
-    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
     if (isPortrait())
         return (
             // Modalità Portrait
