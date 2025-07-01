@@ -6,13 +6,18 @@ import { TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { globalStyles } from "../../styles/global";
 
-export default function AggiungiPiantaButton() {
+type Props = {
+    onPress: () => void;
+};
+
+
+export default function AggiungiPiantaButton({ onPress }: Props) {
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
     return (
         <TouchableOpacity
             style={globalStyles.addButton}
-            onPress={() => navigation.navigate('AggiungiPianta')}
+            onPress={onPress}
         >
             <Ionicons name="add" size={32} color="#fff" />
         </TouchableOpacity>

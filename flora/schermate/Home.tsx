@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Text, View, StyleSheet, ScrollView} from "react-native";
+import {Text, View, StyleSheet, ScrollView, TouchableOpacity, Modal} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import {getAll} from "../database/PiantePosseduteDAO";
@@ -11,11 +11,13 @@ import ProssimiInterventi from "../components/home/ProssimiInterventi";
 import PiantaButton from "../components/home/PiantaButton";
 import { globalStyles } from "../styles/global";
 import {PiantaPosseduta} from "../model/PiantaPosseduta";
+import { styles } from "../styles/home";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function Home({ navigation }: Props) {
     const [ultimePiante, setUltimePiante] = useState<number[]>([]);
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
 
     useEffect(() => {
         const caricaUltimePiante = async () => {
@@ -27,14 +29,6 @@ export default function Home({ navigation }: Props) {
         caricaUltimePiante();
     }, []);
 
-    const styles = StyleSheet.create({
-        piantaContainer: {
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'space-evenly',
-            padding: 10
-        }
-    });
 
     return (
         <Background>
@@ -47,9 +41,45 @@ export default function Home({ navigation }: Props) {
                     ))}
                 </View>
                 <HomeButton title="Vedi tutte le piante" onPress={() => navigation.navigate('ListaPiante', { searched: '' })} />
-                <ProssimiInterventi navigation={navigation}/>
+                <ProssimiInterventi navigation={navigation} />
             </ScrollView>
-            <AggiungiPiantaButton />
+            <AggiungiPiantaButton onPress={() => setModalVisible(true)} />
+
+            <Modal
+                visible={modalVisible}
+                transparent={true}
+                animationType="fade"
+                onRequestClose={() => setModalVisible(false)}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContent}>
+                        <TouchableOpacity
+                            style={styles.buttonModal}
+                            onPress={() => {
+                                setModalVisible(false);
+                                navigation.navigate('AggiungiPianta');
+                            }}
+                        >
+                            <Text style={styles.buttonText}>Nuova pianta</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.buttonModal}
+                            onPress={() => {
+                                setModalVisible(false);
+                               // navigation.navigate('Intervento'); // Schermata da creare
+                            }}
+                        >
+                            <Text style={styles.buttonText}>Nuovo intervento</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.buttonModal}
+                            onPress={() => setModalVisible(false)}
+                        >
+                            <Text style={styles.buttonText}>Indietro</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </Background>
     );
 }
