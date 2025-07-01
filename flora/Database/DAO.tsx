@@ -72,7 +72,7 @@ function popolaDB(db: SQLiteDatabase): void {
             data   TEXT    NOT NULL,
             FOREIGN KEY (pianta) REFERENCES PiantePossedute(id)
                 ON UPDATE CASCADE ON DELETE CASCADE
-        )
+        );
     `);
 }
 
