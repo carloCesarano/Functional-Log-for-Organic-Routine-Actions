@@ -1,5 +1,6 @@
 import {LinearGradient} from 'expo-linear-gradient';
 import {ReactNode} from "react";
+import {isPortrait} from "./OrientazioneChecker";
 import {globalStyles, isMobile} from "../../styles/global";
 
 interface Props {
@@ -8,19 +9,11 @@ interface Props {
 
 export default function Background({children}: Props) {
     return (
-        isMobile ?
         <LinearGradient
-            colors={['#eef8e8', '#c7deac']}
-            style={globalStyles.background}
+            colors={isMobile ? ['#eef8e8', '#c7deac'] : ['#dae8d3', '#c7deac']}
+            style={isPortrait() ? globalStyles.background : globalStyles.LAND_background}
         >
             {children}
         </LinearGradient>
-        :
-        <LinearGradient
-            colors={['#dae8d3', '#c7deac']}
-            style={globalStyles.background}
-        >
-            {children}
-        </LinearGradient>
-    )
+    );
 }

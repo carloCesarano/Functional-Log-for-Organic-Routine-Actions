@@ -5,10 +5,14 @@ export const isMobile: boolean = Platform.OS === "android" || Platform.OS === "i
 export const globalStyles = StyleSheet.create({
     // Container principale dell'applicazione
     background: {
-        padding: 16,
         flex: 1,
         paddingVertical: isMobile ? 50 : 16,
         paddingHorizontal: 16,
+    },
+    LAND_background: {
+        flex: 1,
+        paddingVertical: isMobile ? 50 : 16,
+        paddingHorizontal: 50,
     },
     // Semplice contenitore orizzontale
     hbox: {
