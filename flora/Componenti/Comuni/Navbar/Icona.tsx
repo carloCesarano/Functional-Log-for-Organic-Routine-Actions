@@ -1,7 +1,9 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../types';
+// COMPONENTI NATIVI
 import {TouchableOpacity, Image} from 'react-native';
+// FOGLI DI STILE
 import {styles} from '../../../Styles/NavBar';
 
 export default function Icona() {

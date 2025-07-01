@@ -27,6 +27,7 @@ type Props = {
     titolo: string,
     messaggio: string
 };
+
 export function MostraToast({tipo, titolo, messaggio}: Props) {
     Toast.show({
         type: tipo,

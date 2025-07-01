@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../types';
+// COMPONENTI NATIVI
 import {View, TextInput, TouchableOpacity} from 'react-native';
 
 export default function BarraDiRicerca() {
