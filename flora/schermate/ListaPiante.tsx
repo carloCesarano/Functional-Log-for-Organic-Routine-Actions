@@ -188,7 +188,7 @@ export default function ListaPiante({ navigation, route }: Props) {
 
                 </View>
 
-                <AggiungiPiantaButton onPress={() => navigation.navigate('AggiungiPianta')} />
+                <AggiungiPiantaButton/>
             </View>
         </Background>
     );

@@ -32,36 +32,4 @@ export const styles = StyleSheet.create({
         padding: 10,
     },
 
-    modalOverlay: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-    },
-    modalContent: {
-        width: '90%',
-        padding: 20,
-        backgroundColor: '#fff',
-        borderRadius: 20,
-        elevation: 5,
-        height: '30%'
-
-    },
-    buttonModal: {
-        backgroundColor: '#4CAF50',
-        padding: 10,
-        borderRadius: 20,
-        marginVertical: 8,
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '25%',
-
-
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 24,
-        fontWeight: 'bold',
-    },
-
 });

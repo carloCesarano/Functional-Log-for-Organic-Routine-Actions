@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Text, View, StyleSheet, ScrollView, TouchableOpacity, Modal} from "react-native";
+import {Text, View, ScrollView} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import {getAll} from "../database/PiantePosseduteDAO";
@@ -43,43 +43,7 @@ export default function Home({ navigation }: Props) {
                 <HomeButton title="Vedi tutte le piante" onPress={() => navigation.navigate('ListaPiante', { searched: '' })} />
                 <ProssimiInterventi navigation={navigation} />
             </ScrollView>
-            <AggiungiPiantaButton onPress={() => setModalVisible(true)} />
-
-            <Modal
-                visible={modalVisible}
-                transparent={true}
-                animationType="fade"
-                onRequestClose={() => setModalVisible(false)}
-            >
-                <View style={styles.modalOverlay}>
-                    <View style={styles.modalContent}>
-                        <TouchableOpacity
-                            style={styles.buttonModal}
-                            onPress={() => {
-                                setModalVisible(false);
-                                navigation.navigate('AggiungiPianta');
-                            }}
-                        >
-                            <Text style={styles.buttonText}>Nuova pianta</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.buttonModal}
-                            onPress={() => {
-                                setModalVisible(false);
-                               // navigation.navigate('Intervento'); // Schermata da creare
-                            }}
-                        >
-                            <Text style={styles.buttonText}>Nuovo intervento</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.buttonModal}
-                            onPress={() => setModalVisible(false)}
-                        >
-                            <Text style={styles.buttonText}>Indietro</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
+           <AggiungiPiantaButton/>
         </Background>
     );
 }
