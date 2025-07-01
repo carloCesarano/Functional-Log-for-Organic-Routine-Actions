@@ -8,6 +8,7 @@ export type Riga = Record<string, string | number | null>;
 function getDB(): SQLiteDatabase {
     if (!db) {
         db = SQLite.openDatabaseSync('FLORA1');
+        db.execSync("PRAGMA foreign_keys = ON;");
         if (DBVuoto(db)) popolaDB(db);
     }
     return db;
@@ -24,8 +25,6 @@ function DBVuoto(db: SQLiteDatabase): boolean {
 }
 
 function popolaDB(db: SQLiteDatabase): void {
-    db.execSync("PRAGMA foreign_keys = ON;");
-
     db.execSync(`
         DROP TABLE IF EXISTS Interventi;
         DROP TABLE IF EXISTS PianteCategorie;
