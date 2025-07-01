@@ -22,15 +22,15 @@ export default function App() {
     return (
         <>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName='Home' screenOptions={{ headerShown: false, title: 'FLORA' }}>
+                <Stack.Navigator initialRouteName='Home' screenOptions={{ headerShown: false }}>
                     {/* Aggiunge tutte le pagine dell'applicazione allo stack */}
-                    <Stack.Screen name='Home' component={Home} />
-                    <Stack.Screen name='InfoPianta' component={InfoPianta} />
-                    <Stack.Screen name='AggiungiPianta' component={AggiungiPianta} />
-                    <Stack.Screen name='ListaPiante' component={ListaPiante} />
-                    <Stack.Screen name='Impostazioni' component={Impostazioni} />
-                    <Stack.Screen name='Analisi' component={Analisi} />
-                    <Stack.Screen name='Categorie' component={Categorie} />
+                    <Stack.Screen name='Home'           component={Home}          />
+                    <Stack.Screen name='InfoPianta'     component={InfoPianta}    />
+                    <Stack.Screen name='AggiungiPianta' component={AggiungiPianta}/>
+                    <Stack.Screen name='ListaPiante'    component={ListaPiante}   />
+                    <Stack.Screen name='Impostazioni'   component={Impostazioni}  />
+                    <Stack.Screen name='Analisi'        component={Analisi}       />
+                    <Stack.Screen name='Categorie'      component={Categorie}     />
                 </Stack.Navigator>
             </NavigationContainer>
             {/* Aggiunge la logica dei messaggi toast a tutte le schermate */}
