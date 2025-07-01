@@ -15,7 +15,6 @@ export const styles = StyleSheet.create({
         fontSize: 24,
         width: "100%",
         textAlign: "center",
-        backgroundColor: "white",
         padding: 5,
         borderRadius: 5,
     },
@@ -25,7 +24,6 @@ export const styles = StyleSheet.create({
         fontStyle: "italic",
         width: "80%",
         textAlign: "center",
-        backgroundColor: "white",
         borderRadius: 5,
     },
     image: {
@@ -36,7 +34,6 @@ export const styles = StyleSheet.create({
         marginBottom: 20,
     },
     infoBox: {
-        backgroundColor: "white",
     },
     buttons: {
         flexDirection: "row",

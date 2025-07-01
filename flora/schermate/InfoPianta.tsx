@@ -67,7 +67,7 @@ export default function InfoPianta({ navigation, route }: Props) {
     return (
         <Background>
             <NavBar/>
-            <ScrollView contentContainerStyle={[styles.scroll, {backgroundColor: piantaAttuale?.coloreStato()}]}>
+            <ScrollView contentContainerStyle={styles.scroll}>
                 <Text
                     numberOfLines={1}
                     ellipsizeMode={"tail"}

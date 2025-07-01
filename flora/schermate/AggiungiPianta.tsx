@@ -113,32 +113,32 @@ export default function AggiungiPianta({navigation}: Props) {
         }
 
         // Tento di creare la pianta
-        try {
-            const nuovaPianta: RigaTabella = {
-                id: -1,
-                nome: nome.trim(),
-                specie: specie,
-                dataAcq: dataAcq.toISOString(),
-                ultimaInnaff: ultimaInnaff.toISOString(),
-                ultimaPotat: ultimaPotat.toISOString(),
-                ultimoRinv: ultimoRinv.toISOString(),
-                note: note,
-                foto: typeof foto === 'number' ? "" : (foto ?? "")
-            };
-            await PiantaPosseduta.creaNuova(nuovaPianta);
-            navigation.navigate('ListaPiante', {searched: nome});
-            Toast.show({
-                type: "success",
-                text1: "Pianta creata con successo",
-                text2: "Prenditi cura della tua nuova pianta di " + specie + "!"
-            });
-        } catch (error) {
-            ToastShow({
+        const riga: RigaTabella = {
+            id: 0,
+            nome: nome.trim(),
+            specie: specie,
+            dataAcq: dataAcq.toISOString(),
+            ultimaInnaff: ultimaInnaff.toISOString(),
+            ultimaPotat: ultimaPotat.toISOString(),
+            ultimoRinv: ultimoRinv.toISOString(),
+            note: note,
+            foto: typeof foto === 'number' ? "" : (foto ?? "")
+        };
+        PiantaPosseduta.creaNuova(riga)
+            .then(pianta => {
+                console.log(pianta.toString());
+                navigation.navigate('InfoPianta', {plantId: pianta.getId()});
+                Toast.show({
+                    type: "success",
+                    text1: "Pianta creata con successo",
+                    text2: "Prenditi cura della tua nuova pianta di " + specie + "!"
+                });
+            })
+            .catch(() => ToastShow({
                 type: "error",
                 title: "Errore",
                 message: "Errore nell'aggiunta della pianta"
-            })
-        }
+            }));
     }
 
     return (

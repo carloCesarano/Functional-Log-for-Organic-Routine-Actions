@@ -187,7 +187,7 @@ export default function ListaPiante({ navigation, route }: Props) {
 
                 </View>
 
-                <AggiungiPiantaButton style={styles.customAddButton} />
+                <AggiungiPiantaButton/>
             </View>
         </Background>
     );
