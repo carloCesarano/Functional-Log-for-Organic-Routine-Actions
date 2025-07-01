@@ -39,7 +39,8 @@ export default function ListaPiante({ navigation, route }: Props) {
     useEffect(() => {
         const filtraPiante = () => {
             let filtrate = allPiante.filter(pianta =>
-                pianta.getNome().includes(searched) || pianta.getSpecie().includes(searched)
+                pianta.getNome().toLowerCase().includes(searched.toLowerCase())
+                || pianta.getSpecie().toLowerCase().includes(searched.toLowerCase())
             );
 
             if (categorieSelezionate.length > 0) {
