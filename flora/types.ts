@@ -9,4 +9,5 @@ export type RootStackParamList = {
     Impostazioni   : undefined;
     Analisi        : undefined;
     Categorie      : undefined;
+    Sviluppatore   : undefined;
 };
