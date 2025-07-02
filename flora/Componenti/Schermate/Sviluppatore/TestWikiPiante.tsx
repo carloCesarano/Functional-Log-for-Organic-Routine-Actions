@@ -5,6 +5,18 @@ import * as WikiPianteDAO from '../../../Database/WikiPianteDAO';
 import Button from '../../Comuni/Input/Button';
 import {styles} from '../../../Styles/Sviluppatore';
 
+TestWikiPiante.INTRO = `TEST: WikiPiante
+Questo test mira a controllare l'efficacia delle funzioni esportate
+dal modulo 'WikiPianteDAO'. La ScrollView è riempita con delle specie
+reperite dalla funzione getAll() e ordinate per id dal maggiore. 
+I tre pulsanti servono per:
+1. Aggiungere una nuova specie al Database;
+2. Eliminare l'ultima specie nel Database (id maggiore);
+3. Modificare il nome dell'ultima specie nel Database (id maggiore).
+Il label 'Caricamento' è TRUE quando un'azione è stata avviata ma non
+ha ancora dato segnale di completamento.
+`;
+
 export function TestWikiPiante() {
     const [piante, setPiante] = useState<WikiPianta[]>([]);
     const [num, setNum] = useState<number>(0);
