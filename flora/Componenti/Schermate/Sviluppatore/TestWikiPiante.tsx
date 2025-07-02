@@ -3,23 +3,25 @@ import {Image, View, Text, FlatList} from 'react-native';
 import {WikiPianta} from '../../../Model/WikiPianta';
 import * as WikiPianteDAO from '../../../Database/WikiPianteDAO';
 import Button from '../../Comuni/Input/Button';
+import {styles} from '../../../Styles/Sviluppatore';
 
 export function TestWikiPiante() {
     const [piante, setPiante] = useState<WikiPianta[]>([]);
     const [num, setNum] = useState<number>(0);
     const [caricamento, setCaricamento] = useState<boolean>(true);
 
+    const caricaPiante = async () => {
+        try {
+            const data: WikiPianta[] = await WikiPianteDAO.getAll();
+            setPiante(data.sort((a,b) => b.getId() - a.getId()));
+        } catch (error) {
+            console.error('[TestWikiPiante]: caricaPiante error:', error);
+        } finally {
+            setCaricamento(false);
+        }
+    };
+
     useEffect(() => {
-        const caricaPiante = async () => {
-            try {
-                const data: WikiPianta[] = await WikiPianteDAO.getAll();
-                setPiante(data.sort((a,b) => b.getId() - a.getId()));
-            } catch (error) {
-                console.error('[TestWikiPiante]: caricaPiante error:', error);
-            } finally {
-                setCaricamento(false);
-            }
-        };
         caricaPiante();
     }, []);
 
@@ -34,9 +36,24 @@ export function TestWikiPiante() {
         };
         const p = await WikiPianta.creaNuova(dati);
         if (p)
-            setPiante(curr => [p, ...curr]);
+            caricaPiante();
         else
             console.warn('Errore creazione nuova pianta:', num);
+    }
+
+    const eliminaUltima = async () => {
+        setNum(num => num + 1);
+        const p = piante[0];
+        await WikiPianteDAO.remove(p);
+        await caricaPiante();
+    }
+
+    const aggiornaUltima = async () => {
+        setNum(num => num + 1);
+        const p = piante[0];
+        p.specie = 'Aggiornata ' + num.toString();
+        await WikiPianteDAO.update(p);
+        await caricaPiante();
     }
 
     const renderPianta= ({item}: {item: WikiPianta}) => (
@@ -44,16 +61,17 @@ export function TestWikiPiante() {
             <Image
                 source={item.getFoto() as any}
                 style={{width: 100, height: 100}}
-                resizeMode='center'/>
+                resizeMode='cover'/>
             <Text>{item.toString()}</Text>
         </View>
     )
 
     return (
-        <View
-            style={{flex: 1}}>
-            <Text>Caricamento: {Number(caricamento).toString()}</Text>
-            <Button testo='Aggiungi' onPress={aggiungiPianta}/>
+        <View style={styles.test}>
+            <Text>Caricamento: {caricamento ? 'TRUE' : 'FALSE'}</Text>
+            <Button testo='Aggiungi' onPress={aggiungiPianta} stileButton={styles.button}/>
+            <Button testo='Elimina ultima' onPress={eliminaUltima} stileButton={styles.button}/>
+            <Button testo='Aggiorna ultima' onPress={aggiornaUltima} stileButton={styles.button}/>
             <FlatList
                 style={{paddingBottom: 200}}
                 data={piante}

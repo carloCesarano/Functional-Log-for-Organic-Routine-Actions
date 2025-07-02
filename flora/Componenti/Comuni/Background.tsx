@@ -8,6 +8,7 @@ interface Props {
 export default function Background({children}: Props) {
     return (
         <LinearGradient
+            style={{flex: 1}}
             colors={['#eef8e8', '#c7deac']}>
 
             {children}

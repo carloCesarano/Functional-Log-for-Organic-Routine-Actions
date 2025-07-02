@@ -7,6 +7,7 @@ import {Text} from 'react-native';
 import Background from '../Componenti/Comuni/Background';
 import NavBar from '../Componenti/Comuni/NavBar';
 import {TestWikiPiante} from '../Componenti/Schermate/Sviluppatore/TestWikiPiante';
+import {styles} from '../Styles/Sviluppatore';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Sviluppatore'>;
 
@@ -15,7 +16,7 @@ export default function Sviluppatore({navigation}: Props) {
         <Background>
             <NavBar/>
 
-            <Text>TestWikiPiante</Text>
+            <Text style={styles.titolo}>TestWikiPiante</Text>
             <TestWikiPiante/>
         </Background>
     )

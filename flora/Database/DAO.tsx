@@ -158,7 +158,7 @@ export async function update<T extends Riga>(tabella: string, riga: T): Promise<
         const statement: SQLiteStatement = getDB().prepareSync(query);
 
         // ESEGUO LA QUERY
-        statement.executeSync(...valori, id);
+        statement.executeSync([...valori, id]);
     } catch (error: any) {
         throw new Error(`Errore in UPDATE (${tabella}): ${error.message}`);
     }

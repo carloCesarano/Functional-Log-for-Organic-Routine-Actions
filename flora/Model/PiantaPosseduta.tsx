@@ -1,4 +1,5 @@
 import {Riga} from '../Database/PiantePosseduteDAO';
+import * as WikiPianteDAO from '../Database/WikiPianteDAO';
 import {WikiPianta} from './WikiPianta';
 import {assertDefined} from './UndefinedError';
 import {assertNonEmpty} from './EmptyError';
@@ -19,11 +20,10 @@ export class PiantaPosseduta {
     foto        ?: string;
     note        ?: string;
 
-    static async crea(props: Riga): Promise<PiantaPosseduta> {
+    static async creaNuova(props: Riga): Promise<PiantaPosseduta> {
         const pianta = new PiantaPosseduta();
 
-        pianta.id = props.id;
-        pianta.specie = await WikiPianta.daSpecie(props.specie);
+        pianta.specie = await WikiPianteDAO.get(props.specie);
         pianta.nome = props.nome;
         pianta.acq = new Date(props.acq);
         pianta.note = props.note ?? '';
