@@ -9,7 +9,16 @@ export async function getAll(): Promise<Riga[]> {
     return await DAO.getAll<Riga>('Categorie');
 }
 
-export async function get(nome: string): Promise<number> {
+export async function get(id: number): Promise<string> {
+    const risultati: Riga[] = await DAO.get<Riga>('Categorie', {id: id});
+
+    if (risultati.length !== 1)
+        throw new Error(`GET(Categorie, ${id}) FALLITO`);
+
+    return (risultati)[0].nome;
+}
+
+export async function daNome(nome: string): Promise<number> {
     const risultati: Riga[] = await DAO.get<Riga>('Categorie', {nome: nome});
 
     if (risultati.length !== 1)
@@ -28,13 +37,13 @@ export async function insert(nome: string): Promise<number | null> {
 
 export async function update({vecchio, nuovo}: {vecchio: string, nuovo: string}): Promise<void> {
     const riga = {
-        id: await get(vecchio),
+        id: await daNome(vecchio),
         nome: nuovo
     };
     await DAO.update<Riga>('Categorie', riga);
 }
 
 export async function remove(nome: string): Promise<void> {
-    const id: number = await get(nome);
+    const id: number = await daNome(nome);
     await DAO.remove('Categorie', id);
 }

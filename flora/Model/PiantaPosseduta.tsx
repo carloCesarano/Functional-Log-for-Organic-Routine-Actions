@@ -1,6 +1,8 @@
-import {Riga} from '../Database/PiantePosseduteDAO';
+import {Riga, insert} from '../Database/PiantePosseduteDAO';
 import * as WikiPianteDAO from '../Database/WikiPianteDAO';
 import {WikiPianta} from './WikiPianta';
+import {getPerPianta as categorieGet} from '../Database/PianteCategorieDAO';
+import {getPerPianta as interventiGet} from '../Database/InterventiDAO';
 import {assertDefined} from './UndefinedError';
 import {assertNonEmpty} from './EmptyError';
 
@@ -17,17 +19,45 @@ export class PiantaPosseduta {
     innaff      ?: Date[];
     potat       ?: Date[];
     rinv        ?: Date[];
-    foto        ?: string;
+    foto        ?: string | null;
     note        ?: string;
 
-    static async creaNuova(props: Riga): Promise<PiantaPosseduta> {
+    static async creaNuova(props: Riga, ultimaInnaff: Date, ultimaPotat: Date, ultimoRinv: Date): Promise<PiantaPosseduta> {
         const pianta = new PiantaPosseduta();
 
         pianta.specie = await WikiPianteDAO.get(props.specie);
         pianta.nome = props.nome;
         pianta.acq = new Date(props.acq);
         pianta.note = props.note ?? '';
-        pianta.foto = props.foto || undefined;
+        pianta.foto = props.foto;
+        pianta.categorie = [];
+        pianta.innaff = [ultimaInnaff];
+        pianta.potat = [ultimaPotat];
+        pianta.rinv = [ultimoRinv];
+
+        await insert(pianta);
+
+        return pianta;
+    }
+
+    static async daRiga(riga: Riga): Promise<PiantaPosseduta> {
+        const pianta = new PiantaPosseduta();
+
+        pianta.id = riga.id;
+        pianta.nome = riga.nome;
+        pianta.specie = await WikiPianteDAO.get(riga.specie);
+        pianta.acq = new Date(riga.acq);
+        pianta.note = riga.note ?? '';
+        pianta.foto = riga.foto;
+        pianta.categorie = await categorieGet(riga.id);
+
+        const interventi = await interventiGet(riga.id);
+        pianta.innaff = interventi.filter(i => i.tipo === 'INN')
+                        .map(i => i.data).sort();
+        pianta.potat = interventi.filter(i => i.tipo === 'POT')
+                       .map(i => i.data).sort();
+        pianta.rinv = interventi.filter(i => i.tipo === 'RINV')
+                      .map(i => i.data).sort();
 
         return pianta;
     }
