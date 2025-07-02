@@ -1,6 +1,6 @@
 import * as DAO from './DAO';
 
-export interface Riga extends DAO.Riga{
+export interface Riga extends DAO.Riga {
     id: number,
     nome: string
 }
@@ -14,6 +14,7 @@ export async function get(nome: string): Promise<number> {
 
     if (risultati.length !== 1)
         throw new Error(`GET(Categorie, ${nome}) FALLITO`);
+
     return (risultati)[0].id;
 }
 
