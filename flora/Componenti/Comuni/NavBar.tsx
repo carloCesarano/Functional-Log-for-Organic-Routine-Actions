@@ -5,12 +5,14 @@ import {View} from 'react-native';
 import Icona          from './Navbar/Icona';
 import BarraDiRicerca from './Navbar/BarraDiRicerca';
 import HamburgerMenu  from './Navbar/HamburgerMenu';
+// FOGLI DI STILE
+import {styles} from '../../Styles/NavBar';
 
 export default function NavBar() {
     if (isPortrait())
         return (
             // Modalità Portrait
-            <View>
+            <View style={styles.navbarP}>
                 <Icona/>
                 <BarraDiRicerca/>
                 <HamburgerMenu/>

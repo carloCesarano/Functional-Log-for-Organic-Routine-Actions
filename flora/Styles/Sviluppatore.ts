@@ -1,7 +1,12 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-    titolo: {
+    titoloButton: {
+        borderWidth: 2,
+        borderStyle: 'solid',
+        width: '80%',
+    },
+    titoloText: {
         fontSize: 32,
         fontWeight: 'bold',
     },
