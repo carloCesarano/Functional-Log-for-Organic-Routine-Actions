@@ -1,17 +1,20 @@
 import {Riga, insert} from '../Database/WikiPianteDAO';
 
 export const IMAGE_MOCKUPS : {[key: string]: number} = {
-    "mockup:generic"     : require('../Assets/MOCKUP/generic.jpg'    ),
-    "mockup:Ficus"       : require('../Assets/MOCKUP/FICUS.webp'     ),
-    "mockup:Sanseveria"  : require('../Assets/MOCKUP/SANSEVERIA.jpg' ),
-    "mockup:Pothos"      : require('../Assets/MOCKUP/POTHOS.jpg'     ),
-    "mockup:Zamioculca"  : require('../Assets/MOCKUP/ZAMIOCULCA.jpg' ),
-    "mockup:Spatifillo"  : require('../Assets/MOCKUP/SPATIFILLO.jpg' ),
-    "mockup:Orchidea"    : require('../Assets/MOCKUP/ORCHIDEA.jpg'   ),
-    "mockup:Anthurium"   : require('../Assets/MOCKUP/ANTHURIUM.jpg'  ),
-    "mockup:Begonia"     : require('../Assets/MOCKUP/BEGONIA.jpg'    ),
-    "mockup:Basilico"    : require('../Assets/MOCKUP/BASILICO.webp'  ),
-    "mockup:Peperoncino" : require('../Assets/MOCKUP/PEPERONCINO.jpg')
+    "mockup:generic"          : require('../Assets/MOCKUP/generic.jpg'       ),
+    "mockup:Ficus"            : require('../Assets/MOCKUP/FICUS.png'         ),
+    "mockup:Sanseveria"       : require('../Assets/MOCKUP/SANSEVERIA.jpg'    ),
+    "mockup:Pothos"           : require('../Assets/MOCKUP/POTHOS.jpg'        ),
+    "mockup:Zamioculca"       : require('../Assets/MOCKUP/ZAMIOCULCA.jpg'    ),
+    "mockup:Spatifillo"       : require('../Assets/MOCKUP/SPATIFILLO.jpg'    ),
+    "mockup:Orchidea"         : require('../Assets/MOCKUP/ORCHIDEA.jpg'      ),
+    "mockup:Anthurium"        : require('../Assets/MOCKUP/ANTHURIUM.jpg'     ),
+    "mockup:Begonia"          : require('../Assets/MOCKUP/BEGONIA.jpg'       ),
+    "mockup:Calla"            : require('../Assets/MOCKUP/CALLA.jpg'         ),
+    "mockup:Impatiens"        : require('../Assets/MOCKUP/IMPATIENS.png'     ),
+    "mockup:Stella di Natale" : require('../Assets/MOCKUP/STELLADINATALE.jpg'),
+    "mockup:Basilico"         : require('../Assets/MOCKUP/BASILICO.png'      ),
+    "mockup:Peperoncino"      : require('../Assets/MOCKUP/PEPERONCINO.jpg'   )
 }
 
 export class WikiPianta {
