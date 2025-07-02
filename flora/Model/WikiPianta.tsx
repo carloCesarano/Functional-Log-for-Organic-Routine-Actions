@@ -1,4 +1,4 @@
-import {Riga, get} from '../Database/WikiPianteDAO';
+import {Riga, insert} from '../Database/WikiPianteDAO';
 
 export const IMAGE_MOCKUPS : {[key: string]: number} = {
     "mockup:generic"     : require('../Assets/MOCKUP/generic.jpg'    ),
@@ -35,6 +35,16 @@ export class WikiPianta {
         this.foto       = riga.foto;
     }
 
+    static async creaNuova(riga: Omit<Riga, 'id'>): Promise<WikiPianta | null> {
+        const wikiPianta = new WikiPianta({...riga, id: -1} as Riga);
+        const ID: number | null = await insert(wikiPianta);
+        if (ID === null)
+            return null;
+
+        wikiPianta.id = ID;
+        return wikiPianta;
+    }
+
     /** @returns Id della specie */
     getId()         : number { return this.id         }
     /** @returns Nome comune */
@@ -55,8 +65,13 @@ export class WikiPianta {
         return IMAGE_MOCKUPS['mockup:generic'];
     }
 
-    static async daSpecie(specie: string) {
-        return await get(specie);
+    toString(): string {
+        let foto: string;
+        if (this.foto) foto = this.foto;
+        else if (IMAGE_MOCKUPS['mockup:' + this.getSpecie()]) foto = 'Mockup';
+        else foto = 'Generic';
+
+        return `[${this.getId()}] ${this.getSpecie()}: ${this.getFreqInnaff()}, ${this.getFreqPotat()}, ${this.getFreqRinv()} (${foto})`;
     }
 
 }

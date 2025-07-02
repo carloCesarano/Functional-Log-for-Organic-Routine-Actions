@@ -9,7 +9,8 @@ function getDB(): SQLiteDatabase {
     if (!db) {
         db = SQLite.openDatabaseSync('FLORA1');
         db.execSync("PRAGMA foreign_keys = ON;");
-        if (DBVuoto(db)) popolaDB(db);
+        // if (DBVuoto(db))
+            popolaDB(db);
     }
     return db;
 }
@@ -73,6 +74,30 @@ function popolaDB(db: SQLiteDatabase): void {
             FOREIGN KEY (pianta) REFERENCES PiantePossedute(id)
                 ON UPDATE CASCADE ON DELETE CASCADE
         );
+    `);
+
+    db.execSync(`
+    INSERT INTO WikiPiante (specie, freqInnaff, freqPotat, freqRinv) VALUES
+        ('Ficus',              7,  60, 365),
+        ('Sanseveria',        14, 180, 730),
+        ('Pothos',             5,  30, 365),
+        ('Zamioculca',        10,  90, 730),
+        ('Spatifillo',         4,  45, 365),
+        ('Orchidea',           7,  60, 730),
+        ('Anthurium',          5,  60, 365),
+        ('Begonia',            4,  30, 365),
+        ('Geranio',            3,  20, 180),
+        ('Ciclamino',          4,  30, 180),
+        ('Kalanchoe',          7,  45, 365),
+        ('Guzmania',           6,  60, 365),
+        ('Amarillide',         5,  45, 365),
+        ('Violette africane',  3,  30, 180),
+        ('Clivia',             7,  60, 730),
+        ('Calla',              5,  30, 365),
+        ('Impatiens',          3,  20, 180),
+        ('Stella di Natale',   6,  60, 365),
+        ('Basilico',           2,  15,  90),
+        ('Peperoncino',        3,  30, 180);
     `);
 }
 

@@ -23,3 +23,40 @@ export async function get(specie: string): Promise<WikiPianta> {
 
     return new WikiPianta(risultati[0]);
 }
+
+export async function insert(wiki: WikiPianta): Promise<number | null> {
+    try {
+        return await DAO.insert<Riga>('WikiPiante', preparaPerInsert(wiki));
+    } catch (error) {
+        return null;
+    }
+}
+
+export async function update(wiki: WikiPianta): Promise<void> {
+    await DAO.update<Riga>('WikiPiante', preparaPerUpdate(wiki));
+}
+
+export async function remove(wiki: WikiPianta): Promise<void> {
+    await DAO.remove('WikiPiante', wiki.getId());
+}
+
+function preparaPerUpdate(w: WikiPianta): Riga {
+    return {
+        id         : w.getId(),
+        specie     : w.getSpecie(),
+        freqInnaff : w.getFreqInnaff(),
+        freqPotat  : w.getFreqPotat(),
+        freqRinv   : w.getFreqRinv(),
+        foto       : w.foto,
+    }
+}
+
+function preparaPerInsert(w: WikiPianta): Omit<Riga, 'id'> {
+    return {
+        specie     : w.getSpecie(),
+        freqInnaff : w.getFreqInnaff(),
+        freqPotat  : w.getFreqPotat(),
+        freqRinv   : w.getFreqRinv(),
+        foto       : w.foto,
+    }
+}
