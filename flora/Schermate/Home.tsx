@@ -3,12 +3,14 @@ import React from 'react';
 import {ScrollView} from 'react-native';
 // COMPONENTI CUSTOM
 import Background from '../Componenti/Comuni/Background';
-import NavBar from '../Componenti/Comuni/NavBar';
+import NavBar     from '../Componenti/Comuni/NavBar';
+import Titolo     from '../Componenti/Comuni/Titolo';
 
 export default function Home() {
     return (
         <Background>
             <NavBar/>
+            <Titolo nome='Home'/>
 
             <ScrollView>
                 {/*

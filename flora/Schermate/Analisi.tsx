@@ -1,13 +1,15 @@
 import React from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../types';
 // COMPONENTI CUSTOM
 import Background from '../Componenti/Comuni/Background';
+import NavBar     from '../Componenti/Comuni/NavBar';
+import Titolo     from '../Componenti/Comuni/Titolo';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Analisi'>;
-
-export default function Analisi({navigation}: Props) {
+export default function Analisi() {
     return (
-        <Background/>
+        <Background>
+            <NavBar/>
+            <Titolo nome='Analisi'/>
+
+        </Background>
     )
 }
