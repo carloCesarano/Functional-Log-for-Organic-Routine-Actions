@@ -15,6 +15,12 @@ I tre pulsanti servono per:
 3. Modificare il nome dell'ultima specie nel Database (id maggiore).
 Il label 'Caricamento' è TRUE quando un'azione è stata avviata ma non
 ha ancora dato segnale di completamento.
+FUNZIONI UTILIZZATE:
+- WikiPianteDAO.getAll
+- WikiPianteDAO.remove
+- WikiPianteDAO.update
+- WikiPianta.creaNuova
+- PiantaPosseduta.getId
 `;
 
 export function TestWikiPiante() {
