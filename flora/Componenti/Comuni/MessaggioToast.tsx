@@ -1,5 +1,7 @@
 import Toast, {BaseToast, ErrorToast} from 'react-native-toast-message';
 import {styles} from '../../Styles/MessaggioToast';
+import React from 'react';
+import {View} from 'react-native';
 
 const config = {
     success: (props: any) => (
@@ -38,6 +40,8 @@ export function MostraToast({tipo, titolo, messaggio}: Props) {
 
 export default function MessaggioToast() {
     return (
-        <Toast config={config}/>
+        <View pointerEvents='none' style={styles.view}>
+            <Toast config={config}/>
+        </View>
     )
 }
