@@ -1,30 +1,25 @@
-import {isPortrait} from "./OrientazioneChecker";
 // COMPONENTI NATIVI
 import {View} from 'react-native';
 // COMPONENTI CUSTOM
 import Icona          from './Navbar/Icona';
 import BarraDiRicerca from './Navbar/BarraDiRicerca';
 import HamburgerMenu  from './Navbar/HamburgerMenu';
+// UTILITY
+import {isPortrait} from "./OrientazioneChecker";
 // FOGLI DI STILE
-import {styles} from '../../Styles/NavBar';
+import {PORTRAIT, LANDSCAPE} from '../../Styles/NavBar';
 
 export default function NavBar() {
-    if (isPortrait())
-        return (
-            // Modalità Portrait
-            <View style={styles.navbarP}>
-                <Icona/>
-                <BarraDiRicerca/>
-                <HamburgerMenu/>
-            </View>
-        )
-    else
-        return (
-            // Modalità Landscape
-            <View>
-                <Icona/>
-                <BarraDiRicerca/>
-                <HamburgerMenu/>
-            </View>
-        )
+    // HOOKS
+    const portraitMode = isPortrait();
+
+    const styles = portraitMode ? PORTRAIT : LANDSCAPE;
+
+    return (
+        <View style={styles.navbar}>
+            <Icona style={styles.icona}/>
+            <BarraDiRicerca/>
+            <HamburgerMenu iconStyle={styles.hamburgerIcon} menuStyle={styles.hamburgerMenu}/>
+        </View>
+    )
 }

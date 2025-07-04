@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../types';
 // COMPONENTI NATIVI
-import {TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View, ViewStyle} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 // COMPONENTI CUSTOM
 import Button from '../Input/Button';
@@ -16,7 +16,7 @@ const OPZIONI = [
 ] as const;
 type OPZIONE = typeof OPZIONI[number];
 
-export default function HamburgerMenu() {
+export default function HamburgerMenu({iconStyle, menuStyle}: {iconStyle: ViewStyle, menuStyle: ViewStyle}) {
     // VARIABILI DI STATO
     const [isAperto, setAperto] = useState<boolean>(false);
     
@@ -44,18 +44,18 @@ export default function HamburgerMenu() {
     }
 
     return (
-        <View>
+        <View style={iconStyle}>
             <TouchableOpacity
                 onPress={toggleMenu}>
 
                 <Ionicons
                     name="menu"
-                    size={32}/>
+                    size={42}/>
 
             </TouchableOpacity>
 
             {isAperto && (
-                <View>
+                <View style={menuStyle}>
                     {OPZIONI.map(opzione => (
                         <Button
                             key={opzione}

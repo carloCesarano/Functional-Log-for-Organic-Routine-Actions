@@ -2,11 +2,9 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../types';
 // COMPONENTI NATIVI
-import {TouchableOpacity, Image} from 'react-native';
-// FOGLI DI STILE
-import {styles} from '../../../Styles/NavBar';
+import {TouchableOpacity, Image, ImageStyle} from 'react-native';
 
-export default function Icona() {
+export default function Icona({style}: {style: ImageStyle}) {
     // Recupero il navigatore
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
@@ -25,7 +23,7 @@ export default function Icona() {
         <TouchableOpacity
             onPress={goHome}>
             <Image
-                style={styles.icona}
+                style={style}
                 source={require("../../../Assets/full_logo.png")}/>
         </TouchableOpacity>
     )
