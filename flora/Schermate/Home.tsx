@@ -5,6 +5,7 @@ import {ScrollView} from 'react-native';
 import Background from '../Componenti/Comuni/Background';
 import NavBar     from '../Componenti/Comuni/NavBar';
 import Titolo     from '../Componenti/Comuni/Titolo';
+import AggiungiPiantaButton from '../Componenti/Comuni/AggiungiPiantaButton';
 
 export default function Home() {
     return (
@@ -19,9 +20,7 @@ export default function Home() {
                 */}
             </ScrollView>
 
-            {/*
             <AggiungiPiantaButton/>
-            */}
         </Background>
     )
 }
