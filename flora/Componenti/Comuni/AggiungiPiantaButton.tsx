@@ -5,12 +5,15 @@ import {useNavigation} from '@react-navigation/native';
 // COMPONENTI NATIVI
 import {TouchableOpacity} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
+// UTILITY
+import {isPortrait} from './OrientazioneChecker';
 // FOGLI DI STILE
 import {styles} from '../../Styles/AggiungiPiantaButton';
 
 export default function AggiungiPiantaButton() {
     // HOOKS
-    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+    const portraitMode = isPortrait();
 
     // QUANDO VIENE CHAMATA:
     // Quando si clicca sul pulsante '+' in basso a destra
@@ -22,9 +25,11 @@ export default function AggiungiPiantaButton() {
         navigation.navigate('AggiungiPianta');
     }
 
+    const stile = portraitMode ? 'buttonP' : 'buttonL';
+
     return (
         <TouchableOpacity
-            style={styles.aggiungiPiantaButton}
+            style={styles[stile]}
             onPress={vaiAllaSchermataAggiungiPianta}>
 
             <Ionicons

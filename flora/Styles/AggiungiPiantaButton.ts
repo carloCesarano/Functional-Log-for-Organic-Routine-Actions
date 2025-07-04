@@ -1,11 +1,11 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-    // <AggiungiPiantaButton> -> <TouchableOpacity>
-    aggiungiPiantaButton: {
+    // PORTRAIT: <AggiungiPiantaButton> -> <TouchableOpacity>
+    buttonP: {
         position: 'absolute',
-        bottom: 50,
-        right: 20,
+        bottom: 60,
+        right: 30,
         width: 60,
         height: 60,
         elevation: 5,
@@ -14,5 +14,19 @@ export const styles = StyleSheet.create({
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
-    }
-});
+    },
+    // LANDSCAPE: <AggiungiPiantaButton> -> <TouchableOpacity>
+    buttonL: {
+        position: 'absolute',
+        bottom: 30,
+        right: 60,
+        width: 60,
+        height: 60,
+        elevation: 5,
+        zIndex: 5,
+        backgroundColor: '#52B04E',
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+})
