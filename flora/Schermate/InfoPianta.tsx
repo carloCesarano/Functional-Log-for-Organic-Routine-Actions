@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../types';
 // COMPONENTI CUSTOM
@@ -12,10 +12,25 @@ interface Props extends Partial<NavigationProps> {
     ID: number
 }
 export default function InfoPianta({ID}: Props) {
+    const [editing, setEditing] = useState<boolean>(false);
+
     return (
         <Background>
             <NavBar/>
             <Titolo nome="InfoPianta"/>
+
+            {/*
+            {!editing && (
+                <VisualizzaInfo id={ID}/>
+            )}
+
+            {editing && (
+                <FormModifica id={ID}/>
+            )}
+
+            <Button> // Pulsante che elimina
+            <Button> // Pulsante che fa il toggle tra modifica/visualizza
+            */}
 
         </Background>
     )

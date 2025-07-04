@@ -10,6 +10,9 @@ export default function AggiungiPianta() {
             <NavBar/>
             <Titolo nome='AggiungiPianta'/>
 
+            {/*
+            <Form/>
+            */}
         </Background>
     )
 }
