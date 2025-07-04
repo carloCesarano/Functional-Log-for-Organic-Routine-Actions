@@ -3,7 +3,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../types';
 // COMPONENTI NATIVI
-import {View, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 
 export default function BarraDiRicerca() {
     // VARIABILI DI STATO
@@ -52,7 +52,8 @@ export default function BarraDiRicerca() {
             {testoNonVuoto && (
                 <TouchableOpacity
                     onPress={pulisciTesto}>
-                    X
+
+                    <Text>X</Text>
                 </TouchableOpacity>
             )}
         </View>
