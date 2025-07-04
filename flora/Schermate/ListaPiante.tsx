@@ -5,6 +5,7 @@ import {RootStackParamList} from '../types';
 import Background from '../Componenti/Comuni/Background';
 import NavBar     from '../Componenti/Comuni/NavBar';
 import Titolo     from '../Componenti/Comuni/Titolo';
+import AggiungiPiantaButton from '../Componenti/Comuni/AggiungiPiantaButton';
 
 // DEFINISCO GLI INPUT
 type NavigationProps = NativeStackScreenProps<RootStackParamList, 'ListaPiante'>;
@@ -25,11 +26,9 @@ export default function ListaPiante({cercato}: Props) {
             <VistaPiante cercato={cercato} filtri={{stati, categorie}}/>
 
             <MenuFiltri .../> // Da specificare gli input
-
-            // Ho tolto il pulsante "Indietro" da quasi tutte le schermate
-            // perché, dato che l'app deve girare solo su mobile, non serve
-            // più.
             */}
+
+            <AggiungiPiantaButton/>
         </Background>
     )
 }
