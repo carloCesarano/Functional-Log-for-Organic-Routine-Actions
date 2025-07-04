@@ -9,14 +9,14 @@ import {Ionicons} from '@expo/vector-icons';
 import Button from '../Input/Button';
 
 const OPZIONI = [
-    "Impostazioni",
     "Analisi",
     "Categorie",
+    "Impostazioni",
     "Sviluppatore"
 ] as const;
 type OPZIONE = typeof OPZIONI[number];
 
-export default function HamburgerMenu({iconStyle, menuStyle}: {iconStyle: ViewStyle, menuStyle: ViewStyle}) {
+export default function HamburgerMenu({iconStyle, menuStyle, optionStyle}: {iconStyle: ViewStyle, menuStyle: ViewStyle, optionStyle: ViewStyle}) {
     // VARIABILI DI STATO
     const [isAperto, setAperto] = useState<boolean>(false);
     
@@ -60,6 +60,7 @@ export default function HamburgerMenu({iconStyle, menuStyle}: {iconStyle: ViewSt
                         <Button
                             key={opzione}
                             testo={opzione}
+                            stileButton={optionStyle}
                             onPress={() => {
                                 onOpzione(opzione);
                                 setAperto(false);

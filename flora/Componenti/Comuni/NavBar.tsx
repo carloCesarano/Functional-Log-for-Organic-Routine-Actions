@@ -17,9 +17,13 @@ export default function NavBar() {
 
     return (
         <View style={styles.navbar}>
-            <Icona style={styles.icona}/>
+            <Icona
+                style={styles.icona}/>
             <BarraDiRicerca/>
-            <HamburgerMenu iconStyle={styles.hamburgerIcon} menuStyle={styles.hamburgerMenu}/>
+            <HamburgerMenu
+                iconStyle={styles.hamburgerIcon}
+                menuStyle={styles.hamburgerMenu}
+                optionStyle={styles.hamburgerOption}/>
         </View>
     )
 }

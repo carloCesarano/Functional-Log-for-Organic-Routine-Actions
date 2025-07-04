@@ -25,7 +25,15 @@ export const PORTRAIT = StyleSheet.create({
         minWidth: 150,
         zIndex: 1000,
         elevation: 1000,
+        borderWidth: 2,
+        borderStyle: 'solid',
+        borderRadius: 10,
+        backgroundColor: '#eaf5df',
     },
+    hamburgerOption: {
+        borderRadius: 10,
+        backgroundColor: '#eaf5df',
+    }
 });
 
 export const LANDSCAPE = StyleSheet.create({
@@ -53,5 +61,13 @@ export const LANDSCAPE = StyleSheet.create({
         minWidth: 150,
         zIndex: 1000,
         elevation: 1000,
+        borderWidth: 2,
+        borderStyle: 'solid',
+        borderRadius: 10,
+        backgroundColor: '#eaf5df',
     },
+    hamburgerOption: {
+        borderRadius: 10,
+        backgroundColor: '#eaf5df',
+    }
 })
