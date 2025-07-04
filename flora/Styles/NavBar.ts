@@ -33,6 +33,7 @@ export const PORTRAIT = StyleSheet.create({
     hamburgerOption: {
         borderRadius: 10,
         backgroundColor: '#eaf5df',
+        borderBottomWidth: 0.5
     }
 });
 
@@ -69,5 +70,6 @@ export const LANDSCAPE = StyleSheet.create({
     hamburgerOption: {
         borderRadius: 10,
         backgroundColor: '#eaf5df',
+        borderBottomWidth: 0.5
     }
 })
