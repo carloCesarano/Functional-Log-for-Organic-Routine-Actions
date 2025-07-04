@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../types';
 // COMPONENTI CUSTOM
@@ -13,11 +13,23 @@ interface Props extends Partial<NavigationProps> {
 }
 
 export default function ListaPiante({cercato}: Props) {
+    const [stati,     setStati    ] = useState<string[]>([]);
+    const [categorie, setCategorie] = useState<string[]>([]);
+
     return (
         <Background>
             <NavBar/>
             <Titolo nome="ListaPiante"/>
 
+            {/*
+            <VistaPiante cercato={cercato} filtri={{stati, categorie}}/>
+
+            <MenuFiltri .../> // Da specificare gli input
+
+            // Ho tolto il pulsante "Indietro" da quasi tutte le schermate
+            // perché, dato che l'app deve girare solo su mobile, non serve
+            // più.
+            */}
         </Background>
     )
 }
