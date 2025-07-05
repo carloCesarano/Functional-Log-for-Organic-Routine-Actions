@@ -12,6 +12,11 @@ import VistaPiante from "../Componenti/Schermate/ListaPiante/VistaPiante";
 import MenuFiltri from "../Componenti/Schermate/ListaPiante/MenuFiltri";
 // UTILITY
 import * as CategorieDAO from "../Database/CategorieDAO";
+import Button from "../Componenti/Comuni/Input/Button";
+import {useNavigation} from "@react-navigation/native";
+import {StackNavigationProp} from "@react-navigation/stack";
+import {styles} from "../Styles/Button";
+import {View} from "react-native";
 
 // Definizione dei tipi per le props della schermata ListaPiante
 type NavigationProps = NativeStackScreenProps<RootStackParamList, 'ListaPiante'>;
@@ -32,6 +37,8 @@ export default function ListaPiante({cercato}: Props) {
     const [mostraStati, setMostraStati] = useState(false);
     // Lista di tutte le categorie disponibili (caricate dal DB)
     const [listaCategorie, setListaCategorie] = useState<string[]>([]);
+    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
 
     // Carica tutte le categorie dal database all'avvio della schermata
     useEffect(() => {
@@ -88,6 +95,18 @@ export default function ListaPiante({cercato}: Props) {
             <Titolo nome="ListaPiante"/>
             {/* Lista delle piante filtrata in base a ricerca e filtri */}
             <VistaPiante cercato={cercato} filtri={{stati, categorie}}/>
+
+            <View style={styles.buttonContainer}>
+                <Button
+                    testo="Indietro"
+                    onPress={() => navigation.navigate('Home')}
+                />
+                <Button
+                    testo="Filtra"
+                    onPress={handleFiltriCliccato}
+                />
+            </View>
+
             {/* Menu per la selezione dei filtri */}
             <MenuFiltri
                 mostraMenuFiltri={mostraMenuFiltri}
