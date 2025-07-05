@@ -27,6 +27,9 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 15,
         color: '#333',
+        textAlign: 'center',  // Aggiunto per centrare il testo
+        width: '100%',        // Necessario per textAlign
+        paddingHorizontal: 10, // Aggiunto spazio ai lati
     },
     
     // Lista delle piante (layout a griglia)
