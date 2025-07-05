@@ -5,23 +5,20 @@ import {ScrollView} from 'react-native';
 import Background from '../Componenti/Comuni/Background';
 import NavBar     from '../Componenti/Comuni/NavBar';
 import Titolo     from '../Componenti/Comuni/Titolo';
-import AggiungiPiantaButton from '../Componenti/Comuni/AggiungiPiantaButton';
-import ListaPiantaButton from '../Componenti/Schermate/Home/ListaPiantaButton';
 import UltimePianteAggiunte from '../Componenti/Schermate/Home/UltimePianteAggiunte';
-import ProssimiInterventi from '../Componenti/Schermate/Home/ProssimiInterventi';
+import ProssimiInterventi   from '../Componenti/Schermate/Home/ProssimiInterventi';
+import AggiungiPiantaButton from '../Componenti/Comuni/AggiungiPiantaButton';
 
 export default function Home() {
     return (
         <Background>
             <NavBar/>
-            <Titolo nome='Home'/>
+            <ScrollView contentContainerStyle={{paddingBottom: 10}}>
 
-            <ScrollView>
+                <Titolo nome='Home'/>
                 <UltimePianteAggiunte/>
-                
-                <ListaPiantaButton/>
-
                 <ProssimiInterventi/>
+
             </ScrollView>
 
             <AggiungiPiantaButton/>
