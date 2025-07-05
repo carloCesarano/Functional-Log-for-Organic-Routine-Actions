@@ -99,6 +99,47 @@ function popolaDB(db: SQLiteDatabase): void {
         ('Basilico',           2,  15,  90),
         ('Peperoncino',        3,  30, 180);
     `);
+
+
+    // DATI DI PROVA
+    db.execSync(`
+        INSERT INTO PiantePossedute (nome, specie, acq, note, foto)
+        VALUES
+            ('Ficus', 'Ficus', '2023-05-01', 'Pianta regalo', NULL),
+            ('Sanseveria', 'Sanseveria', '2022-11-15', '', NULL),
+            ('Pothos', 'Pothos', '2024-01-10', 'Cresce bene', NULL)
+    `);
+
+    db.execSync(`
+    INSERT INTO Interventi (pianta, tipo, data) VALUES
+        (1, 'INN', '2025-07-03'),
+        (1, 'POT', '2025-07-03'),
+        (1, 'RINV', '2025-07-03'),
+        (2, 'INN', '2024-06-02'),
+        (2, 'POT', '2025-07-3'),
+        (2, 'RINV', '2025-07-02'),
+        (3, 'INN', '2025-07-01'),
+        (3, 'POT', '2025-07-03'),
+        (3, 'RINV', '2025-07-03')
+`);
+
+    db.execSync(`
+        INSERT INTO Categorie (nome) VALUES
+        ('Piante Grasse'),
+        ('Sempreverdi'),
+        ('Fiorite'),
+        ('Da Interno'),
+        ('Aromatiche');
+    `);
+
+    db.execSync(`
+        INSERT INTO PianteCategorie (pianta, categoria)
+        VALUES
+            (1, (SELECT id FROM Categorie WHERE nome = 'Sempreverdi')),
+            (2, (SELECT id FROM Categorie WHERE nome = 'Piante Grasse')),
+            (3, (SELECT id FROM Categorie WHERE nome = 'Fiorite'));
+    `);
+
 }
 
 export async function getAll<T extends Riga>(tabella: string): Promise<T[]> {
