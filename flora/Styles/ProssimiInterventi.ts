@@ -1,34 +1,55 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet} from 'react-native';
 
-export const prossimiInterventiStyles = StyleSheet.create({
-    wrapper: {
-        marginTop: 20,
-        marginHorizontal: 20,
+export const PORTRAIT = StyleSheet.create({
+    containerElemento: {
+        marginTop: 18,
+        borderWidth: 2,
+        borderRadius: 24,
+        paddingVertical: 8,
+        backgroundColor: '#bbe89f',
+        borderColor: '#384637',
+        alignItems: 'center',
+        paddingBottom: 8,
     },
-    title: {
-        fontSize: 16,
-        fontWeight: "bold",
-        textAlign: "center",
-        marginBottom: 4,
+    titolo: {
+        fontSize: 22,
+        textAlign: 'center',
+        marginBottom: 8,
     },
-    container: {
-        backgroundColor: "#b7db9d",
-        borderRadius: 20,
-        padding: 10,
+    containerInterventi: {
+        justifyContent: 'center',
+        alignItems: "center",
     },
-    gradient: {
-        borderRadius: 50,
-        height: 50,
-        padding: 0,
-        marginBottom: 10,
+    renderIntervento: {
+        minWidth: '90%',
+        maxWidth: '90%',
+        borderRadius: 8,
+        marginBottom: 8
     },
-    button: {
-        backgroundColor: "transparent",
-        height: "100%",
-        marginTop: 5,
+});
+
+export const LANDSCAPE = StyleSheet.create({
+    containerElemento: {
+        marginTop: 18,
+        borderWidth: 2,
+        borderRadius: 24,
+        paddingVertical: 8,
+        backgroundColor: '#bbe89f',
+        borderColor: '#384637',
+        alignItems: 'center',
+        paddingBottom: 8,
     },
-    cardText: {
-        color: "black",
-        fontSize: 14,
+    titolo: {
+        fontSize: 22,
+        textAlign: 'center',
+        marginBottom: 8,
+    },
+    containerInterventi: {
+        justifyContent: 'center',
+    },
+    renderIntervento: {
+        minWidth: '90%',
+        borderRadius: 8,
+        marginBottom: 8
     },
 });
