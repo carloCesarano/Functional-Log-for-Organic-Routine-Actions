@@ -7,6 +7,7 @@ import NavBar     from '../Componenti/Comuni/NavBar';
 import Titolo     from '../Componenti/Comuni/Titolo';
 import AggiungiPiantaButton from '../Componenti/Comuni/AggiungiPiantaButton';
 import ListaPiantaButton from '../Componenti/Comuni/ListaPiantaButton';
+import ProssimiInterventi from '../Componenti/Schermate/Home/ProssimiInterventi';
 
 export default function Home() {
     return (
@@ -15,17 +16,12 @@ export default function Home() {
             <Titolo nome='Home'/>
 
             <ScrollView>
-                {
-                /*
-                <UltimePianteAggiunte/>
-                */
-                
+                {/*<UltimePianteAggiunte/>*/}
                 <ListaPiantaButton/>
 
-                /*
                 <ProssimiInterventi/>
-                */}
             </ScrollView>
+
 
             <AggiungiPiantaButton/>
         </Background>
