@@ -1,13 +1,13 @@
 import React from 'react';
-import {RootStackParamList} from '../../types';
+import {RootStackParamList} from '../../../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
 // COMPONENTI NATIVI
 import {TouchableOpacity, Text} from 'react-native';
 // UTILITY
-import {isPortrait} from './OrientazioneChecker';
+import {isPortrait} from '../../Comuni/OrientazioneChecker';
 // FOGLI DI STILE
-import {styles} from '../../Styles/ListaPiantaButton';
+import {styles} from '../../../Styles/ListaPiantaButton';
 
 export default function ListaPianteButton() {
     // HOOKS
