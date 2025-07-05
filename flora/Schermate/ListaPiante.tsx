@@ -15,7 +15,7 @@ import * as CategorieDAO from "../Database/CategorieDAO";
 import Button from "../Componenti/Comuni/Input/Button";
 import {useNavigation} from "@react-navigation/native";
 import {StackNavigationProp} from "@react-navigation/stack";
-import {styles} from "../Styles/Button";
+import {styles} from "../Styles/ButtonListaPiante";
 import {View} from "react-native";
 
 // Definizione dei tipi per le props della schermata ListaPiante
@@ -100,10 +100,15 @@ export default function ListaPiante({cercato}: Props) {
                 <Button
                     testo="Indietro"
                     onPress={() => navigation.navigate('Home')}
+                    stileButton={styles.button}
+                    stileTesto={styles.testo}
                 />
                 <Button
                     testo="Filtra"
                     onPress={handleFiltriCliccato}
+                    stileButton={styles.button}
+                    stileTesto={styles.testo}
+
                 />
             </View>
 
