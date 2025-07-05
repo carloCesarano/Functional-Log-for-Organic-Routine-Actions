@@ -1,13 +1,8 @@
 // COMPONENTI NATIVI
 import React from "react";
 import { View, TouchableOpacity, Text, ScrollView } from "react-native";
-// COMPONENTI CUSTOM
-import Button from "../../Comuni/Input/Button";
 // UTILITY
 import { CheckBox } from "react-native-elements";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../types";
 // FOGLI DI STILE
 import { listaPianteStyles as styles } from "../../../Styles/ListaPiante";
 
@@ -38,25 +33,13 @@ export default function MenuFiltri({
                                        onStatoSelezionato,
                                        onCategoriaSelezionata
                                    }: Props) {
-    // HOOKS
-    // Ottiene la funzione di navigazione per cambiare schermata
-    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+
 
     // RENDER DEL MENU FILTRI
     // Mostra i pulsanti e i menu a seconda dello stato delle props
     return (
         <>
-            {/* Pulsante per tornare alla Home */}
-            <Button
-                testo="Indietro"
-                onPress={() => navigation.navigate('Home')}
-            />
-
-            {/* Pulsante per aprire/chiudere il menu filtri */}
-            <Button
-                testo="Filtra"
-                onPress={onFiltriCliccato}
-            />
 
             {/* Menu principale: scelta tra filtro per stato o per categoria */}
             {mostraMenuFiltri && (

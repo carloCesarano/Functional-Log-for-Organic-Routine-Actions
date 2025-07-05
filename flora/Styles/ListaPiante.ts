@@ -12,7 +12,8 @@ export const listaPianteStyles = StyleSheet.create({
     },
     filterMenu: {
         position: 'absolute',
-        bottom: 70,
+        bottom: 110,
+        right: 100,
         backgroundColor: 'white',
         borderRadius: 8,
         padding: 10,
@@ -22,7 +23,7 @@ export const listaPianteStyles = StyleSheet.create({
         shadowRadius: 3.80,
         elevation: 5,
         zIndex: 1,
-        minWidth: 200,
+        minWidth: 160,
         maxHeight: 300,
         paddingBottom: 20,
     },

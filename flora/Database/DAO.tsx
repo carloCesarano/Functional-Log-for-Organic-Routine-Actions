@@ -107,7 +107,8 @@ function popolaDB(db: SQLiteDatabase): void {
         VALUES
             ('Ficus', 'Ficus', '2023-05-01', 'Pianta regalo', NULL),
             ('Sanseveria', 'Sanseveria', '2022-11-15', '', NULL),
-            ('Pothos', 'Pothos', '2024-01-10', 'Cresce bene', NULL)
+            ('Pothos', 'Pothos', '2024-01-10', 'Cresce bene', NULL),
+            ('Clivia', 'Clivia', '2024-02-10', 'Bella pianta!', NULL);
     `);
 
     db.execSync(`
@@ -120,7 +121,10 @@ function popolaDB(db: SQLiteDatabase): void {
         (2, 'RINV', '2025-07-02'),
         (3, 'INN', '2025-07-01'),
         (3, 'POT', '2025-07-03'),
-        (3, 'RINV', '2025-07-03')
+        (3, 'RINV', '2025-07-03'),
+        (4, 'INN', '2025-05-01'),
+        (4, 'POT', '2025-04-03'),
+        (4, 'RINV', '2025-06-03');
 `);
 
     db.execSync(`
