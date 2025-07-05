@@ -1,16 +1,22 @@
 import React from 'react';
-import {Text} from 'react-native';
+// COMPONENTI NATIVI
+import {Text, TextStyle} from 'react-native';
 
 interface Props {
-    nome: string
+    nome: string,
+    stile?: TextStyle
 }
 
-export default function Titolo({nome}: Props) {
+export default function Titolo({nome, stile}: Props) {
     return (
-        <Text style={{
-            fontSize: 32,
-            fontWeight: 'bold',
-            marginBottom: 16
-        }}>{nome}</Text>
+        <Text
+            style={[{
+                fontSize: 32,
+                fontWeight: 'bold',
+                marginBottom: 16
+            }, stile]}>
+
+            {nome}
+        </Text>
     )
 }
