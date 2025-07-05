@@ -1,31 +1,31 @@
-// COMPONENTI NATIVI
-import React, {useState, useEffect} from 'react';
-// TIPI DI NAVIGAZIONE
+import {JSX, useState, useEffect} from 'react';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../types';
+import {useNavigation} from '@react-navigation/native';
+// COMPONENTI NATIVI
+import {View} from "react-native";
 // COMPONENTI CUSTOM
 import Background from '../Componenti/Comuni/Background';
-import NavBar from '../Componenti/Comuni/NavBar';
-import Titolo from '../Componenti/Comuni/Titolo';
+import NavBar     from '../Componenti/Comuni/NavBar';
+import Titolo     from '../Componenti/Comuni/Titolo';
 import AggiungiPiantaButton from '../Componenti/Comuni/AggiungiPiantaButton';
-import VistaPiante from "../Componenti/Schermate/ListaPiante/VistaPiante";
-import MenuFiltri from "../Componenti/Schermate/ListaPiante/MenuFiltri";
+import VistaPiante          from '../Componenti/Schermate/ListaPiante/VistaPiante';
+import MenuFiltri           from '../Componenti/Schermate/ListaPiante/MenuFiltri';
+import Button from '../Componenti/Comuni/Input/Button';
 // UTILITY
-import * as CategorieDAO from "../Database/CategorieDAO";
-import Button from "../Componenti/Comuni/Input/Button";
-import {useNavigation} from "@react-navigation/native";
-import {StackNavigationProp} from "@react-navigation/stack";
+import * as CategorieDAO from '../Database/CategorieDAO';
+// FOGLI DI STILE
 import {styles} from "../Styles/ButtonListaPiante";
-import {View} from "react-native";
 
-// Definizione dei tipi per le props della schermata ListaPiante
+// DEFINISCO GLI INPUT
 type NavigationProps = NativeStackScreenProps<RootStackParamList, 'ListaPiante'>;
 interface Props extends Partial<NavigationProps> {
     cercato: string
 }
 
 // COMPONENTE PRINCIPALE DELLA SCHERMATA LISTA PIANTE
-export default function ListaPiante({cercato}: Props) {
+export default function ({cercato}: Props): JSX.Element {
     // HOOKS DI STATO
     // Stati selezionati per il filtro
     const [stati, setStati] = useState<string[]>([]);

@@ -1,4 +1,4 @@
-import React from 'react';
+import {JSX} from 'react';
 // COMPONENTI NATIVI
 import {ScrollView} from 'react-native';
 // COMPONENTI CUSTOM
@@ -9,18 +9,15 @@ import UltimePianteAggiunte from '../Componenti/Schermate/Home/UltimePianteAggiu
 import ProssimiInterventi   from '../Componenti/Schermate/Home/ProssimiInterventi';
 import AggiungiPiantaButton from '../Componenti/Comuni/AggiungiPiantaButton';
 
-export default function Home() {
+export default function (): JSX.Element {
     return (
         <Background>
             <NavBar/>
             <ScrollView contentContainerStyle={{paddingBottom: 10}}>
-
                 <Titolo nome='Home'/>
                 <UltimePianteAggiunte/>
                 <ProssimiInterventi/>
-
             </ScrollView>
-
             <AggiungiPiantaButton/>
         </Background>
     )

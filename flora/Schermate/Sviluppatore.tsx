@@ -1,4 +1,4 @@
-import React from 'react';
+import {JSX} from 'react';
 // COMPONENTI CUSTOM
 import Background from '../Componenti/Comuni/Background';
 import NavBar     from '../Componenti/Comuni/NavBar';
@@ -7,7 +7,7 @@ import Test from '../Componenti/Schermate/Sviluppatore/Test';
 // SINGOLI TEST
 import {TestWikiPiante} from '../Componenti/Schermate/Sviluppatore/TestWikiPiante';
 
-export default function Sviluppatore() {
+export default function (): JSX.Element {
     return (
         <Background>
             <NavBar/>

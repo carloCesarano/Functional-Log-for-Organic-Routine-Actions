@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {JSX, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../types';
 // COMPONENTI CUSTOM
@@ -11,7 +11,7 @@ type NavigationProps = NativeStackScreenProps<RootStackParamList, 'InfoPianta'>;
 interface Props extends Partial<NavigationProps> {
     ID: number
 }
-export default function InfoPianta({ID}: Props) {
+export default function ({ID}: Props): JSX.Element {
     const [editing, setEditing] = useState<boolean>(false);
 
     return (
