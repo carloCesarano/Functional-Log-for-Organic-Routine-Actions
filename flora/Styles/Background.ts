@@ -4,7 +4,9 @@ export const PORTRAIT = StyleSheet.create({
     background: {
         flex: 1,
         alignItems: 'center',
-        paddingTop: 36
+        paddingTop: 36,
+        paddingBottom: 48,
+        paddingHorizontal: 16,
     }
 });
 

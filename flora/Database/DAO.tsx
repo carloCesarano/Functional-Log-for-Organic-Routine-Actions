@@ -98,6 +98,28 @@ function popolaDB(db: SQLiteDatabase): void {
         ('Stella di Natale',   6,  60, 365),
         ('Basilico',           2,  15,  90),
         ('Peperoncino',        3,  30, 180);
+    INSERT INTO PiantePossedute (nome, specie, acq, note, foto) VALUES
+        ('Fico',                'Ficus',      '2023-05-01', 'Pianta regalo', NULL),
+        ('Lingua di suocera',   'Sanseveria', '2022-11-15', '',              NULL),
+        ('Potus',               'Pothos',     '2024-01-10', 'Cresce bene',   NULL),
+        ('Clivia',              'Clivia',     '2024-02-10', 'Bella pianta!', NULL),
+        ('Basilico di mamma',   'Basilico',   '2025-01-01', 'Qualità media', NULL);
+    INSERT INTO Interventi (pianta, tipo, data) VALUES
+        (1, 'INN', '2025-07-03'),
+        (1, 'POT', '2025-07-03'),
+        (1, 'RINV', '2025-07-03'),
+        (2, 'INN', '2024-06-02'),
+        (2, 'POT', '2025-07-3'),
+        (2, 'RINV', '2025-07-02'),
+        (3, 'INN', '2025-07-01'),
+        (3, 'POT', '2025-07-03'),
+        (3, 'RINV', '2025-07-03'),
+        (4, 'INN', '2025-05-01'),
+        (4, 'POT', '2025-04-03'),
+        (4, 'RINV', '2025-06-03'),
+        (5, 'INN', '2025-06-31'),
+        (5, 'POT', '2025-06-15'),
+        (5, 'RINV', '2025-07-05');
     `);
 }
 
