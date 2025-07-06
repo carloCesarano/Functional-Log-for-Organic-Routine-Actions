@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../types';
@@ -14,11 +14,6 @@ export default function ({stile}: {stile: ViewStyle}) {
     // HOOKS
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
     const route = useRoute();
-
-// Aggiorna il testo della barra di ricerca quando cambia il parametro 'cercato' nella route.
-    useEffect(() => {
-        setTesto((route.params as any)?.cercato ?? "");
-    }, [route.params]);
 
     // CHIAMATA QUANDO:
     // Funzione chiamata quando si preme il tasto
