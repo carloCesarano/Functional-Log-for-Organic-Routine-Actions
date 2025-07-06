@@ -1,6 +1,5 @@
 import {JSX, useState, useEffect} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../types';
 import {useNavigation} from '@react-navigation/native';
 // COMPONENTI NATIVI
@@ -15,18 +14,17 @@ import MenuFiltri           from '../Componenti/Schermate/ListaPiante/MenuFiltri
 import Button from '../Componenti/Comuni/Input/Button';
 // UTILITY
 import * as CategorieDAO from '../Database/CategorieDAO';
+import { useRoute, RouteProp } from '@react-navigation/native';
+
 // FOGLI DI STILE
 import {styles} from "../Styles/ButtonListaPiante";
 
-// DEFINISCO GLI INPUT
-type NavigationProps = NativeStackScreenProps<RootStackParamList, 'ListaPiante'>;
-interface Props extends Partial<NavigationProps> {
-    cercato: string
-}
 
 // COMPONENTE PRINCIPALE DELLA SCHERMATA LISTA PIANTE
-export default function ({cercato}: Props): JSX.Element {
+export default function (): JSX.Element {
     // HOOKS DI STATO
+    const route = useRoute<RouteProp<RootStackParamList, 'ListaPiante'>>();
+    const cercato = route.params?.cercato ?? "";
     // Stati selezionati per il filtro
     const [stati, setStati] = useState<string[]>([]);
     // Categorie selezionate per il filtro

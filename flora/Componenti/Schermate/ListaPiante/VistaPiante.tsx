@@ -18,28 +18,33 @@ export default function VistaPiante({ cercato, filtri }: Props) {
     // HOOKS
     const [piante, setPiante] = useState<PiantaPosseduta[]>([]);
 
-    // EFFETTUA IL FETCH DELLE PIANTE OGNI VOLTA CHE CAMBIA 'cercato' O 'filtri'
+    // EFFETTUA IL FETCH DELLE PIANTE
     useEffect(() => {
         async function caricaPiante() {
-            let tutte = await getAll();
-            if (cercato) {
-                tutte = tutte.filter(p =>
-                    p.getNome().toLowerCase().includes(cercato.toLowerCase())
-                );
-            }
+            const tutte = await getAll();
             setPiante(tutte);
         }
         caricaPiante();
-    }, [cercato, filtri]);
+    }, []);
 
     // FILTRA LE PIANTE IN BASE AI FILTRI SELEZIONATI
     const pianteFiltrate = piante.filter((pianta) => {
+        // Filtro per testo cercato
+        if (
+            cercato &&
+            !pianta.getNome().toLowerCase().includes(cercato.toLowerCase()) &&
+            !pianta.getSpecie().getSpecie().toLowerCase().includes(cercato.toLowerCase())
+        ) {
+            return false;
+        }
+        // Filtro per categorie
         if (filtri.categorie.length > 0) {
             const categoriePianta = pianta.getCategorie();
             if (!categoriePianta.some(cat => filtri.categorie.includes(cat))) {
                 return false;
             }
         }
+        // Filtro per stati
         if (filtri.stati.length > 0) {
             const statoMatch = filtri.stati.some(stato => {
                 if (stato === "In salute") return pianta.inSalute();
