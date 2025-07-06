@@ -19,7 +19,7 @@ export default function NavBar() {
         <View style={styles.navbar}>
             <Icona
                 style={styles.icona}/>
-            <BarraDiRicerca/>
+            <BarraDiRicerca stile={styles.barraRicerca}/>
             <HamburgerMenu
                 iconStyle={styles.hamburgerIcon}
                 menuStyle={styles.hamburgerMenu}

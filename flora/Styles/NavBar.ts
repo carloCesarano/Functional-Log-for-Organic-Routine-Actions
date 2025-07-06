@@ -34,6 +34,17 @@ export const PORTRAIT = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#eaf5df',
         borderBottomWidth: 0.5
+    },
+    barraRicerca: {
+        width: '50%',
+        borderWidth: 1,
+        borderRadius: 8,
+        backgroundColor: '#e6f8d1',
+        borderStyle: "solid",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 5,
     }
 });
 
@@ -71,5 +82,16 @@ export const LANDSCAPE = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#eaf5df',
         borderBottomWidth: 0.5
+    },
+    barraRicerca: {
+        width: '50%',
+        borderWidth: 1,
+        borderRadius: 8,
+        backgroundColor: '#e6f8d1',
+        borderStyle: "solid",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 5,
     }
 })

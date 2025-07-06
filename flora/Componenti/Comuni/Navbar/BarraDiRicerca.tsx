@@ -3,11 +3,12 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../types';
 // COMPONENTI NATIVI
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, ViewStyle} from 'react-native';
 
-export default function BarraDiRicerca() {
+export default function ({stile}: {stile: ViewStyle}) {
     // VARIABILI DI STATO
     const [testo, setTesto] = useState<string>("");
+    const [focus, setFocus] = useState<boolean>(false);
     const testoNonVuoto = testo.length > 0;
 
     // HOOKS
@@ -41,9 +42,36 @@ export default function BarraDiRicerca() {
             navigation.setParams({cercato: ""})
     };
 
+    const style: ViewStyle = focus ? stile : {width: '50%'};
+
+    // CHIAMATA QUANDO:
+    // Funzione chiamata quando si clicca sulla
+    // scritta 'Cerca'.
+    //
+    // COSA FA:
+    // Applica uno stile personalizzato alla
+    // barra di ricerca.
+    const impostaStile = () => setFocus(true);
+
+    // CHIAMATA QUANDO:
+    // Funzione chiamata quando si termina
+    // di usare la barra di ricerca (si
+    // clicca su qualcos'altro o si preme
+    // 'Invio').
+    //
+    // COSA FA:
+    // Resetta lo stile della barra di ricerca.
+    const eliminaStile = () => {
+        pulisciTesto();
+        setFocus(false);
+    }
+
     return (
-        <View>
+        <View style={style}>
             <TextInput
+                style={{maxWidth: '80%'}}
+                onFocus={impostaStile}
+                onBlur={eliminaStile}
                 value={testo}
                 onChangeText={setTesto}
                 onSubmitEditing={invioRicerca}
@@ -53,7 +81,13 @@ export default function BarraDiRicerca() {
                 <TouchableOpacity
                     onPress={pulisciTesto}>
 
-                    <Text>X</Text>
+                    <Text style={{
+                        backgroundColor: 'white',
+                        borderRadius: 100,
+                        paddingHorizontal: 10,
+                        paddingVertical: 5,
+                        fontWeight: '800'
+                    }}>X</Text>
                 </TouchableOpacity>
             )}
         </View>
