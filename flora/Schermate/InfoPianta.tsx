@@ -7,11 +7,10 @@ import NavBar     from '../Componenti/Comuni/NavBar';
 import Titolo     from '../Componenti/Comuni/Titolo';
 
 // DEFINISCO GLI INPUT
-type NavigationProps = NativeStackScreenProps<RootStackParamList, 'InfoPianta'>;
-interface Props extends Partial<NavigationProps> {
-    ID: number
-}
-export default function ({ID}: Props): JSX.Element {
+type Props = NativeStackScreenProps<RootStackParamList, 'InfoPianta'>;
+
+export default function ({route}: Props): JSX.Element {
+    const {ID} = route.params;
     const [editing, setEditing] = useState<boolean>(false);
 
     return (
