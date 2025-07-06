@@ -12,8 +12,8 @@ export const listaPianteStyles = StyleSheet.create({
     },
     filterMenu: {
         position: 'absolute',
-        bottom: 110,
-        right: 100,
+        bottom: 116,
+        right: 140,
         backgroundColor: 'white',
         borderRadius: 8,
         padding: 10,
@@ -33,40 +33,7 @@ export const listaPianteStyles = StyleSheet.create({
     filterOptionText: {
         fontSize: 16,
     },
-    buttonContainer: {
 
-        flexDirection: 'row',
-        alignItems: 'center',
-        position: 'absolute',
-        bottom: 20,
-        left: 0,
-        right: 0,
-        backgroundColor: 'transparent',
-        paddingHorizontal: 30,
-        paddingVertical: 20,
-
-
-    },
-    backButton: {
-        flex: 0,
-
-    },
-    filterButtonContainer: {
-        flex: 1,
-        position: 'relative',
-        alignItems: 'center',
-        marginRight: 60,
-        backgroundColor: 'green',
-        borderRadius: 20,
-        width: '100%',
-    },
-    customAddButton: {
-        flex: 1,
-        alignItems: 'flex-end',
-        width: 150,
-        height: 50,
-        borderRadius: 25,
-    },
     nome: {
         fontSize: 20,
         fontWeight: 'bold',
@@ -110,6 +77,6 @@ export const listaPianteStyles = StyleSheet.create({
     },
     flatList: {
         marginTop: 10,
-        marginBottom: 80,
+        marginBottom: 50,
     },
 });

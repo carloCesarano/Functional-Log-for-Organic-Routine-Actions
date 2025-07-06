@@ -40,13 +40,14 @@ export default function VistaPiante({ cercato, filtri }: Props) {
         // Filtro per categorie
         if (filtri.categorie.length > 0) {
             const categoriePianta = pianta.getCategorie();
-            if (!categoriePianta.some(cat => filtri.categorie.includes(cat))) {
+            // Deve contenere tutte le categorie selezionate
+            if (!filtri.categorie.every(cat => categoriePianta.includes(cat))) {
                 return false;
             }
         }
         // Filtro per stati
         if (filtri.stati.length > 0) {
-            const statoMatch = filtri.stati.some(stato => {
+            const statoMatch = filtri.stati.every(stato => {
                 if (stato === "In salute") return pianta.inSalute();
                 if (stato === "Da innaffiare") return pianta.daInnaffiare();
                 if (stato === "Da potare") return pianta.daPotare();

@@ -1,67 +1,151 @@
+// REACT
+import React, { useState, useEffect } from "react";
 // COMPONENTI NATIVI
-import React from "react";
-import { View, TouchableOpacity, Text, ScrollView } from "react-native";
-// UTILITY
+import {View, Text, ScrollView, Dimensions} from "react-native";
 import { CheckBox } from "react-native-elements";
 // FOGLI DI STILE
 import { listaPianteStyles as styles } from "../../../Styles/ListaPiante";
+// UTILITY
+import * as CategorieDAO from "../../../Database/CategorieDAO";
+import { isPortrait } from '../../Comuni/OrientazioneChecker';
+// COMPONENTI CUSTOM
+import Button from '../../Comuni/Input/Button';
+// FOGLI DI STILE CUSTOM
+import {stylesButton} from "../../../Styles/ButtonListaPiante";
 
-// Definizione delle props accettate dal componente MenuFiltri
+
 interface Props {
-    mostraMenuFiltri: boolean; // Se true, mostra il menu principale dei filtri
-    mostraCategorie: boolean;  // Se true, mostra la lista delle categorie selezionabili
-    mostraStati: boolean;      // Se true, mostra la lista degli stati selezionabili
-    listaCategorie: string[];  // Tutte le categorie disponibili
-    categorieSelezionate: string[]; // Categorie attualmente selezionate
-    statiSelezionati: string[];     // Stati attualmente selezionati
-    onFiltriCliccato: () => void;   // Callback per apertura/chiusura menu filtri
-    onSelezionaFiltro: (filtro: 'stato' | 'categoria') => void; // Callback per selezione tipo filtro
-    onStatoSelezionato: (stato: string) => void; // Callback per selezione/deselezione stato
-    onCategoriaSelezionata: (categoria: string) => void; // Callback per selezione/deselezione categoria
+    onFiltriCambiati: (filtri: { stati: string[]; categorie: string[] }) => void;
 }
 
-// Componente principale che gestisce la UI dei filtri
-export default function MenuFiltri({
-                                       mostraMenuFiltri,
-                                       mostraCategorie,
-                                       mostraStati,
-                                       listaCategorie,
-                                       categorieSelezionate,
-                                       statiSelezionati,
-                                       onFiltriCliccato,
-                                       onSelezionaFiltro,
-                                       onStatoSelezionato,
-                                       onCategoriaSelezionata
-                                   }: Props) {
+// COMPONENTE: MenuFiltri
+// COSA FA: Mostra un menu per filtrare la lista delle piante per stato o categoria.
+//          Comunica i filtri selezionati al componente padre tramite la prop onFiltriCambiati.
+export default function MenuFiltri({ onFiltriCambiati }: Props) {
+    // VARIABILI DI STATO
+    const [mostraMenuFiltri, setMostraMenuFiltri] = useState(false);
+    const [mostraCategorie, setMostraCategorie] = useState(false);
+    const [mostraStati, setMostraStati] = useState(false);
+    const [categorieSelezionate, setCategorieSelezionate] = useState<string[]>([]);
+    const [statiSelezionati, setStatiSelezionati] = useState<string[]>([]);
+    const [listaCategorie, setListaCategorie] = useState<string[]>([]);
+    const portrait = isPortrait();
 
+    // CHIAMATA QUANDO: il componente viene montato.
+    // COSA FA: Carica la lista delle categorie dal database.
+    useEffect(() => {
+        async function caricaCategorie() {
+            const tutte = await CategorieDAO.getAll();
+            // Ordina alfabeticamente per nome
+            const nomiOrdinati = tutte.map((c: any) => c.nome).sort((a: string, b: string) => a.localeCompare(b));
+            setListaCategorie(nomiOrdinati);
+        }
+        caricaCategorie();
+    }, []);
 
+    // CHIAMATA QUANDO: cambiano i filtri selezionati.
+    // COSA FA: Comunica i filtri selezionati al componente padre.
+    useEffect(() => {
+        onFiltriCambiati({
+            stati: statiSelezionati,
+            categorie: categorieSelezionate,
+        });
+    }, [statiSelezionati, categorieSelezionate]);
 
-    // RENDER DEL MENU FILTRI
-    // Mostra i pulsanti e i menu a seconda dello stato delle props
+    // CHIAMATA QUANDO: si preme il pulsante "Filtra".
+    // COSA FA: Apre o chiude il menu filtri e chiude eventuali sottomenu.
+    const toggleMenu = () => {
+        if (mostraMenuFiltri || mostraCategorie || mostraStati) {
+            setMostraMenuFiltri(false);
+            setMostraCategorie(false);
+            setMostraStati(false);
+        } else {
+            setMostraMenuFiltri(true);
+            setMostraCategorie(false);
+            setMostraStati(false);
+        }
+    };
+
+    // CHIAMATA QUANDO: si seleziona "Per stato" o "Per categoria".
+    // COSA FA: Mostra il sottomenu corrispondente.
+    const onSelezionaFiltro = (tipo: "stato" | "categoria") => {
+        setMostraCategorie(tipo === "categoria");
+        setMostraStati(tipo === "stato");
+        setMostraMenuFiltri(false);
+    };
+
+    // CHIAMATA QUANDO: si seleziona/deseleziona uno stato.
+    // COSA FA: Aggiorna la lista degli stati selezionati.
+    const onStatoSelezionato = (stato: string) => {
+        setStatiSelezionati((prev) => {
+            if (stato === "In salute") {
+                // Se selezioni "In salute", deseleziona tutto il resto
+                return prev.includes("In salute") ? [] : ["In salute"];
+            } else {
+                // Se selezioni un altro stato, deseleziona "In salute"
+                const altri = prev.filter(s => s !== "In salute");
+                if (altri.includes(stato)) {
+                    // Deseleziona lo stato se già selezionato
+                    return altri.filter(s => s !== stato);
+                } else {
+                    // Seleziona lo stato
+                    return [...altri, stato];
+                }
+            }
+        });
+    };
+
+    // CHIAMATA QUANDO: si seleziona/deseleziona una categoria.
+    // COSA FA: Aggiorna la lista delle categorie selezionate.
+    const onCategoriaSelezionata = (categoria: string) => {
+        setCategorieSelezionate((prev) =>
+            prev.includes(categoria)
+                ? prev.filter((c) => c !== categoria)
+                : [...prev, categoria]
+        );
+    };
+
+    // CHIAMATA QUANDO: si preme "Indietro" in un sottomenu.
+    // COSA FA: Torna al menu principale dei filtri.
+    const chiudiSottoMenu = () => {
+        setMostraCategorie(false);
+        setMostraStati(false);
+        setMostraMenuFiltri(true);
+    };
+
+    // RENDER
     return (
         <>
+            {/* Pulsante per aprire/chiudere il menu filtri */}
+            <Button
+                testo="Filtra"
+                onPress={toggleMenu}
+                stileButton={[
+                    stylesButton.button,
+                    portrait ? {} : { marginBottom: 55 }
+                ]}
+                stileTesto={stylesButton.testo}
+            />
 
             {/* Menu principale: scelta tra filtro per stato o per categoria */}
             {mostraMenuFiltri && (
                 <View style={styles.filterMenu}>
-                    {/* Opzione filtro per stato */}
-                    <TouchableOpacity
-                        style={styles.filterOption}
-                        onPress={() => onSelezionaFiltro('stato')}
-                    >
-                        <Text style={styles.filterOptionText}>Per stato</Text>
-                    </TouchableOpacity>
-                    {/* Opzione filtro per categoria */}
-                    <TouchableOpacity
-                        style={styles.filterOption}
-                        onPress={() => onSelezionaFiltro('categoria')}
-                    >
-                        <Text style={styles.filterOptionText}>Per categoria</Text>
-                    </TouchableOpacity>
+                    <Button
+                        testo="Per stato"
+                        onPress={() => onSelezionaFiltro("stato")}
+                        stileButton={{backgroundColor: "#52B04E", marginBottom: 10}}
+                        stileTesto={{color: "white"}}
+                    />
+                    <Button
+                        testo="Per categoria"
+                        onPress={() => onSelezionaFiltro("categoria")}
+                        stileButton={{backgroundColor: "#52B04E"}}
+                        stileTesto={{color: "white"}}
+                    />
                 </View>
             )}
 
-            {/* Sezione per selezionare una o più categorie */}
+            {/* Sottomenu: selezione categorie */}
             {mostraCategorie && (
                 <ScrollView style={styles.filterMenu}>
                     {listaCategorie.map((categoria, index) => (
@@ -73,21 +157,35 @@ export default function MenuFiltri({
                             textStyle={styles.filterOptionText}
                         />
                     ))}
+                    <Button
+                        testo="Indietro"
+                        onPress={chiudiSottoMenu}
+                        stileButton={{marginTop: 10, backgroundColor: "#aaa"}}
+                        stileTesto={{color: "white"}}
+                    />
                 </ScrollView>
             )}
 
-            {/* Sezione per selezionare uno o più stati */}
+            {/* Sottomenu: selezione stati */}
             {mostraStati && (
                 <View style={styles.filterMenu}>
-                    {["In salute", "Da innaffiare", "Da potare", "Da rinvasare"].map((stato, index) => (
-                        <CheckBox
-                            key={index}
-                            title={stato}
-                            checked={statiSelezionati.includes(stato)}
-                            onPress={() => onStatoSelezionato(stato)}
-                            textStyle={styles.filterOptionText}
-                        />
-                    ))}
+                    {["In salute", "Da innaffiare", "Da potare", "Da rinvasare"].map(
+                        (stato, index) => (
+                            <CheckBox
+                                key={index}
+                                title={stato}
+                                checked={statiSelezionati.includes(stato)}
+                                onPress={() => onStatoSelezionato(stato)}
+                                textStyle={styles.filterOptionText}
+                            />
+                        )
+                    )}
+                    <Button
+                        testo="Indietro"
+                        onPress={chiudiSottoMenu}
+                        stileButton={{marginTop: 10, backgroundColor: "#aaa"}}
+                        stileTesto={{color: "white"}}
+                    />
                 </View>
             )}
         </>

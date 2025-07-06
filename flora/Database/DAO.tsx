@@ -121,6 +121,30 @@ function popolaDB(db: SQLiteDatabase): void {
         (5, 'POT', '2025-06-15'),
         (5, 'RINV', '2025-07-05');
     `);
+
+    db.execSync(`
+        INSERT INTO Categorie (nome) VALUES
+            ('Appartamento'),
+            ('Esterno'),
+            ('Fiorita'),
+            ('Grassa'),
+            ('Aromatica'),
+            ('Sempreverde');
+    `);
+
+    db.execSync(`
+    INSERT INTO PianteCategorie (pianta, categoria) VALUES
+        (1, 1), -- Fico -> Appartamento
+        (1, 6), -- Fico -> Sempreverde
+        (2, 1), -- Lingua di suocera -> Appartamento
+        (2, 4), -- Lingua di suocera -> Grassa
+        (3, 1), -- Potus -> Appartamento
+        (3, 3), -- Potus -> Fiorita
+        (4, 2), -- Clivia -> Esterno
+        (4, 3), -- Clivia -> Fiorita
+        (5, 5); -- Basilico di mamma -> Aromatica
+`);
+
 }
 
 export async function getAll<T extends Riga>(tabella: string): Promise<T[]> {
