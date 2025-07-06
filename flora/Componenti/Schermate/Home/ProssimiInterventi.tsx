@@ -17,6 +17,14 @@ interface Intervento {
     giorniRimanenti: number
 }
 
+// CHIAMATA QUANDO:
+// Funzione chiamata quando si deve calcolare il colore
+// di sfondo di un intervento.
+//
+// COSA FA:
+// Prende un intervento e restituisce un valore tra 0 e 1
+// in base a quanto è urgente (0 per intervento in completo
+// ritardo, 1 per intervento non urgente).
 function normalizza(intervento: Intervento): number {
     const giorni = intervento.giorniRimanenti;
     const limite = {INN: 3, POT: 14, RINV: 30}[intervento.tipo];
@@ -27,11 +35,15 @@ function normalizza(intervento: Intervento): number {
 }
 
 export default function () {
+    // VARIABILI DI STATO
     const [interventiAll, setInterventiAll] = useState<Intervento[]>([]);
     const [interventiMostrati, setInterventiMostrati] = useState<Intervento[]>([]);
 
+    // HOOKS
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-    const stile = isPortrait() ? PORTRAIT : LANDSCAPE;
+    const portraitMode: boolean = isPortrait();
+
+    const stile = portraitMode ? PORTRAIT : LANDSCAPE;
 
     useEffect(() => {
         const caricaDati = async () => {
@@ -59,6 +71,18 @@ export default function () {
         caricaDati();
     }, []);
 
+    // CHIAMATA QUANDO:
+    // Funzione chiamata alla fine del caricamento dei dati
+    // dal database.
+    //
+    // COSA FA:
+    // Prende la lista di tutti gli interventi e sceglie quali
+    // mostrare in base a una logica definita e ordinati.
+    // La logica è:
+    // 1. Solo interventi in ritardo o con giorni rimanenti <= 7;
+    // 2. A prescindere, massimo 10 interventi;
+    // 3. Interventi ordinati in base all'urgenza (minor valore di
+    //    giorni rimanenti).
     useEffect(() => {
         const filtraInterventi = async () => {
             setInterventiMostrati(
@@ -71,6 +95,15 @@ export default function () {
         filtraInterventi();
     }, [interventiAll]);
 
+    // CHIAMATA QUANDO:
+    // Funzione chiamata quando si deve mostrare un
+    // singolo intervento all'interno della FlatList.
+    //
+    // COSA FA:
+    // Prende un intervento e crea un componente JSX.Element
+    // che mostra il tipo di intervento, il nome della pianta
+    // e i giorni rimanenti, con un colore di sfondo che va
+    // dal verde al rosso in base al ritardo sull'intervento.
     const renderIntervento = ({item}: {item: Intervento}) => {
         const azione: string = {INN: 'Innaffiare', POT: 'Potare', RINV: 'Rinvasare'}[item.tipo];
         const giorni: number = item.giorniRimanenti;
