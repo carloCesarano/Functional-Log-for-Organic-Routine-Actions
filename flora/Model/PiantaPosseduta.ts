@@ -69,12 +69,9 @@ export class PiantaPosseduta {
         pianta.categorie = await categorieGet(riga.id);
 
         const interventi = await interventiGet(riga.id);
-        pianta.innaff = interventi.filter(i => i.tipo === 'INN')
-                        .map(i => i.data).sort();
-        pianta.potat = interventi.filter(i => i.tipo === 'POT')
-                       .map(i => i.data).sort();
-        pianta.rinv = interventi.filter(i => i.tipo === 'RINV')
-                      .map(i => i.data).sort();
+        pianta.innaff = interventi.filter(i => i.tipo === 'INN').map(i => i.data).sort((a, b) => a.getTime() - b.getTime());
+        pianta.potat = interventi.filter(i => i.tipo === 'POT').map(i => i.data).sort((a, b) => a.getTime() - b.getTime());
+        pianta.rinv  = interventi.filter(i => i.tipo === 'RINV').map(i => i.data).sort((a, b) => a.getTime() - b.getTime());
 
         return pianta;
     }

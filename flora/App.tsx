@@ -15,6 +15,7 @@ import Impostazioni   from './Schermate/Impostazioni';
 import Analisi        from './Schermate/Analisi';
 import Categorie      from './Schermate/Categorie';
 import Sviluppatore   from './Schermate/Sviluppatore';
+import Interventi from "./Schermate/Interventi";
 
 // Definisce uno stack di pagine vuoto
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -33,6 +34,7 @@ export default function App() {
                     <Stack.Screen name='Analisi'        component={Analisi}       />
                     <Stack.Screen name='Categorie'      component={Categorie}     />
                     <Stack.Screen name='Sviluppatore'   component={Sviluppatore}  />
+                    <Stack.Screen name="Interventi" component={Interventi} />
                 </Stack.Navigator>
             </NavigationContainer>
             {/* Aggiunge la logica dei messaggi toast a tutte le schermate */}
