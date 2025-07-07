@@ -1,14 +1,29 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Alert, TouchableOpacity, Text } from 'react-native';
+import {
+    View,
+    TextInput,
+    Button,
+    StyleSheet,
+    Alert,
+    TouchableOpacity,
+    Text,
+    Modal,
+    KeyboardAvoidingView,
+    Platform
+} from 'react-native';
 import * as CategorieDAO from '../../../Database/CategorieDAO';
+import { isPortrait } from '../../Comuni/OrientazioneChecker';
+import { PORTRAIT, LANDSCAPE } from '../../../Styles/AggiungiCategoriaButtonStyles';
 
 interface Props {
-    onCategoriaAggiunta: () => void; // callback per aggiornare la lista in parent
+    onCategoriaAggiunta: () => void;
 }
 
 export default function AggiungiCategoriaButton({ onCategoriaAggiunta }: Props) {
     const [showInput, setShowInput] = useState(false);
     const [nomeNuovaCategoria, setNomeNuovaCategoria] = useState('');
+    const portraitMode = isPortrait();
+    const stile = portraitMode ? PORTRAIT : LANDSCAPE;
 
     const aggiungiCategoria = async () => {
         const nomePulito = nomeNuovaCategoria.trim();
@@ -23,67 +38,58 @@ export default function AggiungiCategoriaButton({ onCategoriaAggiunta }: Props) 
                 Alert.alert('Errore', 'Questa categoria esiste già');
                 return;
             }
+
             await CategorieDAO.insert(nomePulito);
             Alert.alert('Successo', 'Categoria aggiunta con successo!');
             setNomeNuovaCategoria('');
             setShowInput(false);
-            onCategoriaAggiunta(); // aggiorna lista
+            onCategoriaAggiunta();
         } catch (error) {
             Alert.alert('Errore', 'Impossibile aggiungere categoria');
             console.error(error);
         }
     };
 
-    if (!showInput) {
-        return (
-            <TouchableOpacity style={styles.bottone} onPress={() => setShowInput(true)}>
-                <Text style={styles.testoBottone}>+ Aggiungi Categoria</Text>
-            </TouchableOpacity>
-        );
-    }
-
     return (
-        <View style={styles.containerInput}>
-            <TextInput
-                placeholder="Nuovo nome categoria"
-                value={nomeNuovaCategoria}
-                onChangeText={setNomeNuovaCategoria}
-                style={styles.input}
-                autoFocus
-            />
-            <Button title="Salva" onPress={aggiungiCategoria} />
-            <Button title="Annulla" onPress={() => { setShowInput(false); setNomeNuovaCategoria(''); }} color="red" />
-        </View>
+        <>
+            <TouchableOpacity style={stile.bottone} onPress={() => setShowInput(true)}>
+                <Text style={stile.testoBottone}>Aggiungi Categoria</Text>
+            </TouchableOpacity>
+
+            <Modal
+                visible={showInput}
+                transparent
+                animationType="slide"
+                onRequestClose={() => setShowInput(false)}
+            >
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    style={stile.modalContainer}
+                >
+                    <View style={stile.modalContent}>
+                        <TextInput
+                            placeholder="Nuovo nome categoria"
+                            value={nomeNuovaCategoria}
+                            onChangeText={setNomeNuovaCategoria}
+                            style={stile.input}
+                            autoFocus
+                        />
+                        <View style={stile.buttonRow}>
+                            <Button title="Salva" onPress={aggiungiCategoria} color="green" />
+                            <Button
+                                title="Annulla"
+                                onPress={() => {
+                                    setShowInput(false);
+                                    setNomeNuovaCategoria('');
+                                }}
+                                color="red"
+                            />
+                        </View>
+                    </View>
+                </KeyboardAvoidingView>
+            </Modal>
+        </>
     );
 }
 
-const styles = StyleSheet.create({
-    bottone: {
-        backgroundColor: '#4caf50',
-        padding: 12,
-        borderRadius: 8,
-        marginHorizontal: 20,
-        marginVertical: 10,
-        alignItems: 'center',
-    },
-    testoBottone: {
-        color: 'white',
-        fontWeight: '600',
-        fontSize: 16,
-    },
-    containerInput: {
-        flexDirection: 'row',
-        marginHorizontal: 20,
-        marginVertical: 10,
-        alignItems: 'center',
-        gap: 10,
-    },
-    input: {
-        flex: 1,
-        borderColor: '#4caf50',
-        borderWidth: 1,
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        height: 40,
-    },
-});
+

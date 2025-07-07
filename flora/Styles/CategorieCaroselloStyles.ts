@@ -1,13 +1,24 @@
-// Styles/CategorieCaroselloStyles.ts
 import { StyleSheet } from 'react-native';
 
 export const PORTRAIT = StyleSheet.create({
     containerCarosello: {
+        alignItems: 'center',
+        justifyContent: 'center',
         marginVertical: 10,
+        backgroundColor:'green',
+        borderRadius: 10,
+        height: 100,
+    },
+    titolo:{
+        padding:5,
+        fontSize: 18,
+        color: 'white',
+        fontWeight: 'bold',
     },
     containerCategorie: {
         paddingHorizontal: 10,
         gap: 10,
+        margin: 10,
     },
     cardCategoria: {
         backgroundColor: '#d0e8f2',
@@ -51,6 +62,11 @@ export const PORTRAIT = StyleSheet.create({
 export const LANDSCAPE = StyleSheet.create({
     ...PORTRAIT,
     containerCarosello: {
+        alignItems: 'center',
+        justifyContent: 'center',
         marginVertical: 5,
+        backgroundColor:'green',
+        borderRadius: 10,
+        height: 100,
     },
 });

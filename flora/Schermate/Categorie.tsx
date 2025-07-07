@@ -10,7 +10,7 @@ import CategorieCarosello from '../Componenti/Schermate/Categoria/CategorieCaros
 import { ScrollView } from 'react-native';
 
 export default function (): JSX.Element {
-    //Costanti che permettono la comunicazione tra due componenti
+    //Costanti che permettono la comunicazione tra i vari componenti
     const [categoriaSelezionata, setCategoriaSelezionata] = useState<{ id: number; nome: string } | null>(null);
     const [aggiornaLista, setAggiornaLista] = useState(false);
 
@@ -18,18 +18,18 @@ export default function (): JSX.Element {
 
     return (
         <Background>
-            <ScrollView>
             <NavBar/>
+            <ScrollView>
                 <CategorieCarosello
                     key={aggiornaLista.toString()}
                     onCategoriaSelezionata={setCategoriaSelezionata}
                 />
-                <NumPianteCategoria nomeCategoria={categoriaSelezionata?.nome ?? null} />
                 <AggiungiCategoriaButton onCategoriaAggiunta={triggerAggiorna} />
                 <ModificaCategoriaButton
                     categoriaSelezionata={categoriaSelezionata}
                     onCategoriaModificata={triggerAggiorna}
                 />
+                <NumPianteCategoria nomeCategoria={categoriaSelezionata?.nome ?? null} />
             </ScrollView>
         </Background>
     )

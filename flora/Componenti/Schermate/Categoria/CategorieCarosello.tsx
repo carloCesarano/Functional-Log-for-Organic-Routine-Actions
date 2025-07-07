@@ -1,4 +1,3 @@
-// Componenti/Schermate/Categoria/CategorieCarosello.tsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { isPortrait } from '../../Comuni/OrientazioneChecker';
@@ -11,8 +10,7 @@ interface IPianteCategoria {
 }
 
 interface Props {
-    onCategoriaSelezionata: (nome: string) => void;
-}
+    onCategoriaSelezionata: (categoria: { id: number; nome: string }) => void;}
 
 export default function CategorieCarosello({ onCategoriaSelezionata }: Props) {
     const [categorie, setCategorie] = useState<IPianteCategoria[]>([]);
@@ -29,7 +27,7 @@ export default function CategorieCarosello({ onCategoriaSelezionata }: Props) {
 
     const renderCategoria = ({ item }: { item: IPianteCategoria }) => (
         <TouchableOpacity
-            onPress={() => onCategoriaSelezionata(item.nome)}
+            onPress={() => onCategoriaSelezionata(item)}
             style={stile.cardCategoria}
         >
             <Text style={stile.nomeCategoria}>{item.nome}</Text>
@@ -38,6 +36,7 @@ export default function CategorieCarosello({ onCategoriaSelezionata }: Props) {
 
     return (
         <View style={stile.containerCarosello}>
+            <Text style={stile.titolo}>Categorie presenti:</Text>
             <FlatList
                 horizontal
                 keyExtractor={(item) => `${item.id}`}

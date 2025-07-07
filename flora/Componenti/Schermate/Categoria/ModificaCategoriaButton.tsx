@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { Modal, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { View, TextInput, Button, StyleSheet, Alert, TouchableOpacity, Text } from 'react-native';
 import * as CategorieDAO from '../../../Database/CategorieDAO';
+import { isPortrait } from '../../Comuni/OrientazioneChecker';
+import { PORTRAIT, LANDSCAPE } from '../../../Styles/ModificaCategorieButtonStyles';
 
 interface Props {
     categoriaSelezionata: { id: number; nome: string } | null;
@@ -10,6 +13,8 @@ interface Props {
 export default function ModificaCategoriaButton({ categoriaSelezionata, onCategoriaModificata }: Props) {
     const [showInput, setShowInput] = useState(false);
     const [nomeModificato, setNomeModificato] = useState('');
+    const portraitMode = isPortrait();
+    const stile = portraitMode ? PORTRAIT : LANDSCAPE;
 
     // Se cambia la categoria selezionata, aggiorna il valore nell'input
     React.useEffect(() => {
@@ -50,68 +55,58 @@ export default function ModificaCategoriaButton({ categoriaSelezionata, onCatego
         }
     };
 
+return(
+    <>
+        <TouchableOpacity
+            style={[
+                stile.bottone,
+                !categoriaSelezionata && { backgroundColor: '#ccc' },
+            ]}
+            onPress={() => categoriaSelezionata && setShowInput(true)}
+            disabled={!categoriaSelezionata}
+        >
+            <Text style={stile.testoBottone}>Modifica Categoria</Text>
+        </TouchableOpacity>
 
-    if (!categoriaSelezionata) {
-        return null; // oppure un messaggio "Seleziona una categoria"
-    }
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={showInput}
+            onRequestClose={() => setShowInput(false)}
+        >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={stile.modalOverlay}>
+                    <KeyboardAvoidingView
+                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                        style={stile.modalContainer}
+                    >
+                        <View style={stile.modalContent}>
+                            <TextInput
+                                value={nomeModificato}
+                                onChangeText={setNomeModificato}
+                                style={stile.input}
+                                autoFocus
+                                placeholder="Nuovo nome categoria"
+                            />
+                            <View style={stile.buttonRow}>
+                            <Button title="Salva" onPress={modificaCategoria} color="green" />
+                            <Button
+                                title="Annulla"
+                                onPress={() => {
+                                    setShowInput(false);
+                                    setNomeModificato(categoriaSelezionata?.nome || '');
+                                }}
+                                color="red"
+                            />
+                            </View>
+                        </View>
+                    </KeyboardAvoidingView>
+                </View>
+            </TouchableWithoutFeedback>
+        </Modal>
+    </>
+);
 
-    if (!showInput) {
-        return (
-            <TouchableOpacity style={styles.bottone} onPress={() => setShowInput(true)}>
-                <Text style={styles.testoBottone}>Modifica Categoria</Text>
-            </TouchableOpacity>
-        );
-    }
-
-    return (
-        <View style={styles.containerInput}>
-            <TextInput
-                value={nomeModificato}
-                onChangeText={setNomeModificato}
-                style={styles.input}
-                autoFocus
-            />
-            <Button title="Salva" onPress={modificaCategoria} />
-            <Button
-                title="Annulla"
-                onPress={() => {
-                    setShowInput(false);
-                    setNomeModificato(categoriaSelezionata.nome);
-                }}
-                color="red"
-            />
-        </View>
-    );
 }
 
-const styles = StyleSheet.create({
-    bottone: {
-        backgroundColor: '#2196f3',
-        padding: 12,
-        borderRadius: 8,
-        marginHorizontal: 20,
-        marginVertical: 10,
-        alignItems: 'center',
-    },
-    testoBottone: {
-        color: 'white',
-        fontWeight: '600',
-        fontSize: 16,
-    },
-    containerInput: {
-        flexDirection: 'row',
-        marginHorizontal: 20,
-        marginVertical: 10,
-        alignItems: 'center',
-        gap: 10,
-    },
-    input: {
-        flex: 1,
-        borderColor: '#2196f3',
-        borderWidth: 1,
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        height: 40,
-    },
-});
 
