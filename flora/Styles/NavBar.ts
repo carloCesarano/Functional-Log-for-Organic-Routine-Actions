@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 export const PORTRAIT = StyleSheet.create({
     // <NavBar> -> <View>
@@ -7,6 +7,7 @@ export const PORTRAIT = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
+        zIndex: 1, // Aggiunto per garantire l'ordine degli elementi
     },
     // <Icona> -> <Image>
     icona: {
@@ -16,6 +17,7 @@ export const PORTRAIT = StyleSheet.create({
     // <HamburgerMenu> -> <View>
     hamburgerIcon: {
         marginRight: 10,
+        zIndex: 1000, // Aumentato per garantire che sia sopra gli altri elementi
     },
     // <HamburgerMenu> -> <View> -> <View>
     hamburgerMenu: {
@@ -23,8 +25,8 @@ export const PORTRAIT = StyleSheet.create({
         right: 5,
         top: 40,
         minWidth: 150,
-        zIndex: 1000,
-        elevation: 1000,
+        zIndex: 1001, // Aumentato per garantire che sia sopra l'overlay
+        elevation: Platform.OS === 'android' ? 1000 : 0, // Solo per Android
         borderWidth: 2,
         borderStyle: 'solid',
         borderRadius: 10,
@@ -55,6 +57,7 @@ export const LANDSCAPE = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
+        zIndex: 1, // Aggiunto per garantire l'ordine degli elementi
     },
     // <Icona> -> <Image>
     icona: {
@@ -64,6 +67,7 @@ export const LANDSCAPE = StyleSheet.create({
     // <HamburgerMenu> -> <View>
     hamburgerIcon: {
         marginRight: 10,
+        zIndex: 1000, // Aumentato per garantire che sia sopra gli altri elementi
     },
     // <HamburgerMenu> -> <View> -> <View>
     hamburgerMenu: {
@@ -71,8 +75,8 @@ export const LANDSCAPE = StyleSheet.create({
         right: 5,
         top: 40,
         minWidth: 150,
-        zIndex: 1000,
-        elevation: 1000,
+        zIndex: 1001, // Aumentato per garantire che sia sopra l'overlay
+        elevation: Platform.OS === 'android' ? 1000 : 0, // Solo per Android
         borderWidth: 2,
         borderStyle: 'solid',
         borderRadius: 10,
@@ -94,4 +98,4 @@ export const LANDSCAPE = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 5,
     }
-})
+});

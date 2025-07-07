@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../types';
 // COMPONENTI NATIVI
-import {TouchableOpacity, View, ViewStyle} from 'react-native';
+import {TouchableOpacity, View, ViewStyle, Platform, StyleSheet} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 // COMPONENTI CUSTOM
 import Button from '../Input/Button';
@@ -44,7 +44,7 @@ export default function HamburgerMenu({iconStyle, menuStyle, optionStyle}: {icon
     }
 
     return (
-        <View style={iconStyle}>
+        <View style={[iconStyle, {zIndex: 1000}]}>
             <TouchableOpacity
                 onPress={toggleMenu}>
 
@@ -55,19 +55,60 @@ export default function HamburgerMenu({iconStyle, menuStyle, optionStyle}: {icon
             </TouchableOpacity>
 
             {isAperto && (
-                <View style={menuStyle}>
-                    {OPZIONI.map(opzione => (
-                        <Button
-                            key={opzione}
-                            testo={opzione}
-                            stileButton={optionStyle}
-                            onPress={() => {
-                                onOpzione(opzione);
-                                setAperto(false);
-                            }}/>
-                    ))}
-                </View>
+                <>
+                    {/* Overlay per iOS che copre il resto dell'applicazione */}
+                    <TouchableOpacity
+                        style={[
+                            styles.overlay,
+                            Platform.OS === 'ios' && styles.iosOverlay
+                        ]}
+                        onPress={toggleMenu}
+                        activeOpacity={1}
+                    />
+                    
+                    {/* Menu vero e proprio */}
+                    <View style={[
+                        menuStyle,
+                        Platform.OS === 'ios' && styles.iosMenu
+                    ]}>
+                        {OPZIONI.map(opzione => (
+                            <Button
+                                key={opzione}
+                                testo={opzione}
+                                stileButton={optionStyle}
+                                onPress={() => {
+                                    onOpzione(opzione);
+                                    setAperto(false);
+                                }}/>
+                        ))}
+                    </View>
+                </>
             )}
         </View>
     )
 }
+
+// Stili specifici per il componente HamburgerMenu
+const styles = StyleSheet.create({
+    // Overlay che copre tutta la schermata
+    overlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 999,
+    },
+    // Stile specifico per l'overlay su iOS
+    iosOverlay: {
+        backgroundColor: 'rgba(0,0,0,0.1)',
+    },
+    // Stile specifico per il menu su iOS
+    iosMenu: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5, // Per Android comunque
+    }
+});
