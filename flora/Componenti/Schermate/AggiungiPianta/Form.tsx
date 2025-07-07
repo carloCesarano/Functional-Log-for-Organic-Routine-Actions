@@ -1,10 +1,12 @@
-import {JSX, useEffect, useState} from 'react';
-import {TextInput, View} from 'react-native';
+import React, {JSX, useEffect, useState} from 'react';
+import {TextInput, ScrollView} from 'react-native';
 import FotoPicker from '../../Comuni/Input/FotoPicker';
 import {styles} from '../../../Styles/Form';
 import DataPicker from '../../Comuni/Input/DataPicker';
-import SinglePicker from "../../Comuni/Input/SinglePicker";
 import * as WikiPianteDAO from '../../../Database/WikiPianteDAO';
+import * as CategorieDAO from '../../../Database/CategorieDAO';
+import PickerMultiplo from "../../Comuni/Input/PickerMultiplo";
+import PickerSingolo from "../../Comuni/Input/PickerSingolo";
 
 export default function (): JSX.Element {
     // VARIABILI DI STATO
@@ -12,7 +14,7 @@ export default function (): JSX.Element {
     const [nome, setNome] = useState<string>('');
     const [acq, setAcq] = useState<Date>(new Date());
     const [catSel, setCatSel] = useState<string[]>([]);
-    const [specie, setSpecie] = useState<string>('');
+    const [specie, setSpecie] = useState<string | null>(null);
     const [ultInn, setUltInn] = useState<Date>(new Date());
     const [ultPot, setUltPot] = useState<Date>(new Date());
     const [ultRinv, setUltRinv] = useState<Date>(new Date());
@@ -30,9 +32,19 @@ export default function (): JSX.Element {
         getAllSpecie();
     }, []);
 
+    const [allCat, setAllCat] = useState<string[]>([]);
+    useEffect(() => {
+        const getAllCategorie = async () => {
+            const tabella = await CategorieDAO.getAll();
+            setAllCat(tabella.map(riga => riga.nome).sort());
+        };
+        getAllCategorie();
+    }, []);
+
     return (
-        <View
-            style={{gap: 16, alignItems: 'center', width: '100%'}}>
+        <ScrollView
+            style={{width: '100%'}}
+            contentContainerStyle={{gap: 16, alignItems: 'center', width: '100%', paddingBottom: 100}}>
 
             <FotoPicker
                 foto={foto}
@@ -52,12 +64,19 @@ export default function (): JSX.Element {
                 nome='Acquisizione'
                 maxValore={new Date()}/>
 
-            <SinglePicker
-                valore={specie}
-                onCambio={setSpecie}
-                placeholder='Specie'
-                opzioni={allSpecie}
+            <PickerSingolo
+                titolo={'Specie'}
+                opzioni={allSpecie.map(s => {return {label: s, value: s}})}
+                selezionato={specie}
+                onCambia={setSpecie}
+            />
+
+            <PickerMultiplo
+                titolo={'Categorie'}
+                opzioni={allCat.map(s => {return {label: s, value: s}})}
+                selezionati={catSel}
+                onCambia={setCatSel}
                 />
-        </View>
+        </ScrollView>
     )
 }

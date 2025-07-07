@@ -10,7 +10,6 @@ import ProssimiInterventi   from '../Componenti/Schermate/Home/ProssimiIntervent
 import AggiungiPiantaButton from '../Componenti/Comuni/AggiungiPiantaButton';
 
 export default function (): JSX.Element {
-
     return (
         <Background>
             <NavBar/>
