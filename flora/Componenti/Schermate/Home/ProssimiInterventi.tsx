@@ -1,15 +1,19 @@
+import {useCallback, useEffect, useState} from 'react';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../../types';
+// COMPONENTI NATIVI
 import {FlatList, View} from 'react-native';
-import {PiantaPosseduta} from "../../../Model/PiantaPosseduta";
+// COMPONENTI CUSTOM
+import Titolo from '../../Comuni/Titolo';
+import Button from '../../Comuni/Input/Button';
+// UTILITY
 import * as PiantePosseduteDAO from '../../../Database/PiantePosseduteDAO';
-import React, {useEffect, useState} from 'react';
-import Titolo from "../../Comuni/Titolo";
-import Button from "../../Comuni/Input/Button";
-import {useNavigation} from "@react-navigation/native";
-import {StackNavigationProp} from "@react-navigation/stack";
-import {RootStackParamList} from "../../../types";
-import {PORTRAIT, LANDSCAPE} from "../../../Styles/ProssimiInterventi";
-import {colora} from "../../../Model/Coloratore";
-import {isPortrait} from "../../Comuni/OrientazioneChecker";
+import {PiantaPosseduta} from '../../../Model/PiantaPosseduta';
+import {colora} from '../../../Model/Coloratore';
+import {isPortrait} from '../../Comuni/OrientazioneChecker';
+// FOGLI DI STILE
+import {PORTRAIT, LANDSCAPE} from '../../../Styles/ProssimiInterventi';
 
 interface Intervento {
     pianta: PiantaPosseduta,
@@ -45,31 +49,30 @@ export default function () {
 
     const stile = portraitMode ? PORTRAIT : LANDSCAPE;
 
-    useEffect(() => {
-        const caricaDati = async () => {
-            setInterventiAll([]);
-            const piante: PiantaPosseduta[] = await PiantePosseduteDAO.getAll();
-            for (const pianta of piante) {
-                const INN: Intervento = {
-                    pianta: pianta,
-                    tipo: 'INN',
-                    giorniRimanenti: pianta.giorniProxInnaff()
-                };
-                const POT: Intervento = {
-                    pianta: pianta,
-                    tipo: 'POT',
-                    giorniRimanenti: pianta.giorniProxPotat()
-                };
-                const RINV: Intervento = {
-                    pianta: pianta,
-                    tipo: 'RINV',
-                    giorniRimanenti: pianta.giorniProxRinv()
-                };
-                setInterventiAll(prev => [...prev, INN, POT, RINV]);
-            }
-        };
-        caricaDati();
-    }, []);
+    // CHIAMATA QUANDO:
+    // Funzione chiamata quando la schermata diventa attiva.
+    //
+    // COSA FA:
+    // Prende la lista di tutte le piante dal database e costruisce
+    // una lista di interventi da eseguire mettendone tre per ogni
+    // pianta (innaffiatura, potatura, rinvaso) basandosi sull'ultima
+    // volta che sono stati eseguiti.
+    useFocusEffect(useCallback(() => {
+            const caricaDati = async () => {
+                const piante: PiantaPosseduta[] = await PiantePosseduteDAO.getAll();
+                const lista: Intervento[] = [];
+
+                for (const pianta of piante)
+                    lista.push(
+                        {pianta: pianta, tipo: 'INN', giorniRimanenti: pianta.giorniProxInnaff()},
+                        {pianta: pianta, tipo: 'POT', giorniRimanenti: pianta.giorniProxPotat()},
+                        {pianta: pianta, tipo: 'RINV', giorniRimanenti: pianta.giorniProxRinv()}
+                    )
+
+                setInterventiAll(lista);
+            };
+            caricaDati();
+        }, []));
 
     // CHIAMATA QUANDO:
     // Funzione chiamata alla fine del caricamento dei dati
@@ -84,7 +87,7 @@ export default function () {
     // 3. Interventi ordinati in base all'urgenza (minor valore di
     //    giorni rimanenti).
     useEffect(() => {
-        const filtraInterventi = async () => {
+        const filtraInterventi = () => {
             setInterventiMostrati(
                 interventiAll
                 .filter(i => i.giorniRimanenti <= 7)
@@ -128,11 +131,16 @@ export default function () {
         <View style={stile.containerElemento}>
             <Titolo nome='Prossimi Interventi' stile={stile.titolo}/>
             <FlatList
-                keyExtractor={i => `${i.giorniRimanenti} - ${i.tipo} - ${i.pianta.getId()}`}
+                keyExtractor={i => `${i.tipo} - ${i.pianta.getId()}`}
                 data={interventiMostrati}
                 renderItem={renderIntervento}
                 contentContainerStyle={stile.containerInterventi}
                 scrollEnabled={false}/>
+            <Button
+                testo='Vedi tutti gli interventi'
+                onPress={() => navigation.navigate('Interventi')}
+                stileButton={stile.buttonVediTutti}
+                stileTesto={stile.testoVediTutti}/>
         </View>
     )
 }

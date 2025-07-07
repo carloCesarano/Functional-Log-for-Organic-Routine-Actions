@@ -26,6 +26,15 @@ export const PORTRAIT = StyleSheet.create({
         borderRadius: 8,
         marginBottom: 8
     },
+    buttonVediTutti: {
+        alignItems: 'flex-end',
+        backgroundColor: 'transparent',
+        height: 30,
+    },
+    testoVediTutti: {
+        fontStyle: 'italic',
+        paddingHorizontal: 5,
+    },
 });
 
 export const LANDSCAPE = StyleSheet.create({
@@ -51,5 +60,14 @@ export const LANDSCAPE = StyleSheet.create({
         minWidth: '90%',
         borderRadius: 8,
         marginBottom: 8
+    },
+    buttonVediTutti: {
+        alignItems: 'flex-end',
+        backgroundColor: 'transparent',
+        height: 30,
+    },
+    testoVediTutti: {
+        fontStyle: 'italic',
+        paddingHorizontal: 5,
     },
 });
