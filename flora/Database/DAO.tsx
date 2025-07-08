@@ -117,7 +117,7 @@ function popolaDB(db: SQLiteDatabase): void {
         (4, 'INN', '2025-05-01'),
         (4, 'POT', '2025-04-03'),
         (4, 'RINV', '2025-06-03'),
-        (5, 'INN', '2025-06-31'),
+        (5, 'INN', '2025-06-30'),
         (5, 'POT', '2025-06-15'),
         (5, 'RINV', '2025-07-05');
     `);
@@ -216,5 +216,25 @@ export async function remove(tabella: string, id: number): Promise<void> {
         getDB().execSync(query);
     } catch (error: any) {
         throw new Error(`Errore in REMOVE (${tabella}): ${error.message}`);
+    }
+}
+
+export async function stampaTabella(tabella: string): Promise<void> {
+    try {
+        const risultato = await getAll(tabella);
+        if (risultato.length === 0) {
+            console.log(`Tabella ${tabella} vuota`);
+            return;
+        }
+
+        const intestazione = Object.keys(risultato[0]);
+        console.log(intestazione.join(' | '));
+
+        for (const riga of risultato) {
+            const valori = intestazione.map(k => (riga[k]))
+            console.log(valori.join(' | '));
+        }
+    } catch (error: any) {
+        throw new Error(`Errore in STAMPATABELLA(${tabella}: ${error.message}`)
     }
 }
