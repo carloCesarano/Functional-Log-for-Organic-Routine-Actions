@@ -6,6 +6,7 @@ import NavBar     from '../Componenti/Comuni/NavBar';
 import EseguiIntervento from '../Componenti/Schermate/Interventi/EseguiIntervento';
 // UTILITY
 import {stampaTabella} from '../Database/DAO';
+import Titolo from "../Componenti/Comuni/Titolo";
 
 
 export default function (): JSX.Element {
@@ -15,6 +16,7 @@ export default function (): JSX.Element {
     return (
         <Background>
             <NavBar/>
+            <Titolo nome="Interventi" />
             <EseguiIntervento/>
         </Background>
     )

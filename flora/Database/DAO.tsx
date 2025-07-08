@@ -55,7 +55,7 @@ function popolaDB(db: SQLiteDatabase): void {
             note    TEXT,
             foto    TEXT,
             FOREIGN KEY (specie) REFERENCES WikiPiante(specie)
-                ON UPDATE CASCADE ON DELETE RESTRICT
+                ON UPDATE CASCADE ON DELETE CASCADE
         );
         CREATE TABLE IF NOT EXISTS PianteCategorie (
             id        INTEGER PRIMARY KEY AUTOINCREMENT,

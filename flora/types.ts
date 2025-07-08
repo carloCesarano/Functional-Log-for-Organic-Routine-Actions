@@ -11,4 +11,7 @@ export type RootStackParamList = {
     Categorie      : undefined;
     Sviluppatore   : undefined;
     Interventi     : undefined;
+    Specie         : undefined;
+    AggiungiSpecie : undefined;
+
 };
