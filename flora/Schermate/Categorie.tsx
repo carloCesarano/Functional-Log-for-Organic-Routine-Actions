@@ -20,6 +20,7 @@ export default function (): JSX.Element {
         <Background>
             <NavBar/>
             <ScrollView>
+                <Titolo nome='Categorie'/>
                 <CategorieCarosello
                     key={aggiornaLista.toString()}
                     onCategoriaSelezionata={setCategoriaSelezionata}

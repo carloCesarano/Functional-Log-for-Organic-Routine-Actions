@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator,Image } from 'react-native';
 import * as CategorieDAO from '../../../Database/CategorieDAO';
 import * as PianteCategorieDAO from '../../../Database/PianteCategorieDAO';
+import * as PiantePosseduteDAO from '../../../Database/PiantePosseduteDAO';
 import { isPortrait } from '../../Comuni/OrientazioneChecker';
 import { PORTRAIT, LANDSCAPE } from '../../../Styles/CategorieCaroselloStyles';
+import { PiantaPosseduta } from '../../../Model/PiantaPosseduta';
+
 
 interface Props {
     nomeCategoria: string | null;
+}
+
+interface IPianteCategoria{
+    pianta: number,
+    categoria: number,
+}
+
+interface IPiantePossedute{
+    nome: string,
+    foto: string,
 }
 
 export default function NumPianteCategoria({ nomeCategoria }: Props) {
@@ -15,6 +28,10 @@ export default function NumPianteCategoria({ nomeCategoria }: Props) {
     // loading: usata per mostrare un indicatore di caricamento mentre si calcola
     const [numeroPiante, setNumeroPiante] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
+
+    //servono a gestire la logica del carosello delle piante della categoria selezionata
+    const [pianteCagetoria, setPianteCategoria] = useState<IPianteCategoria[]>([]);
+    const [piantePossedute, setPiantePossedute] = useState<PiantaPosseduta[] | null >([]);
 
     // Selezione dello stile in base all’orientamento del dispositivo
     const portraitMode = isPortrait();
@@ -46,22 +63,72 @@ export default function NumPianteCategoria({ nomeCategoria }: Props) {
         conta();
     }, [nomeCategoria]);
 
+
+    useEffect(() => {
+        const caricaPianteCategoria = async () => {
+            if (!nomeCategoria) return;
+            setLoading(true);
+            try {
+                const idCategoria = await CategorieDAO.daNome(nomeCategoria);
+                const relazioni = await PianteCategorieDAO.getAll();
+                const pianteCorrette = relazioni
+                    .filter(r => r.categoria === idCategoria)
+                    .map(r => r.pianta); // <--- corretto
+
+                const tutteLePiante = await PiantePosseduteDAO.getAll();
+                const pianteFiltrate = tutteLePiante.filter(p => {
+                    const id = p.getId();
+                    return id !== undefined && pianteCorrette.includes(id);
+                });
+
+                setPiantePossedute(pianteFiltrate);
+            } catch (err) {
+                console.error("Errore caricamento piante categoria:", err);
+                setPiantePossedute([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+        caricaPianteCategoria();
+    }, [nomeCategoria]);
+
+
     // Se non è stata selezionata una categoria, non mostrare nulla
     if (!nomeCategoria) return null;
 
     return (
         <View style={stile.boxNumPiante}>
-            {/* TITOLO */}
+            {/* TITOLO NUMERO PIANTE */}
             <Text style={stile.titoloNumPiante}>
-                Piante per la categoria "{nomeCategoria}":
+                Hai <Text style={stile.numeroPiante}>{numeroPiante}</Text> piante per la categoria "{nomeCategoria}":
             </Text>
 
-            {/* NUMERO O INDICATORE DI CARICAMENTO */}
+            {/* INDICATORE DI CARICAMENTO */}
             {loading ? (
                 <ActivityIndicator size="small" color="#333" />
             ) : (
-                <Text style={stile.numeroPiante}>{numeroPiante}</Text>
+                <View style={stile.listaPianteCategoria}>
+                    {piantePossedute && piantePossedute.length > 0 ? (
+                        piantePossedute.map((pianta, index) => (
+                            <View key={index} style={stile.cardPianta}>
+                                {pianta.foto ? (
+                                    <Image
+                                        source={ pianta.getFoto() }
+                                        style={stile.fotoPianta}
+                                        resizeMode="cover"
+                                    />
+                                ) : (
+                                    <Text style={stile.noFoto}>[Nessuna foto]</Text>
+                                )}
+                                <Text style={stile.nomePianta}>{pianta.getNome()}</Text>
+                            </View>
+                        ))
+                    ) : (
+                        <Text style={stile.noPiantaTrovata}>Nessuna pianta in questa categoria.</Text>
+                    )}
+                </View>
             )}
         </View>
     );
+
 }

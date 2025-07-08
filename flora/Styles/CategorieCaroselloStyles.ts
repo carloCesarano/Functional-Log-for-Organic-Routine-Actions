@@ -5,12 +5,12 @@ export const PORTRAIT = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10,
-        backgroundColor:'green',
+        backgroundColor: 'green',
         borderRadius: 10,
         height: 100,
     },
-    titolo:{
-        padding:5,
+    titolo: {
+        padding: 5,
         fontSize: 18,
         color: 'white',
         fontWeight: 'bold',
@@ -57,6 +57,49 @@ export const PORTRAIT = StyleSheet.create({
         color: '#0066cc',
         textAlign: 'center',
     },
+
+    // 👇 AGGIUNTI PER MOSTRARE LE PIANTE DELLA CATEGORIA
+    listaPianteCategoria: {
+        marginTop: 10,
+        width: '100%',
+        gap: 12,
+    },
+    cardPianta: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
+        borderRadius: 8,
+        padding: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        elevation: 2,
+    },
+    fotoPianta: {
+        width: 50,
+        height: 50,
+        borderRadius: 25, // tonda
+        marginRight: 10,
+        backgroundColor: '#ddd',
+    },
+    nomePianta: {
+        fontSize: 16,
+        color: '#333',
+    },
+    noFoto: {
+        fontStyle: 'italic',
+        color: '#888',
+        fontSize: 14,
+        marginRight: 10,
+    },
+    noPiantaTrovata: {
+        fontStyle: 'italic',
+        fontSize: 14,
+        color: '#999',
+        textAlign: 'center',
+        marginTop: 10,
+    },
 });
 
 export const LANDSCAPE = StyleSheet.create({
@@ -65,7 +108,7 @@ export const LANDSCAPE = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 5,
-        backgroundColor:'green',
+        backgroundColor: 'green',
         borderRadius: 10,
         height: 100,
     },
