@@ -1,4 +1,7 @@
 import React, {JSX, useEffect, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../../types';
 // COMPONENTI NATIVI
 import {TextInput, ScrollView} from 'react-native';
 // COMPONENTI CUSTOM
@@ -26,6 +29,9 @@ export default function (): JSX.Element {
     const [ultPot, setUltPot] = useState<Date>(new Date());
     const [ultRinv, setUltRinv] = useState<Date>(new Date());
     const [note, setNote] = useState<string>('');
+
+    // HOOKS
+    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
     // DATI DA CARICARE
     const [allSpecie, setAllSpecie] = useState<string[]>([]);
@@ -69,6 +75,14 @@ export default function (): JSX.Element {
             specie: specie,
             note: note
         }, ultInn, ultPot, ultRinv);
+
+        MostraToast({
+            tipo: 'success',
+            titolo: 'Nuova pianta aggiunta',
+            messaggio: 'Prenditi cura della tua nuova pianta di ' + pianta.getSpecie().getSpecie()
+        });
+
+        navigation.navigate('InfoPianta', {ID: pianta.getId()})
 
     }
 
