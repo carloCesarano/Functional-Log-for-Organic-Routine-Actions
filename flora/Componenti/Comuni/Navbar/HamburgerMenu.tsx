@@ -11,8 +11,8 @@ import Button from '../Input/Button';
 const OPZIONI = [
     "Analisi",
     "Categorie",
-    "Specie",
     "Impostazioni",
+    "Specie",
     "Sviluppatore"
 ] as const;
 type OPZIONE = typeof OPZIONI[number];
