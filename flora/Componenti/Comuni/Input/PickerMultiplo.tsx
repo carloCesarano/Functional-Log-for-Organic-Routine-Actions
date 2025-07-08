@@ -1,6 +1,6 @@
 import {JSX, useState} from 'react';
 // COMPONENTI NATIVI
-import {ViewStyle, TextStyle, FlatList, Modal, TouchableOpacity} from 'react-native';
+import {ViewStyle, TextStyle, FlatList, Modal, TouchableOpacity, Platform} from 'react-native';
 import {CheckBox} from 'react-native-elements';
 // COMPONENTI CUSTOM
 import Button from './Button';
@@ -66,7 +66,8 @@ export default function (props: Props): JSX.Element {
             <Modal
                 style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}
                 animationType='fade'
-                backdropColor={'rgba(0, 0, 0, 0.1)'}
+                backdropColor={'rgba(0, 0, 0, 0.05)'}
+                transparent={Platform.OS === 'ios'}
                 visible={aperto}
                 onRequestClose={toggleAperto}>
 
@@ -76,14 +77,15 @@ export default function (props: Props): JSX.Element {
 
                     <TouchableOpacity
                         activeOpacity={1}
-                        style={{width: '70%', maxHeight: '70%', justifyContent: 'center', alignItems: 'center'}}
+                        style={{width: '70%', maxHeight: '70%', justifyContent: 'center', alignItems: 'center', shadowColor: 'black', shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.3, shadowRadius: 18}}
                         onPress={() => {}}>
 
                         <FlatList
+                            style={{width: '100%', borderRadius: 18}}
                             data={opzioni}
                             keyExtractor={opz => opz.value}
                             renderItem={renderOpzione}
-                            contentContainerStyle={[{backgroundColor: 'white'}, stileContainer]}/>
+                            contentContainerStyle={[{backgroundColor: 'white', paddingVertical: 4}, stileContainer]}/>
                     </TouchableOpacity>
                 </TouchableOpacity>
             </Modal>
