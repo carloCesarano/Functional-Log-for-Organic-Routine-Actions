@@ -1,12 +1,19 @@
 import React, {JSX, useEffect, useState} from 'react';
+// COMPONENTI NATIVI
 import {TextInput, ScrollView} from 'react-native';
+// COMPONENTI CUSTOM
 import FotoPicker from '../../Comuni/Input/FotoPicker';
-import {styles} from '../../../Styles/Form';
 import DataPicker from '../../Comuni/Input/DataPicker';
-import * as WikiPianteDAO from '../../../Database/WikiPianteDAO';
-import * as CategorieDAO from '../../../Database/CategorieDAO';
 import PickerMultiplo from "../../Comuni/Input/PickerMultiplo";
 import PickerSingolo from "../../Comuni/Input/PickerSingolo";
+// UTILITY
+import * as WikiPianteDAO from '../../../Database/WikiPianteDAO';
+import * as CategorieDAO from '../../../Database/CategorieDAO';
+import {MostraToast} from '../../Comuni/MessaggioToast';
+// FOGLI DI STILE
+import {styles} from '../../../Styles/Form';
+import Button from "../../Comuni/Input/Button";
+import {PiantaPosseduta} from "../../../Model/PiantaPosseduta";
 
 export default function (): JSX.Element {
     // VARIABILI DI STATO
@@ -20,6 +27,7 @@ export default function (): JSX.Element {
     const [ultRinv, setUltRinv] = useState<Date>(new Date());
     const [note, setNote] = useState<string>('');
 
+    // DATI DA CARICARE
     const [allSpecie, setAllSpecie] = useState<string[]>([]);
     useEffect(() => {
         const getAllSpecie = async () => {
@@ -41,6 +49,29 @@ export default function (): JSX.Element {
         getAllCategorie();
     }, []);
 
+    // VARIABILI DI UTILITY
+    const [altezzaNoteInput, setAltezzaNoteInput] = useState<number>(44);
+
+    const aggiungi = async () => {
+        if (!nome.trim() || !specie) {
+            MostraToast({
+                tipo: 'error',
+                titolo: 'Impossibile creare la pianta',
+                messaggio: 'Il nome e la specie sono obbligatori'
+            });
+            return;
+        }
+
+        const pianta: PiantaPosseduta = await PiantaPosseduta.creaNuova({
+            foto: foto?.uri ?? '',
+            nome: nome.trim(),
+            acq: acq.toISOString().split('T')[0],
+            specie: specie,
+            note: note
+        }, ultInn, ultPot, ultRinv);
+
+    }
+
     return (
         <ScrollView
             style={{width: '100%'}}
@@ -55,8 +86,7 @@ export default function (): JSX.Element {
                 onChangeText={setNome}
                 placeholder='Nome'
                 placeholderTextColor={'#888'}
-                style={styles.textInput}
-            />
+                style={styles.textInput}/>
 
             <DataPicker
                 valore={acq}
@@ -68,15 +98,48 @@ export default function (): JSX.Element {
                 titolo={'Specie'}
                 opzioni={allSpecie.map(s => {return {label: s, value: s}})}
                 selezionato={specie}
-                onCambia={setSpecie}
-            />
+                onCambia={setSpecie}/>
 
             <PickerMultiplo
                 titolo={'Categorie'}
                 opzioni={allCat.map(s => {return {label: s, value: s}})}
                 selezionati={catSel}
-                onCambia={setCatSel}
-                />
+                onCambia={setCatSel}/>
+
+            <TextInput
+                value={note}
+                onChangeText={setNote}
+                multiline={true}
+                placeholder='Note'
+                placeholderTextColor='#888'
+                onContentSizeChange={e => setAltezzaNoteInput(e.nativeEvent.contentSize.height)}
+                style={[styles.textInput, {height: Math.max(44, altezzaNoteInput)}]}/>
+
+            <DataPicker
+                valore={ultInn}
+                onChange={setUltInn}
+                nome='Ultima innaffiatura'
+                minValore={acq}
+                maxValore={new Date()}/>
+
+            <DataPicker
+                valore={ultPot}
+                onChange={setUltPot}
+                nome='Ultima potatura'
+                minValore={acq}
+                maxValore={new Date()}/>
+
+            <DataPicker
+                valore={ultRinv}
+                onChange={setUltRinv}
+                nome='Ultimo rinvaso'
+                minValore={acq}
+                maxValore={new Date()}/>
+
+            <Button
+                testo='Aggiungi'
+                onPress={aggiungi}/>
+
         </ScrollView>
     )
 }

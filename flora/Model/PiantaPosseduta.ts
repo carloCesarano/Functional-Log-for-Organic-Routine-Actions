@@ -32,18 +32,18 @@ export class PiantaPosseduta {
     // potatura' e 'Ultimo rinvaso' alla tabella Interventi. Infine
     // aggiunge le categorie collegate alla pianta nella tabella
     // PianteCategorie.
-    static async creaNuova(props: Riga, ultimaInnaff: Date, ultimaPotat: Date, ultimoRinv: Date): Promise<PiantaPosseduta> {
+    static async creaNuova(props: Omit<Riga, 'id'>, ultInn: Date, ultPot: Date, ultRinv: Date): Promise<PiantaPosseduta> {
         const pianta = new PiantaPosseduta();
 
-        pianta.specie = await WikiPianteDAO.get(props.specie);
-        pianta.nome = props.nome;
-        pianta.acq = new Date(props.acq);
-        pianta.note = props.note ?? '';
-        pianta.foto = props.foto;
+        pianta.specie = await WikiPianteDAO.get(props.specie as string);
+        pianta.nome = props.nome as string;
+        pianta.acq = new Date(props.acq as string);
+        pianta.note = (props.note ?? '') as string;
+        pianta.foto = props.foto as string;
         pianta.categorie = [];
-        pianta.innaff = [ultimaInnaff];
-        pianta.potat = [ultimaPotat];
-        pianta.rinv = [ultimoRinv];
+        pianta.innaff = [ultInn];
+        pianta.potat = [ultPot];
+        pianta.rinv = [ultRinv];
 
         await insert(pianta);
 

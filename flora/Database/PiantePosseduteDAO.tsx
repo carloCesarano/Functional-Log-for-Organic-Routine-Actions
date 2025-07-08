@@ -44,7 +44,7 @@ function preparaPerInsert(pianta: PiantaPosseduta): Omit<Riga, 'id'> {
     return {
         nome: pianta.getNome(),
         specie: pianta.getSpecie().getSpecie(),
-        acq: pianta.getAcq().toISOString(),
+        acq: pianta.getAcq().toISOString().split('T')[0],
         note: pianta.getNote(),
         foto: pianta.foto ?? ''
     };

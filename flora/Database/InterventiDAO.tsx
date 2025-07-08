@@ -23,7 +23,7 @@ export async function insert(pianta: PiantaPosseduta, tipo: string, data: Date):
     const riga: Omit<Riga, 'id'> = {
         pianta: pianta.getId(),
         tipo: tipo,
-        data: data.toISOString()
+        data: data.toISOString().split('T')[0]
     };
     await DAO.insert<Riga>('Interventi', riga);
 }
