@@ -42,7 +42,13 @@ export default function ({stile}: {stile: ViewStyle}) {
             navigation.setParams({cercato: ""})
     };
 
-    const style: ViewStyle = focus ? stile : {width: '50%'};
+    const style: ViewStyle = focus ? stile : {
+        width: '50%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 5,
+    };
 
     // CHIAMATA QUANDO:
     // Funzione chiamata quando si clicca sulla
@@ -62,7 +68,6 @@ export default function ({stile}: {stile: ViewStyle}) {
     // COSA FA:
     // Resetta lo stile della barra di ricerca.
     const eliminaStile = () => {
-        pulisciTesto();
         setFocus(false);
     }
 
