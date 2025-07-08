@@ -152,6 +152,8 @@ export default function (): JSX.Element {
 
             <Button
                 testo='Aggiungi'
+                stileButton={{width: '50%', height: 60, borderRadius: 18, backgroundColor: '#30a505'}}
+                stileTesto={{textAlign: 'center', fontSize: 24, color: 'white', fontWeight: 'bold'}}
                 onPress={aggiungi}/>
 
         </ScrollView>
