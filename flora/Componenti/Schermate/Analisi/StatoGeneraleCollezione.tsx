@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, StyleSheet, Image } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import * as PiantePosseduteDAO from '../../../Database/PiantePosseduteDAO';
 import { PiantaPosseduta } from '../../../Model/PiantaPosseduta';
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../../types';
 
 import stili from '../../../Styles/Analisi';
 const styles = stili.PORTRAIT;
@@ -11,6 +14,12 @@ export default function StatoGeneraleCollezione() {
   const [statoCollezione, setStatoCollezione] = useState<number>(0);
   const [piantaPiuSalute, setPiantaPiuSalute] = useState<PiantaPosseduta | null>(null);
   const [piantaMenoSalute, setPiantaMenoSalute] = useState<PiantaPosseduta | null>(null);
+  
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const goToInfoPianta = (id: number) => {
+    navigation.navigate('InfoPianta', { ID: id });
+  };
 
   useEffect(() => {
     const caricaDati = async () => {
@@ -22,11 +31,9 @@ export default function StatoGeneraleCollezione() {
           return;
         }
 
-        // Calcola la media dello stato della collezione
         const mediaStato = piante.reduce((sum, pianta) => sum + pianta.stato(), 0) / piante.length;
         setStatoCollezione(mediaStato);
 
-        // Trova pianta con stato migliore e peggiore
         const pianteOrdinate = [...piante].sort((a, b) => b.stato() - a.stato());
         setPiantaPiuSalute(pianteOrdinate[0]);
         setPiantaMenoSalute(pianteOrdinate[pianteOrdinate.length - 1]);
@@ -54,12 +61,12 @@ export default function StatoGeneraleCollezione() {
           </Text>
           
           <View style={styles.containerPiante}>
-            {/* Card Pianta più in salute */}
+            {/* Pianta più in salute - Button */}
             {piantaPiuSalute && (
-              <View style={[
-                styles.cardPianta, 
-                { backgroundColor: piantaPiuSalute.coloreStato() }
-              ]}>
+              <TouchableOpacity
+                style={[styles.cardPianta, { backgroundColor: piantaPiuSalute.coloreStato() }]}
+                onPress={() => goToInfoPianta(piantaPiuSalute.getId())}
+              >
                 <Text style={styles.cardLabel}>Pianta più in salute</Text>
                 {typeof piantaPiuSalute.getFoto() === 'number' ? (
                   <Image 
@@ -76,15 +83,15 @@ export default function StatoGeneraleCollezione() {
                 <Text style={styles.statoPianta}>
                   {Math.round(piantaPiuSalute.stato() * 100)}%
                 </Text>
-              </View>
+              </TouchableOpacity>
             )}
 
-            {/* Card Pianta più malata */}
+            {/* Pianta più malata - Button */}
             {piantaMenoSalute && (
-              <View style={[
-                styles.cardPianta, 
-                { backgroundColor: piantaMenoSalute.coloreStato() }
-              ]}>
+              <TouchableOpacity
+                style={[styles.cardPianta, { backgroundColor: piantaMenoSalute.coloreStato() }]}
+                onPress={() => goToInfoPianta(piantaMenoSalute.getId())}
+              >
                 <Text style={styles.cardLabel}>Pianta più malata</Text>
                 {typeof piantaMenoSalute.getFoto() === 'number' ? (
                   <Image 
@@ -101,7 +108,7 @@ export default function StatoGeneraleCollezione() {
                 <Text style={styles.statoPianta}>
                   {Math.round(piantaMenoSalute.stato() * 100)}%
                 </Text>
-              </View>
+              </TouchableOpacity>
             )}
           </View>
         </>
