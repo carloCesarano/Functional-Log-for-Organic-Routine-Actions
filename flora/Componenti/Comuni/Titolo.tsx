@@ -13,7 +13,8 @@ export default function Titolo({nome, stile}: Props) {
             style={[{
                 fontSize: 32,
                 fontWeight: 'bold',
-                marginBottom: 16
+                marginBottom: 16,
+                textAlign: 'center'
             }, stile]}>
 
             {nome}
