@@ -10,7 +10,7 @@ export const coloriInterventi = {
 
 const baseStyles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#bbe89f',
     borderRadius: 10,
     padding: 20,
     marginHorizontal: 20,
