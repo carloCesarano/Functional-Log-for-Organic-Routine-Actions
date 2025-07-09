@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator,Image } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import * as CategorieDAO from '../../../Database/CategorieDAO';
 import * as PianteCategorieDAO from '../../../Database/PianteCategorieDAO';
 import * as PiantePosseduteDAO from '../../../Database/PiantePosseduteDAO';
@@ -12,25 +12,13 @@ interface Props {
     nomeCategoria: string | null;
 }
 
-interface IPianteCategoria{
-    pianta: number,
-    categoria: number,
-}
-
-interface IPiantePossedute{
-    nome: string,
-    foto: string,
-}
-
 export default function NumPianteCategoria({ nomeCategoria }: Props) {
     // VARIABILI DI STATO:
     // numeroPiante: contiene il numero di piante per la categoria selezionata
     // loading: usata per mostrare un indicatore di caricamento mentre si calcola
+    //piantePossedute: serve a gestire la logica della lista delle piante appartenenti alla categoria selezionata
     const [numeroPiante, setNumeroPiante] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
-
-    //servono a gestire la logica del carosello delle piante della categoria selezionata
-    const [pianteCagetoria, setPianteCategoria] = useState<IPianteCategoria[]>([]);
     const [piantePossedute, setPiantePossedute] = useState<PiantaPosseduta[] | null >([]);
 
     // Selezione dello stile in base all’orientamento del dispositivo
@@ -73,7 +61,7 @@ export default function NumPianteCategoria({ nomeCategoria }: Props) {
                 const relazioni = await PianteCategorieDAO.getAll();
                 const pianteCorrette = relazioni
                     .filter(r => r.categoria === idCategoria)
-                    .map(r => r.pianta); // <--- corretto
+                    .map(r => r.pianta);
 
                 const tutteLePiante = await PiantePosseduteDAO.getAll();
                 const pianteFiltrate = tutteLePiante.filter(p => {
@@ -111,15 +99,6 @@ export default function NumPianteCategoria({ nomeCategoria }: Props) {
                     {piantePossedute && piantePossedute.length > 0 ? (
                         piantePossedute.map((pianta, index) => (
                             <View key={index} style={stile.cardPianta}>
-                                {pianta.foto ? (
-                                    <Image
-                                        source={ pianta.getFoto() }
-                                        style={stile.fotoPianta}
-                                        resizeMode="cover"
-                                    />
-                                ) : (
-                                    <Text style={stile.noFoto}>[Nessuna foto]</Text>
-                                )}
                                 <Text style={stile.nomePianta}>{pianta.getNome()}</Text>
                             </View>
                         ))

@@ -10,6 +10,12 @@ export default function (): JSX.Element {
             <NavBar/>
             <Titolo nome="Impostazioni"/>
 
+            {/*
+                <EliminaAllPiante/>
+                <EliminaAllCategorie/>
+                <EliminaAllSpecie/>
+            */}
+
         </Background>
     )
 }

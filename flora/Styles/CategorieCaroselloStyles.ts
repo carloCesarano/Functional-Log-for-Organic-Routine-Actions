@@ -76,22 +76,9 @@ export const PORTRAIT = StyleSheet.create({
         shadowRadius: 2,
         elevation: 2,
     },
-    fotoPianta: {
-        width: 50,
-        height: 50,
-        borderRadius: 25, // tonda
-        marginRight: 10,
-        backgroundColor: '#ddd',
-    },
     nomePianta: {
         fontSize: 16,
         color: '#333',
-    },
-    noFoto: {
-        fontStyle: 'italic',
-        color: '#888',
-        fontSize: 14,
-        marginRight: 10,
     },
     noPiantaTrovata: {
         fontStyle: 'italic',
