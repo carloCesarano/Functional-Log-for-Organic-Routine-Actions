@@ -5,31 +5,34 @@ import {RootStackParamList} from '../types';
 import Background from '../Componenti/Comuni/Background';
 import NavBar     from '../Componenti/Comuni/NavBar';
 import Titolo     from '../Componenti/Comuni/Titolo';
+import FormModifica from '../Componenti/Schermate/InfoPianta/FormModifica';
+
 
 // DEFINISCO GLI INPUT
 type Props = NativeStackScreenProps<RootStackParamList, 'InfoPianta'>;
 
 export default function ({route}: Props): JSX.Element {
     const {ID} = route.params;
-    const [editing, setEditing] = useState<boolean>(false);
+    const [editing, setEditing] = useState<boolean>(true);
 
     return (
         <Background>
             <NavBar/>
             <Titolo nome="InfoPianta"/>
 
-            {/*
-            {!editing && (
-                <VisualizzaInfo id={ID}/>
-            )}
 
-            {editing && (
+            {!editing && (
                 <FormModifica id={ID}/>
             )}
 
+            {editing && (
+                <FormModifica id={1}/>
+            )}
+            {/*
             <Button> // Pulsante che elimina
             <Button> // Pulsante che fa il toggle tra modifica/visualizza
             */}
+
 
         </Background>
     )

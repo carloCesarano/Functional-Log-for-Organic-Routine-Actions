@@ -7,7 +7,6 @@ import {
     Keyboard,
     View,
     TextInput,
-    Button,
     Alert,
     TouchableOpacity,
     Text
@@ -16,6 +15,7 @@ import {
 import * as CategorieDAO from '../../../Database/CategorieDAO';
 import { isPortrait } from '../../Comuni/OrientazioneChecker';
 import { PORTRAIT, LANDSCAPE } from '../../../Styles/ModificaCategorieButtonStyles';
+import Button from "../../Comuni/Input/Button";
 
 interface Props {
     categoriaSelezionata: { id: number; nome: string } | null;
@@ -129,14 +129,19 @@ export default function ModificaCategoriaButton({ categoriaSelezionata, onCatego
                                 />
                                 {/* BOTTONI: SALVA / ANNULLA */}
                                 <View style={stile.buttonRow}>
-                                    <Button title="Salva" onPress={modificaCategoria} color="green" />
+                                    <Button testo="Salva"
+                                            onPress={modificaCategoria}
+                                            stileButton={{width: '50%', height: 60, borderRadius: 18, backgroundColor: '#30a505'}}
+                                            stileTesto={{textAlign: 'center', fontSize: 24, color: 'white', fontWeight: 'bold'}}
+                                    />
                                     <Button
-                                        title="Annulla"
+                                        testo="Annulla"
                                         onPress={() => {
                                             setShowInput(false);
                                             setNomeModificato(categoriaSelezionata?.nome || '');
                                         }}
-                                        color="red"
+                                        stileButton={{width: '50%', height: 60, borderRadius: 18, backgroundColor: '#30a505'}}
+                                        stileTesto={{textAlign: 'center', fontSize: 24, color: 'white', fontWeight: 'bold'}}
                                     />
                                 </View>
                             </View>

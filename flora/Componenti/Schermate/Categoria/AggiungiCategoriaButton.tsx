@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
     View,
     TextInput,
-    Button,
+
     Alert,
     TouchableOpacity,
     Text,
@@ -14,6 +14,7 @@ import {
 import * as CategorieDAO from '../../../Database/CategorieDAO';
 import { isPortrait } from '../../Comuni/OrientazioneChecker';
 import { PORTRAIT, LANDSCAPE } from '../../../Styles/AggiungiCategoriaButtonStyles';
+import Button from "../../Comuni/Input/Button";
 
 interface Props {
     onCategoriaAggiunta: () => void;
@@ -97,14 +98,19 @@ export default function AggiungiCategoriaButton({ onCategoriaAggiunta }: Props) 
                         />
                         {/* BOTTONI "SALVA" E "ANNULLA" */}
                         <View style={stile.buttonRow}>
-                            <Button title="Salva" onPress={aggiungiCategoria} color="green" />
+                            <Button testo="Salva"
+                                    onPress={aggiungiCategoria}
+                                    stileButton={{width: '50%', height: 60, borderRadius: 18, backgroundColor: '#30a505'}}
+                                    stileTesto={{textAlign: 'center', fontSize: 24, color: 'white', fontWeight: 'bold'}}
+                            />
                             <Button
-                                title="Annulla"
+                                testo="Annulla"
                                 onPress={() => {
                                     setShowInput(false);
                                     setNomeNuovaCategoria('');
                                 }}
-                                color="red"
+                                stileButton={{width: '50%', height: 60, borderRadius: 18, backgroundColor: '#30a505'}}
+                                stileTesto={{textAlign: 'center', fontSize: 24, color: 'white', fontWeight: 'bold'}}
                             />
                         </View>
                     </View>
