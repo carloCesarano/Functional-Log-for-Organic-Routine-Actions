@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView} from 'react-native';
 import Background from '../Componenti/Comuni/Background';
 import NavBar from '../Componenti/Comuni/NavBar';
 import Titolo from '../Componenti/Comuni/Titolo';
@@ -10,21 +10,21 @@ import StatoGeneraleCollezione from '../Componenti/Schermate/Analisi/StatoGenera
 import AnalisiStyles from '../Styles/Analisi';
 
 export default function Analisi() {
-  const [aggiorna, setAggiorna] = useState(false);
+    const [aggiorna, setAggiorna] = useState(false);
 
-  return (
-    <Background>
-      <NavBar/>
-      <ScrollView
-        style={AnalisiStyles.PORTRAIT.scrollContainer}
-        contentContainerStyle={AnalisiStyles.PORTRAIT.contentContainer}
-      >
-        <Titolo nome='Analisi'/>
-        <NumPiantePresenti key={`presenti-${aggiorna}`} />
-        <NumPianteCategoria key={`categorie-${aggiorna}`} />
-        <GraficoInterventiPiante key={`interventi-${aggiorna}`} />
-        <StatoGeneraleCollezione key={`stato-${aggiorna}`} />
-      </ScrollView>
-    </Background>
-  );
+    return (
+        <Background>
+            <NavBar/>
+            <ScrollView
+                style={AnalisiStyles.PORTRAIT.scrollContainer}
+                contentContainerStyle={AnalisiStyles.PORTRAIT.contentContainer}
+            >
+                <Titolo nome='Analisi'/>
+                <StatoGeneraleCollezione key={`stato-${aggiorna}`}/>
+                <GraficoInterventiPiante key={`interventi-${aggiorna}`}/>
+                <NumPiantePresenti key={`presenti-${aggiorna}`}/>
+                <NumPianteCategoria key={`categorie-${aggiorna}`}/>
+            </ScrollView>
+        </Background>
+    );
 }
