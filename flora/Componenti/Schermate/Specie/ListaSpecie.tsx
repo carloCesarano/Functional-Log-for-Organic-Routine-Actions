@@ -10,6 +10,7 @@ import { isPortrait } from "../../Comuni/OrientazioneChecker";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from '../../../types';
 import {StackNavigationProp} from "@react-navigation/stack";
+import { useFocusEffect } from "@react-navigation/native";
 
 
 export default function ListaSpecie() {
@@ -18,9 +19,11 @@ export default function ListaSpecie() {
     const portrait = isPortrait();
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-    useEffect(() => {
-        caricaSpecie();
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+            caricaSpecie();
+        }, [])
+    );
 
     async function caricaSpecie() {
         const tutte = await WikiPianteDAO.getAll();
