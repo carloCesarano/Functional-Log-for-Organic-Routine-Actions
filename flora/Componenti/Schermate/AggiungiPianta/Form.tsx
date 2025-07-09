@@ -151,9 +151,9 @@ export default function (): JSX.Element {
                 maxValore={new Date()}/>
 
             <Button
-                testo='Aggiungi'
-                stileButton={{width: '50%', height: 60, borderRadius: 18, backgroundColor: '#30a505'}}
-                stileTesto={{textAlign: 'center', fontSize: 24, color: 'white', fontWeight: 'bold'}}
+                testo='+'
+                stileButton={{width: 60, height: 60, borderRadius: 50, backgroundColor: '#30a505', alignItems: 'center', justifyContent: 'center'}}
+                stileTesto={{textAlign: 'center', fontSize: 48, color: 'white', fontWeight: 'bold'}}
                 onPress={aggiungi}/>
 
         </ScrollView>
