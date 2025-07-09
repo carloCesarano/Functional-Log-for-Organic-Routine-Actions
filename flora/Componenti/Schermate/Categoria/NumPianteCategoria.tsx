@@ -6,6 +6,10 @@ import * as PiantePosseduteDAO from '../../../Database/PiantePosseduteDAO';
 import { isPortrait } from '../../Comuni/OrientazioneChecker';
 import { PORTRAIT, LANDSCAPE } from '../../../Styles/CategorieCaroselloStyles';
 import { PiantaPosseduta } from '../../../Model/PiantaPosseduta';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../../types';
+import Button from '../../Comuni/Input/Button';
 
 
 interface Props {
@@ -24,6 +28,10 @@ export default function NumPianteCategoria({ nomeCategoria }: Props) {
     // Selezione dello stile in base all’orientamento del dispositivo
     const portraitMode = isPortrait();
     const stile = portraitMode ? PORTRAIT : LANDSCAPE;
+
+    //HOOKS
+    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
 
     // CHIAMATA QUANDO:
     // Ogni volta che cambia `nomeCategoria`.
@@ -99,13 +107,30 @@ export default function NumPianteCategoria({ nomeCategoria }: Props) {
                     {piantePossedute && piantePossedute.length > 0 ? (
                         piantePossedute.map((pianta, index) => (
                             <View key={index} style={stile.cardPianta}>
-                                <Text style={stile.nomePianta}>{pianta.getNome()}</Text>
+                                <Button
+                                    testo={pianta.getNome()}
+                                    onPress={() => navigation.navigate('InfoPianta', { ID: pianta.getId() })}
+                                    stileButton={{
+                                        width: '100%',
+                                        height: 50,
+                                        borderRadius: 12,
+                                        backgroundColor: '#4caf50',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}
+                                    stileTesto={{
+                                        fontSize: 16,
+                                        color: 'white',
+                                        fontWeight: 'bold',
+                                    }}
+                                />
                             </View>
                         ))
                     ) : (
                         <Text style={stile.noPiantaTrovata}>Nessuna pianta in questa categoria.</Text>
                     )}
                 </View>
+
             )}
         </View>
     );
