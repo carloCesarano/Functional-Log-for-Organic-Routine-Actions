@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {useCallback, useState} from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import * as InterventiDAO from '../../../Database/InterventiDAO';
 import AnalisiStyles, { coloriInterventi } from '../../../Styles/Analisi';
+import {useFocusEffect} from "@react-navigation/native";
 
 type TipoIntervento = keyof typeof coloriInterventi;
 
@@ -14,7 +15,7 @@ export default function GraficoInterventiPiante() {
   const [loading, setLoading] = useState(true);
   const [maxValue, setMaxValue] = useState(1);
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     const caricaInterventi = async () => {
       try {
         const oggi = new Date();
@@ -42,7 +43,7 @@ export default function GraficoInterventiPiante() {
     };
 
     caricaInterventi();
-  }, []);
+  }, []));
 
   const styles = AnalisiStyles.GRAFICO_INTERVENTI;
 
@@ -65,7 +66,7 @@ export default function GraficoInterventiPiante() {
                   style={[
                     styles.barra,
                     { 
-                      width: `${Math.min((valore / maxValue) * 100, 80)}%`,
+                      width: `${Math.min((valore / maxValue) * 80, 80)}%`,
                       backgroundColor: coloriInterventi[tipo]
                     }
                   ]}
