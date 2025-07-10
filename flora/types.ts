@@ -6,7 +6,6 @@ export type RootStackParamList = {
     AggiungiPianta : undefined;
     InfoPianta     : {ID: number};
     ListaPiante    : {cercato: string};
-    Impostazioni   : undefined;
     Analisi        : undefined;
     Categorie      : undefined;
     Sviluppatore   : undefined;

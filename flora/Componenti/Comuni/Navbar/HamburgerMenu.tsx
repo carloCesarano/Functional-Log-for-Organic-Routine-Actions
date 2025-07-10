@@ -11,7 +11,6 @@ import Button from '../Input/Button';
 const OPZIONI = [
     "Analisi",
     "Categorie",
-    "Impostazioni",
     "Specie",
     "Sviluppatore"
 ] as const;
