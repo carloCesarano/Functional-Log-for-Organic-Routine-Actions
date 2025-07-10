@@ -4,7 +4,6 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
-
     },
     titolo: {
         fontSize: 20,
@@ -46,7 +45,8 @@ export const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     bottone: {
-        marginTop: 25,
+        marginTop: 18,
+        marginBottom: 18,
         width: 250,
         alignSelf: 'center',
         alignItems: 'center',
