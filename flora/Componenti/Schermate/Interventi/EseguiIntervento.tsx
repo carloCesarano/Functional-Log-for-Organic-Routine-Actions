@@ -1,22 +1,25 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { FlatList, View, Text, TouchableOpacity } from 'react-native';
+import {JSX, useEffect, useState, useCallback} from 'react';
+// COMPONENTI NATIVI
+import {FlatList, View, Text, TouchableOpacity, ScrollView} from 'react-native';
+// COMPONENTI CUSTOM
+import Titolo from '../../Comuni/Titolo';
+import Button from '../../Comuni/Input/Button';
+// UTILITY
 import { PiantaPosseduta } from '../../../Model/PiantaPosseduta';
 import * as PiantePosseduteDAO from '../../../Database/PiantePosseduteDAO';
 import * as InterventiDAO from '../../../Database/InterventiDAO';
-import Button from '../../Comuni/Input/Button';
 import { colora } from '../../../Model/Coloratore';
-import { styles } from '../../../Styles/EsseguiIntervento';
 import { MostraToast } from '../../Comuni/MessaggioToast';
-
-type TipoIntervento = 'INN' | 'POT' | 'RINV';
+// FOGLI DI STILE
+import { styles } from '../../../Styles/EsseguiIntervento';
 
 interface Intervento {
     pianta: PiantaPosseduta,
-    tipo: TipoIntervento,
+    tipo: 'INN' | 'POT' | 'RINV',
     giorniRimanenti: number
 }
 
-export default function EseguiIntervento() {
+export default function (): JSX.Element {
     const [interventi, setInterventi] = useState<Intervento[]>([]);
     const [selezionati, setSelezionati] = useState<Set<string>>(new Set());
     const [loading, setLoading] = useState(false);
@@ -71,7 +74,7 @@ export default function EseguiIntervento() {
         setLoading(true);
         for (const key of selezionati) {
             const [id, tipo] = key.split('-');
-            const intervento = interventi.find(i => i.pianta.getId().toString() === id && i.tipo === tipo as TipoIntervento);
+            const intervento = interventi.find(i => i.pianta.getId().toString() === id && i.tipo === tipo as 'INN' | 'POT' | 'RINV');
             if (intervento) {
                 await InterventiDAO.insert(intervento.pianta, intervento.tipo, new Date());
             }
@@ -127,21 +130,26 @@ export default function EseguiIntervento() {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.titolo}>Tutti gli Interventi</Text>
-            {loading ? <Text style={styles.caricamento}>Caricamento...</Text> :
-                <FlatList
-                    data={interventi}
-                    keyExtractor={item => `${item.pianta.getId()}-${item.tipo}`}
-                    renderItem={renderItem}
-                />
-            }
+        <>
+            <ScrollView style={styles.container}>
+                <Titolo nome='Tutti gli interventi'/>
+                {loading ? <Text style={styles.caricamento}>Caricamento...</Text> :
+                    <FlatList
+                        data={interventi}
+                        style={{flexGrow: 0}}
+                        contentContainerStyle={{paddingBottom: 18}}
+                        scrollEnabled={false}
+                        keyExtractor={item => `${item.pianta.getId()}-${item.tipo}`}
+                        renderItem={renderItem}
+                    />
+                }
+            </ScrollView>
             <Button
                 testo="Conferma"
                 onPress={conferma}
                 stileButton={[styles.bottone, { opacity: selezionati.size === 0 ? 0.5 : 1 }]}
                 stileTesto={styles.testoButton}
             />
-        </View>
+        </>
     );
 }
