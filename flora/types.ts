@@ -8,7 +8,6 @@ export type RootStackParamList = {
     ListaPiante    : {cercato: string};
     Analisi        : undefined;
     Categorie      : undefined;
-    Sviluppatore   : undefined;
     Interventi     : undefined;
     Specie         : undefined;
     AggiungiSpecie : undefined;

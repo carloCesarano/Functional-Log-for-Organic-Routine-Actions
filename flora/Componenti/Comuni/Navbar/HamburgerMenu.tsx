@@ -12,7 +12,6 @@ const OPZIONI = [
     "Analisi",
     "Categorie",
     "Specie",
-    "Sviluppatore"
 ] as const;
 type OPZIONE = typeof OPZIONI[number];
 
