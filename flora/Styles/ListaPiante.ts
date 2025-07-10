@@ -47,7 +47,6 @@ export const listaPianteStyles = StyleSheet.create({
         flexDirection: 'row',
         flex: 1,
         padding: 15,
-        borderRadius: 8,
         justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',

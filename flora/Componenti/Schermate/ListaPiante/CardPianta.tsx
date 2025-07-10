@@ -29,7 +29,7 @@ export default function CardPianta({ pianta }: { pianta: PiantaPosseduta }) {
     // RENDER DELLA CARD DELLA PIANTA
     return (
         <TouchableOpacity
-            style={[styles.card, {borderStyle: 'solid', borderWidth: 2}]}
+            style={[styles.card, {borderStyle: 'solid', borderWidth: 2, overflow: 'hidden'}]}
             onPress={() => navigation.navigate('InfoPianta', {ID: pianta.getId()})}
         >
             <LinearGradient
