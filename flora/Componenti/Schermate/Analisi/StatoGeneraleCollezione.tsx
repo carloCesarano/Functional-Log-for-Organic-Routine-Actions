@@ -10,6 +10,15 @@ import {colora} from "../../../Model/Coloratore";
 
 const styles = stili.PORTRAIT;
 
+function commentoStato(stato: number): string {
+    if (stato === 1) return 'Pollice verde!';
+    if (stato < 0.3) return 'Forse la botanica non fa per te';
+    if (stato < 0.6) return 'Un po\' più di impegno, dai!';
+    if (stato < 0.75) return 'Stai andando abbastanza bene';
+    if (stato < 0.85) return 'Stai andando molto bene';
+    else return 'Quasi perfetto!'
+}
+
 export default function StatoGeneraleCollezione() {
     const [loading, setLoading] = useState(true);
     const [statoCollezione, setStatoCollezione] = useState<number>(0);
@@ -60,6 +69,8 @@ export default function StatoGeneraleCollezione() {
                     <Text style={[styles.percentuale, {color: colora(statoCollezione) || '#4CAF50'}]}>
                         {Math.round(statoCollezione * 100)}%
                     </Text>
+                    <Text style={{textAlign: 'center', fontSize: 18, fontStyle: 'italic', marginBottom: 18}}>
+                        {commentoStato(statoCollezione)}</Text>
 
                     <View style={styles.containerPiante}>
                         {/* Pianta più in salute - Button */}
