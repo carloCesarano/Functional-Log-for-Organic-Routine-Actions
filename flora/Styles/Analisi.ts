@@ -18,7 +18,7 @@ const baseStyles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    borderWidth: 1,          
+    borderWidth: 2,
     borderColor: '#384637',
   },
   titolo: {
