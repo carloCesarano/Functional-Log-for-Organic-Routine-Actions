@@ -98,7 +98,8 @@ export default function NumPianteCategoria({ nomeCategoria }: Props) {
         <View style={stile.boxNumPiante}>
             {/* TITOLO NUMERO PIANTE */}
             <Text style={stile.titoloNumPiante}>
-                Hai <Text style={stile.numeroPiante}>{numeroPiante}</Text> piante per la categoria "{nomeCategoria}":
+                Hai <Text style={stile.numeroPiante}>{numeroPiante}</Text>{' '}
+                {numeroPiante === 1 ? 'pianta' : 'piante'} per la categoria "{nomeCategoria}":
             </Text>
 
             {/* INDICATORE DI CARICAMENTO */}
@@ -107,19 +108,22 @@ export default function NumPianteCategoria({ nomeCategoria }: Props) {
             ) : (
                 <>
                     {piantePossedute && piantePossedute.length > 0 ? (
-                        <ScrollView horizontal={!portraitMode} style={stile.flatList}>
-                            {piantePossedute.map((item) => (
-                                <CardPianta key={item.getId().toString()} pianta={item} />
-                            ))}
-                        </ScrollView>
+                        <FlatList
+                            scrollEnabled={false}
+                            data={piantePossedute}
+                            keyExtractor={(item) => item.getId().toString()}
+                            renderItem={({ item }) => <CardPianta pianta={item} />}
+                            horizontal={!portraitMode}
+                            contentContainerStyle={!portraitMode ? { gap: 18 } : undefined}
+                            key={portraitMode ? 'PORTRAIT' : 'LANDSCAPE'}
+                        />
                     ) : (
                         <Text style={stile.noPiantaTrovata}>Nessuna pianta in questa categoria.</Text>
                     )}
-
                 </>
             )}
-
         </View>
     );
+
 
 }
