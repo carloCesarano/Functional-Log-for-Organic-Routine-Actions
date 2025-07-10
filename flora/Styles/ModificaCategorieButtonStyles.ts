@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const PORTRAIT = StyleSheet.create({
     bottone: {
-        backgroundColor: '#287233',
+        backgroundColor: '#52B04E',
         padding: 12,
         borderRadius: 8,
         marginHorizontal: 20,

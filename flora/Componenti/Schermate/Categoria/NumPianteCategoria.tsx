@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator,FlatList } from 'react-native';
 import * as CategorieDAO from '../../../Database/CategorieDAO';
 import * as PianteCategorieDAO from '../../../Database/PianteCategorieDAO';
 import * as PiantePosseduteDAO from '../../../Database/PiantePosseduteDAO';
@@ -10,6 +10,8 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../types';
 import Button from '../../Comuni/Input/Button';
+import CardPianta from '../ListaPiante/CardPianta';
+import { ScrollView } from 'react-native';
 
 
 interface Props {
@@ -103,35 +105,20 @@ export default function NumPianteCategoria({ nomeCategoria }: Props) {
             {loading ? (
                 <ActivityIndicator size="small" color="#333" />
             ) : (
-                <View style={stile.listaPianteCategoria}>
+                <>
                     {piantePossedute && piantePossedute.length > 0 ? (
-                        piantePossedute.map((pianta, index) => (
-                            <View key={index} style={stile.cardPianta}>
-                                <Button
-                                    testo={pianta.getNome()}
-                                    onPress={() => navigation.navigate('InfoPianta', { ID: pianta.getId() })}
-                                    stileButton={{
-                                        width: '100%',
-                                        height: 50,
-                                        borderRadius: 12,
-                                        backgroundColor: '#4caf50',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}
-                                    stileTesto={{
-                                        fontSize: 16,
-                                        color: 'white',
-                                        fontWeight: 'bold',
-                                    }}
-                                />
-                            </View>
-                        ))
+                        <ScrollView horizontal={!portraitMode} style={stile.flatList}>
+                            {piantePossedute.map((item) => (
+                                <CardPianta key={item.getId().toString()} pianta={item} />
+                            ))}
+                        </ScrollView>
                     ) : (
                         <Text style={stile.noPiantaTrovata}>Nessuna pianta in questa categoria.</Text>
                     )}
-                </View>
 
+                </>
             )}
+
         </View>
     );
 

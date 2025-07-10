@@ -5,7 +5,7 @@ export const PORTRAIT = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10,
-        backgroundColor: 'green',
+        backgroundColor: '#52B04E',
         borderRadius: 10,
         height: 100,
     },
@@ -58,7 +58,7 @@ export const PORTRAIT = StyleSheet.create({
         textAlign: 'center',
     },
 
-    // 👇 AGGIUNTI PER MOSTRARE LE PIANTE DELLA CATEGORIA
+
     listaPianteCategoria: {
         marginTop: 10,
         width: '100%',
@@ -87,6 +87,10 @@ export const PORTRAIT = StyleSheet.create({
         textAlign: 'center',
         marginTop: 10,
     },
+    flatList: {
+        marginBottom: 10
+    },
+
 });
 
 export const LANDSCAPE = StyleSheet.create({
