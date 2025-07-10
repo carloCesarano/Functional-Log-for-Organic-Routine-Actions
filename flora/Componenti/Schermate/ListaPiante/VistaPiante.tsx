@@ -26,7 +26,7 @@ export default function ({cercato, filtri}: Props): JSX.Element {
     useFocusEffect(useCallback(() => {
         async function caricaPiante() {
             const tutte = await getAll();
-            setPiante(tutte);
+            setPiante(tutte.sort((a,b) => b.getId() - a.getId()));
         }
 
         caricaPiante();
