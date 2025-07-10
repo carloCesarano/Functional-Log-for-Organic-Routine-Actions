@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {View, Text, ActivityIndicator, Image, TouchableOpacity} from 'react-native';
 import * as PiantePosseduteDAO from '../../../Database/PiantePosseduteDAO';
 import {PiantaPosseduta} from '../../../Model/PiantaPosseduta';
-import {useNavigation} from "@react-navigation/native";
+import {useFocusEffect, useNavigation} from "@react-navigation/native";
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../types';
 import stili from '../../../Styles/Analisi';
@@ -22,7 +22,7 @@ export default function StatoGeneraleCollezione() {
         navigation.navigate('InfoPianta', {ID: id});
     };
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
         const caricaDati = async () => {
             try {
                 const piante = await PiantePosseduteDAO.getAll();
@@ -47,7 +47,7 @@ export default function StatoGeneraleCollezione() {
         };
 
         caricaDati();
-    }, []);
+    }, []));
 
     return (
         <View style={styles.container}>
@@ -64,52 +64,56 @@ export default function StatoGeneraleCollezione() {
                     <View style={styles.containerPiante}>
                         {/* Pianta più in salute - Button */}
                         {piantaPiuSalute && (
-                            <TouchableOpacity
-                                style={[styles.cardPianta, {backgroundColor: piantaPiuSalute.coloreStato()}]}
-                                onPress={() => goToInfoPianta(piantaPiuSalute.getId())}
-                            >
+                            <View style={{flexDirection: 'column', justifyContent: 'center', width: '50%'}}>
                                 <Text style={styles.cardLabel}>Più in salute</Text>
-                                {typeof piantaPiuSalute.getFoto() === 'number' ? (
-                                    <Image
-                                        source={piantaPiuSalute.getFoto() as number}
-                                        style={styles.immaginePianta}
-                                    />
-                                ) : (
-                                    <Image
-                                        source={{uri: (piantaPiuSalute.getFoto() as { uri: string }).uri}}
-                                        style={styles.immaginePianta}
-                                    />
-                                )}
-                                <Text style={styles.nomePianta}>{piantaPiuSalute.getNome()}</Text>
-                                <Text style={styles.statoPianta}>
-                                    {Math.round(piantaPiuSalute.stato() * 100)}%
-                                </Text>
-                            </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[styles.cardPianta, {backgroundColor: piantaPiuSalute.coloreStato()}]}
+                                    onPress={() => goToInfoPianta(piantaPiuSalute.getId())}
+                                >
+                                    {typeof piantaPiuSalute.getFoto() === 'number' ? (
+                                        <Image
+                                            source={piantaPiuSalute.getFoto() as number}
+                                            style={styles.immaginePianta}
+                                        />
+                                    ) : (
+                                        <Image
+                                            source={{uri: (piantaPiuSalute.getFoto() as { uri: string }).uri}}
+                                            style={styles.immaginePianta}
+                                        />
+                                    )}
+                                    <Text style={styles.nomePianta}>{piantaPiuSalute.getNome()}</Text>
+                                    <Text style={styles.statoPianta}>
+                                        {Math.round(piantaPiuSalute.stato() * 100)}%
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
                         )}
 
                         {/* Pianta più malata - Button */}
                         {piantaMenoSalute && (
-                            <TouchableOpacity
-                                style={[styles.cardPianta, {backgroundColor: piantaMenoSalute.coloreStato()}]}
-                                onPress={() => goToInfoPianta(piantaMenoSalute.getId())}
-                            >
+                            <View style={{flexDirection: 'column', justifyContent: 'center', width: '50%'}}>
                                 <Text style={styles.cardLabel}>Meno in salute</Text>
-                                {typeof piantaMenoSalute.getFoto() === 'number' ? (
-                                    <Image
-                                        source={piantaMenoSalute.getFoto() as number}
-                                        style={styles.immaginePianta}
-                                    />
-                                ) : (
-                                    <Image
-                                        source={{uri: (piantaMenoSalute.getFoto() as { uri: string }).uri}}
-                                        style={styles.immaginePianta}
-                                    />
-                                )}
-                                <Text numberOfLines={1} ellipsizeMode='tail' style={styles.nomePianta}>{piantaMenoSalute.getNome()}</Text>
-                                <Text style={styles.statoPianta}>
-                                    {Math.round(piantaMenoSalute.stato() * 100)}%
-                                </Text>
-                            </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[styles.cardPianta, {backgroundColor: piantaMenoSalute.coloreStato()}]}
+                                    onPress={() => goToInfoPianta(piantaMenoSalute.getId())}
+                                >
+                                    {typeof piantaMenoSalute.getFoto() === 'number' ? (
+                                        <Image
+                                            source={piantaMenoSalute.getFoto() as number}
+                                            style={styles.immaginePianta}
+                                        />
+                                    ) : (
+                                        <Image
+                                            source={{uri: (piantaMenoSalute.getFoto() as { uri: string }).uri}}
+                                            style={styles.immaginePianta}
+                                        />
+                                    )}
+                                    <Text numberOfLines={1} ellipsizeMode='tail' style={styles.nomePianta}>{piantaMenoSalute.getNome()}</Text>
+                                    <Text style={styles.statoPianta}>
+                                        {Math.round(piantaMenoSalute.stato() * 100)}%
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
                         )}
                     </View>
                 </>

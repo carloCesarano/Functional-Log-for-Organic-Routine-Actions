@@ -87,7 +87,8 @@ const baseStyles = StyleSheet.create({
     elevation: 2,
   },
   cardLabel: {
-    fontSize: 14,
+    textAlign: 'center',
+    fontSize: 18,
     fontWeight: '500',
     color: '#333',
     marginBottom: 8,
