@@ -1,6 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
-
-const { width } = Dimensions.get('window');
+import {StyleSheet} from 'react-native';
 
 export const coloriInterventi = {
   innaffiature: '#4CAF50',
@@ -146,7 +144,8 @@ const graficoInterventi = StyleSheet.create({
     position: 'absolute',
     right: 0,
     backgroundColor: 'white',
-    paddingHorizontal: 4,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     borderRadius: 10,
   },
 });
