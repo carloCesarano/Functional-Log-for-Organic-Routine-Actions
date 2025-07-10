@@ -53,7 +53,6 @@ export const listaPianteStyles = StyleSheet.create({
         width: '100%',
     },
     flatList: {
-        marginTop: 10,
-        marginBottom: 50,
+        marginBottom: 10
     },
 });

@@ -36,11 +36,11 @@ export default function ({pianta}: {pianta: PiantaPosseduta}): JSX.Element {
                 colors={["white", pianta.coloreStato()]}
                 start={{x: 0, y: 0}}
                 end={{x: 1, y: 0}}
-                style={{alignItems: 'center', justifyContent: 'center', width: 200, padding: 18}}
+                style={{alignItems: 'center', justifyContent: 'center', width: 200, padding: 18, flex: 1}}
             >
 
                 {foto ? (
-                    <Image source={foto} style={styles.cardImage}/>
+                    <Image source={foto} style={[styles.cardImage, {width: 100, height: 100}]}/>
                 ) : (
                     <View style={styles.cardImage}/>
                 )}

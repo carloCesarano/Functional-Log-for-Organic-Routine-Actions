@@ -45,7 +45,7 @@ export default function MenuSelezioneMultipla({titolo, opzioniMenu, selezionati,
 
             {/* Menu principale */}
             {aperto && !menuAttivo && (
-                <View style={[stileMenu?.filterMenu, stileMenu]}>
+                <View style={[stileMenu?.filterMenu]}>
                     {opzioniMenu.map(menu => (
                         <Button
                             key={menu.label}
