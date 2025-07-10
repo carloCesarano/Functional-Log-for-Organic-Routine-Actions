@@ -105,7 +105,7 @@ function popolaDB(db: SQLiteDatabase): void {
         ('Clivia',              'Clivia',     '2024-02-10', 'Bella pianta!', NULL),
         ('Basilico di mamma',   'Basilico',   '2025-01-01', 'Qualità media', NULL);
     INSERT INTO Interventi (pianta, tipo, data) VALUES
-        (1, 'INN', '2025-07-03'),
+        (1, 'INN', '2025-06-03'),
         (1, 'POT', '2025-07-03'),
         (1, 'RINV', '2025-07-03'),
         (2, 'INN', '2024-06-02'),

@@ -12,7 +12,7 @@ const styles = stili.PORTRAIT;
 
 function commentoStato(stato: number): string {
     if (stato === 1) return 'Pollice verde!';
-    if (stato < 0.3) return 'Forse la botanica non fa per te';
+    if (stato < 0.3) return 'Killer di piante!';
     if (stato < 0.6) return 'Un po\' più di impegno, dai!';
     if (stato < 0.75) return 'Stai andando abbastanza bene';
     if (stato < 0.85) return 'Stai andando molto bene';
