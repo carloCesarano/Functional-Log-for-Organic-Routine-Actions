@@ -1,34 +1,39 @@
+import {JSX, useCallback, useState} from 'react';
 // COMPONENTI NATIVI
-import React, { useEffect, useState } from "react";
-import { FlatList } from "react-native";
+import {FlatList} from "react-native";
 // COMPONENTI CUSTOM
-import { PiantaPosseduta } from "../../../Model/PiantaPosseduta";
-import CardPianta from "./CardPianta";
-// FOGLI DI STILE
-import { listaPianteStyles as styles } from "../../../Styles/ListaPiante";
+import CardPianta from './CardPianta';
+import CardPiantaLandscape from './CardPiantaLandscape';
 // UTILITY
-import { getAll } from "../../../Database/PiantePosseduteDAO";
+import {PiantaPosseduta} from "../../../Model/PiantaPosseduta";
+import {getAll} from "../../../Database/PiantePosseduteDAO";
+import {isPortrait} from '../../Comuni/OrientazioneChecker';
+// FOGLI DI STILE
+import {listaPianteStyles as styles} from "../../../Styles/ListaPiante";
+import {useFocusEffect} from "@react-navigation/native";
 
 interface Props {
     cercato: string;
     filtri: { stati: string[]; categorie: string[] };
 }
 
-export default function VistaPiante({ cercato, filtri }: Props) {
+export default function ({cercato, filtri}: Props): JSX.Element {
     // HOOKS
     const [piante, setPiante] = useState<PiantaPosseduta[]>([]);
+    const portraitMode: boolean = isPortrait();
 
     // EFFETTUA IL FETCH DELLE PIANTE
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
         async function caricaPiante() {
             const tutte = await getAll();
             setPiante(tutte);
         }
+
         caricaPiante();
-    }, []);
+    }, []));
 
     // FILTRA LE PIANTE IN BASE AI FILTRI SELEZIONATI
-    const pianteFiltrate = piante.filter((pianta) => {
+    const pianteFiltrate: PiantaPosseduta[] = piante.filter((pianta) => {
         // Filtro per testo cercato
         if (
             cercato &&
@@ -60,14 +65,30 @@ export default function VistaPiante({ cercato, filtri }: Props) {
     });
 
     // RENDER DELLA LISTA DELLE PIANTE FILTRATE
-    return (
-        <FlatList
-            style={styles.flatList}
-            data={pianteFiltrate}
-            keyExtractor={(item) => item.getId().toString()}
-            renderItem={({ item }) => (
-                <CardPianta pianta={item} />
+    return (<>
+            {portraitMode ? (
+                <FlatList
+                    style={styles.flatList}
+                    key={'PORTRAIT'}
+                    data={pianteFiltrate}
+                    keyExtractor={(item) => item.getId().toString()}
+                    renderItem={({item}) => (
+                        <CardPianta pianta={item}/>
+                    )}
+                />
+            ) : (
+                <FlatList
+                    style={styles.flatList}
+                    key={'LANDSCAPE'}
+                    horizontal={true}
+                    data={pianteFiltrate}
+                    contentContainerStyle={{gap: 18}}
+                    keyExtractor={(item) => item.getId().toString()}
+                    renderItem={({item}) => (
+                        <CardPiantaLandscape pianta={item}/>
+                    )}
+                />
             )}
-        />
+        </>
     );
 }
