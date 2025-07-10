@@ -5,18 +5,19 @@ import {RootStackParamList} from '../../../types';
 // COMPONENTI NATIVI
 import {TextInput, ScrollView} from 'react-native';
 // COMPONENTI CUSTOM
-import FotoPicker from '../../Comuni/Input/FotoPicker';
-import DataPicker from '../../Comuni/Input/DataPicker';
-import PickerMultiplo from "../../Comuni/Input/PickerMultiplo";
-import PickerSingolo from "../../Comuni/Input/PickerSingolo";
+import Titolo from '../../Comuni/Titolo';
+import FotoPicker     from '../../Comuni/Input/FotoPicker';
+import DataPicker     from '../../Comuni/Input/DataPicker';
+import PickerSingolo  from '../../Comuni/Input/PickerSingolo';
+import PickerMultiplo from '../../Comuni/Input/PickerMultiplo';
+import Button         from '../../Comuni/Input/Button';
 // UTILITY
+import {PiantaPosseduta} from '../../../Model/PiantaPosseduta';
 import * as WikiPianteDAO from '../../../Database/WikiPianteDAO';
-import * as CategorieDAO from '../../../Database/CategorieDAO';
+import * as CategorieDAO  from '../../../Database/CategorieDAO';
 import {MostraToast} from '../../Comuni/MessaggioToast';
 // FOGLI DI STILE
 import {styles} from '../../../Styles/Form';
-import Button from "../../Comuni/Input/Button";
-import {PiantaPosseduta} from "../../../Model/PiantaPosseduta";
 
 export default function (): JSX.Element {
     // VARIABILI DI STATO
@@ -90,6 +91,8 @@ export default function (): JSX.Element {
         <ScrollView
             style={{width: '100%'}}
             contentContainerStyle={{gap: 16, alignItems: 'center', width: '100%', paddingBottom: 100}}>
+
+            <Titolo nome='Nuova pianta' />
 
             <FotoPicker
                 foto={foto}
