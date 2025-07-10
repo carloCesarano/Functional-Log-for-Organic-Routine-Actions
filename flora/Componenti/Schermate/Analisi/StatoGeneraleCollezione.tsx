@@ -105,7 +105,7 @@ export default function StatoGeneraleCollezione() {
                                         style={styles.immaginePianta}
                                     />
                                 )}
-                                <Text style={styles.nomePianta}>{piantaMenoSalute.getNome()}</Text>
+                                <Text numberOfLines={1} ellipsizeMode='tail' style={styles.nomePianta}>{piantaMenoSalute.getNome()}</Text>
                                 <Text style={styles.statoPianta}>
                                     {Math.round(piantaMenoSalute.stato() * 100)}%
                                 </Text>
