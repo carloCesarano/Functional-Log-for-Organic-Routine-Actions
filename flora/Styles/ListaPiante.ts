@@ -23,7 +23,7 @@ export const listaPianteStyles = StyleSheet.create({
     },
     acquisizione: {
         fontSize: 14,
-        color: '#888',
+        color: '#666',
     },
     card: {
         margin: 10,
