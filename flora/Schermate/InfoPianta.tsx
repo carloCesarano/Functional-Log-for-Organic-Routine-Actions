@@ -20,6 +20,7 @@ export default function ({route}: Props): JSX.Element {
         <Background>
             <NavBar/>
             <ScrollView
+                style={{width: '100%'}}
                 contentContainerStyle={{justifyContent: 'center', alignItems: 'center', paddingBottom: 18}}>
 
                 {!editing && (
@@ -27,7 +28,7 @@ export default function ({route}: Props): JSX.Element {
                 )}
 
                 {editing && (
-                    <FormModifica id={1}/>
+                    <FormModifica id={ID}/>
                 )}
             </ScrollView>
 

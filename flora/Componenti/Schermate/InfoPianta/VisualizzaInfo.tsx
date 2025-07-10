@@ -72,11 +72,13 @@ export default function ({id, edit}: Props): JSX.Element {
                     ellipsizeMode='tail'
                     style={{textAlign: 'center', marginTop: 12, fontWeight: '900', fontSize: 26}}>
                     {pianta?.getNome()}</Text>
+
                 <Text
                     numberOfLines={1}
                     ellipsizeMode='tail'
                     style={{textAlign: 'center', marginTop: 8, fontSize: 18, fontStyle: 'italic'}}>
                     {pianta?.getSpecie().getSpecie()}</Text>
+
                 <Text
                     numberOfLines={1}
                     ellipsizeMode='tail'
@@ -90,6 +92,12 @@ export default function ({id, edit}: Props): JSX.Element {
                     contentContainerStyle={{paddingHorizontal: 16, gap: 16}}
                     keyExtractor={c => c}
                     renderItem={renderCategoria}/>
+
+                <Text
+                    numberOfLines={5}
+                    ellipsizeMode='tail'
+                    style={{textAlign: 'center', marginTop: 8, fontSize: 14, fontStyle: 'italic'}}>
+                    "{pianta?.getNote()}"</Text>
 
                 <InfoIntervento
                     pianta={pianta}
