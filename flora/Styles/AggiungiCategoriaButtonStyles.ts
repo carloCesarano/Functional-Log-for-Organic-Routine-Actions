@@ -10,8 +10,7 @@ export const PORTRAIT = StyleSheet.create({
         alignItems: 'center',
     },
     testoBottone: {
-        color: 'white',
-        fontWeight: '600',
+        color: 'black',
         fontSize: 16,
     },
     containerInput: {

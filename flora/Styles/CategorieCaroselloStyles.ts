@@ -5,15 +5,14 @@ export const PORTRAIT = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10,
-        backgroundColor: '#52B04E',
+        backgroundColor: '#d0e8f2',
         borderRadius: 10,
         height: 100,
     },
     titolo: {
         padding: 5,
         fontSize: 18,
-        color: 'white',
-        fontWeight: 'bold',
+        color: 'black',
     },
     containerCategorie: {
         paddingHorizontal: 10,
@@ -21,7 +20,7 @@ export const PORTRAIT = StyleSheet.create({
         margin: 10,
     },
     cardCategoria: {
-        backgroundColor: '#d0e8f2',
+        backgroundColor: '#52B04E',
         paddingVertical: 10,
         paddingHorizontal: 15,
         marginRight: 10,
