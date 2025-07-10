@@ -7,7 +7,7 @@ export const PORTRAIT = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
-        zIndex: 1, // Aggiunto per garantire l'ordine degli elementi
+        zIndex: 1,
     },
     // <Icona> -> <Image>
     icona: {
@@ -17,7 +17,7 @@ export const PORTRAIT = StyleSheet.create({
     // <HamburgerMenu> -> <View>
     hamburgerIcon: {
         marginRight: 10,
-        zIndex: 1000, // Aumentato per garantire che sia sopra gli altri elementi
+        zIndex: 1000,
     },
     // <HamburgerMenu> -> <View> -> <View>
     hamburgerMenu: {
@@ -25,8 +25,8 @@ export const PORTRAIT = StyleSheet.create({
         right: 5,
         top: 40,
         minWidth: 150,
-        zIndex: 1001, // Aumentato per garantire che sia sopra l'overlay
-        elevation: Platform.OS === 'android' ? 1000 : 0, // Solo per Android
+        zIndex: 1001,
+        elevation: Platform.OS === 'android' ? 1000 : 0,
         borderWidth: 2,
         borderStyle: 'solid',
         borderRadius: 10,
@@ -57,17 +57,17 @@ export const LANDSCAPE = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
-        zIndex: 1, // Aggiunto per garantire l'ordine degli elementi
+        zIndex: 1,
     },
     // <Icona> -> <Image>
     icona: {
-        width:  80,
-        height: 80,
+        width:  50,
+        height: 50,
     },
     // <HamburgerMenu> -> <View>
     hamburgerIcon: {
         marginRight: 10,
-        zIndex: 1000, // Aumentato per garantire che sia sopra gli altri elementi
+        zIndex: 1000,
     },
     // <HamburgerMenu> -> <View> -> <View>
     hamburgerMenu: {
@@ -75,8 +75,8 @@ export const LANDSCAPE = StyleSheet.create({
         right: 5,
         top: 40,
         minWidth: 150,
-        zIndex: 1001, // Aumentato per garantire che sia sopra l'overlay
-        elevation: Platform.OS === 'android' ? 1000 : 0, // Solo per Android
+        zIndex: 1001,
+        elevation: Platform.OS === 'android' ? 1000 : 0,
         borderWidth: 2,
         borderStyle: 'solid',
         borderRadius: 10,
