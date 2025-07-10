@@ -9,7 +9,7 @@ function getDB(): SQLiteDatabase {
     if (!db) {
         db = SQLite.openDatabaseSync('FLORA1');
         db.execSync("PRAGMA foreign_keys = ON;");
-        // if (DBVuoto(db))
+        if (DBVuoto(db))
             popolaDB(db);
     }
     return db;
