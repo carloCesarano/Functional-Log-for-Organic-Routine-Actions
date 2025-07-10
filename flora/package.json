@@ -4,7 +4,8 @@
   "main": "index.ts",
   "scripts": {
     "lan": "expo start",
-    "tunnel": "expo start --host tunnel"
+    "tunnel": "expo start --host tunnel",
+    "localhost": "expo start --host localhost"
   },
   "dependencies": {
     "@expo/metro-runtime": "~5.0.4",
