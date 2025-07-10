@@ -6,6 +6,7 @@ import {WikiPianta} from './WikiPianta';
 import {assertDefined}  from './UndefinedError';
 import {assertNonEmpty} from './EmptyError';
 import {colora} from './Coloratore';
+import {normalizza} from './Normalizzatore';
 
 const LIMITE_INNAFF : number =  3;
 const LIMITE_POTAT  : number = 14;
@@ -298,12 +299,6 @@ export class PiantaPosseduta {
     // per i tre tipi di interventi per restituire un valore
     // compreso tra 0 (stato pessimo) e 1 (stato ottimo).
     stato(): number {
-        function normalizza(giorni: number, limiteCritico: number): number {
-            if (giorni <= -limiteCritico) return 0;
-            if (giorni >= 0) return 1;
-            return giorni/10 + 1;
-        }
-
         const innaff = normalizza(this.giorniProxInnaff(), LIMITE_INNAFF);
         const potat  = normalizza(this.giorniProxPotat(),  LIMITE_POTAT );
         const rinv   = normalizza(this.giorniProxRinv(),   LIMITE_RINV  );
