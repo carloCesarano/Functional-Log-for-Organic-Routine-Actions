@@ -145,7 +145,6 @@ const graficoInterventi = StyleSheet.create({
     fontWeight: 'bold',
     position: 'absolute',
     right: 0,
-    backgroundColor: 'white',
     paddingHorizontal: 4,
     borderRadius: 10,
   },
