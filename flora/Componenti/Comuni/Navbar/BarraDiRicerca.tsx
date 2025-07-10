@@ -74,7 +74,7 @@ export default function ({stile}: {stile: ViewStyle}) {
     return (
         <View style={style}>
             <TextInput
-                style={{maxWidth: '80%'}}
+                style={{maxWidth: '80%', fontSize: 18}}
                 onFocus={impostaStile}
                 onBlur={eliminaStile}
                 value={testo}
