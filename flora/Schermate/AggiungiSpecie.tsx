@@ -1,15 +1,13 @@
-import React from "react";
-import FormSpecie from "../Componenti/Schermate/Specie/FormSpecie";
-import NavBar from "../Componenti/Comuni/NavBar";
-import Titolo from "../Componenti/Comuni/Titolo";
-import Background from "../Componenti/Comuni/Background";
+import {JSX} from 'react';
+import NavBar     from '../Componenti/Comuni/NavBar';
+import Background from '../Componenti/Comuni/Background';
+import FormSpecie from '../Componenti/Schermate/Specie/FormSpecie';
 
-export default function AggiungiSpecie() {
+export default function (): JSX.Element {
     return (
           <Background>
             <NavBar/>
-              <Titolo nome="AggiungiSpecie"/>
-             <FormSpecie />
+             <FormSpecie/>
           </Background>
 
     );

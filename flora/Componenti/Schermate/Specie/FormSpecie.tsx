@@ -9,6 +9,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../types";
 import { MostraToast } from "../../Comuni/MessaggioToast";
 import { isPortrait } from "../../Comuni/OrientazioneChecker";
+import Titolo from "../../Comuni/Titolo";
 
 export default function FormSpecie() {
     const [nome, setNome] = useState("");
@@ -66,6 +67,8 @@ export default function FormSpecie() {
             keyboardVerticalOffset={10}
         >
             <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}>
+                <Titolo nome='Nuova specie'/>
+
                 <View style={portrait ? styles.formContainer : styles.formContainerLandscape}>
                     <View style={{ alignItems: "center", marginVertical: 12 }}>
                         <FotoPicker foto={foto} setFoto={setFoto} />
