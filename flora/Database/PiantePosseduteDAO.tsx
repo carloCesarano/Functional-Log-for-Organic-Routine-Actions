@@ -1,5 +1,6 @@
 import * as DAO from './DAO';
 import {PiantaPosseduta} from '../Model/PiantaPosseduta';
+import * as CatDAO from './PianteCategorieDAO';
 import {insert as InterventiInsert} from './InterventiDAO';
 
 export interface Riga extends DAO.Riga {
@@ -38,6 +39,14 @@ export async function remove(pianta: PiantaPosseduta): Promise<void> {
 
 export async function update(pianta: PiantaPosseduta): Promise<void> {
     await DAO.update<Riga>('PiantePossedute', preparaPerUpdate(pianta));
+
+    // DISTRUGGI LE CATEGORIE PRECEDENTI
+    const vecchie: CatDAO.Riga[] = await CatDAO.getAll();
+    const daRimuovere: CatDAO.Riga[] = vecchie.filter(r => r.pianta === pianta.getId())
+    await Promise.all(daRimuovere.map(riga => CatDAO.remove(riga.id)));
+    // INSERISCI LE NUOVE
+    const nuove: string[] = pianta.getCategorie();
+    await Promise.all(nuove.map(cat => CatDAO.insert(pianta, cat)));
 }
 
 function preparaPerInsert(pianta: PiantaPosseduta): Omit<Riga, 'id'> {
