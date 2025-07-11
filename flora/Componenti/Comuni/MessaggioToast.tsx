@@ -21,6 +21,15 @@ const config = {
             text1Style={styles.titolo}
             text2Style={styles.messaggio}
         />
+    ),
+    warn: (props: any) => (
+        <ErrorToast
+            {...props}
+            style={[styles.toast, {borderLeftColor: '#dfe23e'}]}
+            contentContainerStyle={styles.contenuto}
+            text1Style={styles.titolo}
+            text2Style={styles.messaggio}
+        />
     )
 }
 

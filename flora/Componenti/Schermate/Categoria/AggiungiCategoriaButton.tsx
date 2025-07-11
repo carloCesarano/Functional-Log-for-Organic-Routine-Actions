@@ -1,26 +1,20 @@
-import React, { useState } from 'react';
-import {
-    View,
-    TextInput,
-
-    Alert,
-    TouchableOpacity,
-    Text,
-    Modal,
-    KeyboardAvoidingView,
-    Platform
-} from 'react-native';
-
+import {useState} from 'react';
+// COMPONENTI NATIVI
+import {Modal, KeyboardAvoidingView, TouchableOpacity, View, Text, TextInput, Platform} from 'react-native';
+// COMPONENTI CUSTOM
+import Button from '../../Comuni/Input/Button';
+// UTILITY
 import * as CategorieDAO from '../../../Database/CategorieDAO';
-import { isPortrait } from '../../Comuni/OrientazioneChecker';
-import { PORTRAIT, LANDSCAPE } from '../../../Styles/AggiungiCategoriaButtonStyles';
-import Button from "../../Comuni/Input/Button";
+import {isPortrait} from '../../Comuni/OrientazioneChecker';
+import {MostraToast} from '../../Comuni/MessaggioToast';
+// FOGLI DI STILE
+import {PORTRAIT, LANDSCAPE} from '../../../Styles/AggiungiCategoriaButtonStyles';
 
 interface Props {
     onCategoriaAggiunta: () => void;
 }
 
-export default function AggiungiCategoriaButton({ onCategoriaAggiunta }: Props) {
+export default function AggiungiCategoriaButton({onCategoriaAggiunta}: Props) {
     // VARIABILI DI STATO
 
     // Mostra o nasconde il modale per aggiungere una nuova categoria
@@ -44,7 +38,11 @@ export default function AggiungiCategoriaButton({ onCategoriaAggiunta }: Props) 
         const nomePulito = nomeNuovaCategoria.trim();
 
         if (nomePulito.length === 0) {
-            Alert.alert('Errore', 'Inserisci un nome valido per la categoria');
+            MostraToast({
+                tipo: 'error',
+                titolo: 'Nome non valido',
+                messaggio: 'Inserisci un nome valido'
+            });
             return;
         }
 
@@ -52,18 +50,30 @@ export default function AggiungiCategoriaButton({ onCategoriaAggiunta }: Props) 
             // Controlla se esiste già una categoria con lo stesso nome
             const esisteGia = await CategorieDAO.daNome(nomePulito).then(() => true).catch(() => false);
             if (esisteGia) {
-                Alert.alert('Errore', 'Questa categoria esiste già');
+                MostraToast({
+                    tipo: 'error',
+                    titolo: 'Nome non valido',
+                    messaggio: 'La categoria ' + nomePulito + ' esiste già'
+                });
                 return;
             }
 
             // Inserisce la nuova categoria nel database
             await CategorieDAO.insert(nomePulito);
-            Alert.alert('Successo', 'Categoria aggiunta con successo!');
+            MostraToast({
+                tipo: 'success',
+                titolo: 'Aggiunta con successo',
+                messaggio: 'La categoria ' + nomePulito + ' è stata aggiunta'
+            });
             setNomeNuovaCategoria('');
             setShowInput(false);
             onCategoriaAggiunta(); // Notifica il componente genitore
         } catch (error) {
-            Alert.alert('Errore', 'Impossibile aggiungere categoria');
+            MostraToast({
+                tipo: 'error',
+                titolo: 'Impossibile aggiungere la categoria',
+                messaggio: 'Controlla la console per maggiori informazioni'
+            });
             console.error(error);
         }
     };
@@ -73,7 +83,7 @@ export default function AggiungiCategoriaButton({ onCategoriaAggiunta }: Props) 
             {/* BOTTONE "AGGIUNGI CATEGORIA"
                 - Apre il modale per inserire una nuova categoria */}
             <TouchableOpacity style={stile.bottone} onPress={() => setShowInput(true)}>
-                <Text style={stile.testoBottone}>Aggiungi Categoria</Text>
+                <Text style={stile.testoBottone}>Aggiungi</Text>
             </TouchableOpacity>
 
             {/* MODALE CON INPUT PER LA NUOVA CATEGORIA */}
@@ -100,7 +110,12 @@ export default function AggiungiCategoriaButton({ onCategoriaAggiunta }: Props) 
                         <View style={stile.buttonRow}>
                             <Button testo="Salva"
                                     onPress={aggiungiCategoria}
-                                    stileButton={{width: '50%', height: 60, borderRadius: 18, backgroundColor: '#30a505'}}
+                                    stileButton={{
+                                        width: '50%',
+                                        height: 60,
+                                        borderRadius: 18,
+                                        backgroundColor: '#30a505'
+                                    }}
                                     stileTesto={{textAlign: 'center', fontSize: 24, color: 'white', fontWeight: 'bold'}}
                             />
                             <Button

@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import {
-    Modal,
-    KeyboardAvoidingView,
-    Platform,
-    TouchableWithoutFeedback,
-    Keyboard,
-    View,
-    TextInput,
-    Alert,
-    TouchableOpacity,
-    Text
-} from 'react-native';
-
+import {useState, useEffect} from 'react';
+// COMPONENTI NATIVI
+import {Modal, KeyboardAvoidingView, TouchableWithoutFeedback, TouchableOpacity, View, Text, TextInput, Keyboard, Platform} from 'react-native';
+// COMPONENTI CUSTOM
+import Button from '../../Comuni/Input/Button';
+// UTILITY
 import * as CategorieDAO from '../../../Database/CategorieDAO';
-import { isPortrait } from '../../Comuni/OrientazioneChecker';
-import { PORTRAIT, LANDSCAPE } from '../../../Styles/ModificaCategorieButtonStyles';
-import Button from "../../Comuni/Input/Button";
+import {isPortrait} from '../../Comuni/OrientazioneChecker';
+import {MostraToast} from '../../Comuni/MessaggioToast';
+// FOGLI DI STILE
+import {PORTRAIT, LANDSCAPE} from '../../../Styles/ModificaCategorieButtonStyles';
 
 interface Props {
     categoriaSelezionata: { id: number; nome: string } | null;
     onCategoriaModificata: () => void;
 }
 
-export default function ModificaCategoriaButton({ categoriaSelezionata, onCategoriaModificata }: Props) {
+export default function ModificaCategoriaButton({categoriaSelezionata, onCategoriaModificata}: Props) {
     // VARIABILI DI STATO
 
     // Stato che controlla la visibilità del pop-up di modifica
@@ -57,19 +50,31 @@ export default function ModificaCategoriaButton({ categoriaSelezionata, onCatego
     // Controlla validità input, salva nel DB e aggiorna lo stato.
     const modificaCategoria = async () => {
         if (!categoriaSelezionata) {
-            Alert.alert('Errore', 'Nessuna categoria selezionata');
+            MostraToast({
+                tipo: 'error',
+                titolo: 'Nessuna categoria selezionata',
+                messaggio: 'Seleziona una categoria per modificarla'
+            });
             return;
         }
 
         const nomePulito = nomeModificato.trim();
 
         if (nomePulito.length === 0) {
-            Alert.alert('Errore', 'Inserisci un nome valido');
+            MostraToast({
+                tipo: 'error',
+                titolo: 'Nome non valido',
+                messaggio: 'Inserisci un nome valido'
+            });
             return;
         }
 
         if (nomePulito === categoriaSelezionata.nome) {
-            Alert.alert('Attenzione', 'Il nome non è stato modificato');
+            MostraToast({
+                tipo: 'warn',
+                titolo: 'Nome non modificato',
+                messaggio: 'La categoria non è stata modificata'
+            });
             setShowInput(false);
             return;
         }
@@ -79,11 +84,19 @@ export default function ModificaCategoriaButton({ categoriaSelezionata, onCatego
                 vecchio: categoriaSelezionata.nome,
                 nuovo: nomePulito
             });
-            Alert.alert('Successo', 'Categoria modificata');
+            MostraToast({
+                tipo: 'success',
+                titolo: 'Modificata con successo',
+                messaggio: 'La nuova categoria ora è ' + nomePulito
+            });
             setShowInput(false);
             onCategoriaModificata(); // Notifica il componente genitore
         } catch (error) {
-            Alert.alert('Errore', 'Impossibile modificare la categoria');
+            MostraToast({
+                tipo: 'error',
+                titolo: 'Impossibile modificare la categoria',
+                messaggio: 'Controlla la console per maggiori informazioni'
+            });
             console.error(error);
         }
     };
@@ -96,12 +109,12 @@ export default function ModificaCategoriaButton({ categoriaSelezionata, onCatego
             <TouchableOpacity
                 style={[
                     stile.bottone,
-                    !categoriaSelezionata && { backgroundColor: '#ccc' },
+                    !categoriaSelezionata && {backgroundColor: '#ccc'},
                 ]}
                 onPress={() => categoriaSelezionata && setShowInput(true)}
                 disabled={!categoriaSelezionata}
             >
-                <Text style={stile.testoBottone}>Modifica Categoria</Text>
+                <Text style={stile.testoBottone}>Modifica</Text>
             </TouchableOpacity>
 
             {/* MODALE PER L'INSERIMENTO DEL NUOVO NOME CATEGORIA */}
@@ -131,8 +144,18 @@ export default function ModificaCategoriaButton({ categoriaSelezionata, onCatego
                                 <View style={stile.buttonRow}>
                                     <Button testo="Salva"
                                             onPress={modificaCategoria}
-                                            stileButton={{width: '50%', height: 60, borderRadius: 18, backgroundColor: '#30a505'}}
-                                            stileTesto={{textAlign: 'center', fontSize: 24, color: 'white', fontWeight: 'bold'}}
+                                            stileButton={{
+                                                width: '50%',
+                                                height: 60,
+                                                borderRadius: 18,
+                                                backgroundColor: '#30a505'
+                                            }}
+                                            stileTesto={{
+                                                textAlign: 'center',
+                                                fontSize: 24,
+                                                color: 'white',
+                                                fontWeight: 'bold'
+                                            }}
                                     />
                                     <Button
                                         testo="Annulla"
@@ -140,8 +163,18 @@ export default function ModificaCategoriaButton({ categoriaSelezionata, onCatego
                                             setShowInput(false);
                                             setNomeModificato(categoriaSelezionata?.nome || '');
                                         }}
-                                        stileButton={{width: '50%', height: 60, borderRadius: 18, backgroundColor: '#30a505'}}
-                                        stileTesto={{textAlign: 'center', fontSize: 24, color: 'white', fontWeight: 'bold'}}
+                                        stileButton={{
+                                            width: '50%',
+                                            height: 60,
+                                            borderRadius: 18,
+                                            backgroundColor: '#30a505'
+                                        }}
+                                        stileTesto={{
+                                            textAlign: 'center',
+                                            fontSize: 24,
+                                            color: 'white',
+                                            fontWeight: 'bold'
+                                        }}
                                     />
                                 </View>
                             </View>

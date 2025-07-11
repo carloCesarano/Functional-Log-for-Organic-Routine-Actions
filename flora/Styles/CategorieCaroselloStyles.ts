@@ -5,29 +5,34 @@ export const PORTRAIT = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10,
-        backgroundColor: '#d0e8f2',
-        borderRadius: 10,
-        height: 100,
+        backgroundColor: '#bbe89f',
+        borderRadius: 24,
+        borderWidth: 2,
+        borderStyle: 'solid',
+        paddingVertical: 8,
     },
     titolo: {
-        padding: 5,
-        fontSize: 18,
-        color: 'black',
+        fontSize: 22,
+        textAlign: 'center',
+        marginBottom: 0,
     },
     containerCategorie: {
         paddingHorizontal: 10,
         gap: 10,
         margin: 10,
+        paddingRight: 30,
     },
     cardCategoria: {
-        backgroundColor: '#52B04E',
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        marginRight: 10,
+        backgroundColor: '#67d362',
         borderRadius: 8,
-        minWidth: 80,
-        alignItems: 'center',
-        justifyContent: 'center',
+        padding: 8
+    },
+    cardCategoriaSelezionata: {
+        backgroundColor: '#e5e89b',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderRadius: 8,
+        padding: 8
     },
     nomeCategoria: {
         fontSize: 14,
@@ -36,12 +41,14 @@ export const PORTRAIT = StyleSheet.create({
         textAlign: 'center',
     },
     boxNumPiante: {
-        marginTop: 15,
-        marginHorizontal: 20,
-        padding: 10,
-        backgroundColor: '#e6f2ff',
-        borderRadius: 10,
         alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 10,
+        backgroundColor: '#bbe89f',
+        borderRadius: 24,
+        borderWidth: 2,
+        borderStyle: 'solid',
+        paddingVertical: 8,
     },
     titoloNumPiante: {
         fontSize: 16,
@@ -94,12 +101,4 @@ export const PORTRAIT = StyleSheet.create({
 
 export const LANDSCAPE = StyleSheet.create({
     ...PORTRAIT,
-    containerCarosello: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginVertical: 5,
-        backgroundColor: 'green',
-        borderRadius: 10,
-        height: 100,
-    },
 });

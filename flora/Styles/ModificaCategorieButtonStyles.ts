@@ -2,15 +2,16 @@ import { StyleSheet } from 'react-native';
 
 export const PORTRAIT = StyleSheet.create({
     bottone: {
-        backgroundColor: '#52B04E',
+        backgroundColor: '#30a505',
         padding: 12,
         borderRadius: 8,
-        marginHorizontal: 20,
         marginVertical: 25,
         alignItems: 'center',
+        width: '45%'
     },
     testoBottone: {
-        color: 'black',
+        color: 'white',
+        fontWeight: 'bold',
         fontSize: 16,
     },
     containerInput: {

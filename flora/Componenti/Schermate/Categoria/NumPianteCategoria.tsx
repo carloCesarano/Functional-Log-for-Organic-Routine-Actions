@@ -6,12 +6,7 @@ import * as PiantePosseduteDAO from '../../../Database/PiantePosseduteDAO';
 import { isPortrait } from '../../Comuni/OrientazioneChecker';
 import { PORTRAIT, LANDSCAPE } from '../../../Styles/CategorieCaroselloStyles';
 import { PiantaPosseduta } from '../../../Model/PiantaPosseduta';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../types';
-import Button from '../../Comuni/Input/Button';
 import CardPianta from '../ListaPiante/CardPianta';
-import { ScrollView } from 'react-native';
 
 
 interface Props {
@@ -30,9 +25,6 @@ export default function NumPianteCategoria({ nomeCategoria }: Props) {
     // Selezione dello stile in base all’orientamento del dispositivo
     const portraitMode = isPortrait();
     const stile = portraitMode ? PORTRAIT : LANDSCAPE;
-
-    //HOOKS
-    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
 
     // CHIAMATA QUANDO:
@@ -99,7 +91,7 @@ export default function NumPianteCategoria({ nomeCategoria }: Props) {
             {/* TITOLO NUMERO PIANTE */}
             <Text style={stile.titoloNumPiante}>
                 Hai <Text style={stile.numeroPiante}>{numeroPiante}</Text>{' '}
-                {numeroPiante === 1 ? 'pianta' : 'piante'} per la categoria "{nomeCategoria}":
+                {numeroPiante === 1 ? 'pianta' : 'piante'} per la categoria "{nomeCategoria}"
             </Text>
 
             {/* INDICATORE DI CARICAMENTO */}
