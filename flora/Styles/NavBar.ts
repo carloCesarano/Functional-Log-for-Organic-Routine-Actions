@@ -55,6 +55,7 @@ export const LANDSCAPE = StyleSheet.create({
     navbar: {
         width: '100%',
         justifyContent: 'space-between',
+        paddingHorizontal: 18,
         alignItems: 'center',
         flexDirection: 'row',
         zIndex: 1,
@@ -66,7 +67,6 @@ export const LANDSCAPE = StyleSheet.create({
     },
     // <HamburgerMenu> -> <View>
     hamburgerIcon: {
-        marginRight: 10,
         zIndex: 1000,
     },
     // <HamburgerMenu> -> <View> -> <View>
