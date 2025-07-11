@@ -93,11 +93,13 @@ export default function ({id, edit}: Props): JSX.Element {
                     keyExtractor={c => c}
                     renderItem={renderCategoria}/>
 
-                <Text
-                    numberOfLines={5}
-                    ellipsizeMode='tail'
-                    style={{textAlign: 'center', marginTop: 8, fontSize: 14, fontStyle: 'italic'}}>
-                    "{pianta?.getNote()}"</Text>
+                {pianta?.getNote() && (
+                    <Text
+                        numberOfLines={5}
+                        ellipsizeMode='tail'
+                        style={{textAlign: 'center', marginTop: 8, fontSize: 14, fontStyle: 'italic'}}>
+                        "{pianta?.getNote()}"</Text>
+                )}
 
                 <InfoIntervento
                     pianta={pianta}
