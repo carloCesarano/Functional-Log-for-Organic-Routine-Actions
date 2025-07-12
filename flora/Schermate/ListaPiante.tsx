@@ -10,10 +10,12 @@ import MenuFiltri           from '../Componenti/Schermate/ListaPiante/MenuFiltri
 
 // COMPONENTE PRINCIPALE DELLA SCHERMATA LISTA PIANTE
 export default function (): JSX.Element {
-    
+    // VARIABILI DI STATO
+    const [filtri, setFiltri] = useState<{stati: string[], categorie: string[]}>({stati: [], categorie: []});
+
+    // HOOKS
     const route = useRoute<RouteProp<RootStackParamList, 'ListaPiante'>>();
     const cercato = route.params?.cercato ?? "";
-    const [filtri, setFiltri] = useState<{stati: string[], categorie: string[]}>({stati: [], categorie: []});
 
     // RENDER DELLA SCHERMATA
     // Mostra la navbar, il titolo, la lista delle piante filtrata e il menu filtri
