@@ -10,7 +10,7 @@ import MenuFiltri           from '../Componenti/Schermate/ListaPiante/MenuFiltri
 
 // COMPONENTE PRINCIPALE DELLA SCHERMATA LISTA PIANTE
 export default function (): JSX.Element {
-    // HOOKS DI STATO
+    
     const route = useRoute<RouteProp<RootStackParamList, 'ListaPiante'>>();
     const cercato = route.params?.cercato ?? "";
     const [filtri, setFiltri] = useState<{stati: string[], categorie: string[]}>({stati: [], categorie: []});
