@@ -100,7 +100,7 @@ function popolaDB(db: SQLiteDatabase): void {
         ('Peperoncino',        3,  30, 180);
     INSERT INTO PiantePossedute (nome, specie, acq, note, foto) VALUES
         ('Fico',                'Ficus',      '2023-05-01', 'Pianta regalo', NULL),
-        ('Lingua di suocera',   'Sanseveria', '2022-11-15', '',              NULL),
+        ('Lingua di serpente',  'Sanseveria', '2022-11-15', '',              NULL),
         ('Potus',               'Pothos',     '2024-01-10', 'Cresce bene',   NULL),
         ('Clivia',              'Clivia',     '2024-02-10', 'Bella pianta!', NULL),
         ('Basilico di mamma',   'Basilico',   '2025-01-01', 'Qualità media', NULL);
