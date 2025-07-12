@@ -10,6 +10,7 @@ import * as PiantePosseduteDAO from '../../../Database/PiantePosseduteDAO';
 import * as InterventiDAO from '../../../Database/InterventiDAO';
 import { colora } from '../../../Model/Coloratore';
 import { MostraToast } from '../../Comuni/MessaggioToast';
+import { isPortrait } from '../../Comuni/OrientazioneChecker';
 // FOGLI DI STILE
 import { styles } from '../../../Styles/EsseguiIntervento';
 
@@ -23,6 +24,7 @@ export default function (): JSX.Element {
     const [interventi, setInterventi] = useState<Intervento[]>([]);
     const [selezionati, setSelezionati] = useState<Set<string>>(new Set());
     const [loading, setLoading] = useState(false);
+    const portrait = isPortrait();
 
     const caricaInterventi = useCallback(async () => {
         setLoading(true);
@@ -114,6 +116,7 @@ export default function (): JSX.Element {
                 onPress={() => toggleSelezione(key)}
                 style={[
                     styles.item,
+                    !portrait && styles.itemLandscape,
                     { backgroundColor: colore },
                     selezionati.has(key) ? styles.selezionato : styles.nonSelezionato
                 ]}

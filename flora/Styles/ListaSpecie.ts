@@ -12,11 +12,13 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         padding: 12,
-        marginVertical: 6,
+        marginVertical: 10,
         borderRadius: 8,
         backgroundColor: "white",
         width: 350,
         alignSelf: "center",
+        borderWidth: 2,
+        borderColor: "black",
     },
 
     cardSelezionata: {

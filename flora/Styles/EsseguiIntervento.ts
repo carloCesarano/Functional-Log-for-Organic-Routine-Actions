@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     item: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 4,
+        marginVertical: 6,
         padding: 10,
         borderRadius: 8,
     },
@@ -40,7 +40,6 @@ export const styles = StyleSheet.create({
     },
     testo: {
         fontSize: 16,
-
         flexShrink: 1,
         flexWrap: 'wrap',
     },
@@ -59,6 +58,10 @@ export const styles = StyleSheet.create({
         fontSize: 25,
         color: 'white',
 
-    }
+    },
+    itemLandscape: {
+        width: 600,
+        alignSelf: 'center',
+    },
 
 });
