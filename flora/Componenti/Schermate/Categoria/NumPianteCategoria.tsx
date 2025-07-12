@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+// COMPONENTI NATIVI
 import { View, Text, ActivityIndicator,FlatList } from 'react-native';
+// COMPONENTI CUSTOM
+import CardPianta          from '../ListaPiante/CardPianta';
+import CardPiantaLandscape from '../ListaPiante/CardPiantaLandscape';
+// UTILITY
+import { isPortrait } from '../../Comuni/OrientazioneChecker';
 import * as CategorieDAO from '../../../Database/CategorieDAO';
 import * as PianteCategorieDAO from '../../../Database/PianteCategorieDAO';
 import * as PiantePosseduteDAO from '../../../Database/PiantePosseduteDAO';
-import { isPortrait } from '../../Comuni/OrientazioneChecker';
-import { PORTRAIT, LANDSCAPE } from '../../../Styles/CategorieCaroselloStyles';
 import { PiantaPosseduta } from '../../../Model/PiantaPosseduta';
-import CardPianta from '../ListaPiante/CardPianta';
+// FOGLI DI STILE
+import { PORTRAIT, LANDSCAPE } from '../../../Styles/CategorieCaroselloStyles';
 
 
 interface Props {
@@ -86,6 +91,14 @@ export default function NumPianteCategoria({ nomeCategoria }: Props) {
     // Se non è stata selezionata una categoria, non mostrare nulla
     if (!nomeCategoria) return null;
 
+    const renderPianta = ({item}: {item: PiantaPosseduta}) => {
+        return portraitMode ? (
+            <CardPianta pianta={item}/>
+        ) : (
+            <CardPiantaLandscape pianta={item}/>
+        )
+    }
+
     return (
         <View style={stile.boxNumPiante}>
             {/* TITOLO NUMERO PIANTE */}
@@ -101,12 +114,12 @@ export default function NumPianteCategoria({ nomeCategoria }: Props) {
                 <>
                     {piantePossedute && piantePossedute.length > 0 ? (
                         <FlatList
-                            scrollEnabled={false}
+                            scrollEnabled={!portraitMode}
                             data={piantePossedute}
                             keyExtractor={(item) => item.getId().toString()}
-                            renderItem={({ item }) => <CardPianta pianta={item} />}
+                            renderItem={renderPianta}
                             horizontal={!portraitMode}
-                            contentContainerStyle={!portraitMode ? { gap: 18 } : undefined}
+                            contentContainerStyle={!portraitMode ? { gap: 18, paddingHorizontal: 18 } : {}}
                             key={portraitMode ? 'PORTRAIT' : 'LANDSCAPE'}
                         />
                     ) : (
